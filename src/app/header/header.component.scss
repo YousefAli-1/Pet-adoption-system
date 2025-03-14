@@ -1,0 +1,33 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    background-color: #FFFFFF;
+    padding: 5px 100px 0px 100px;
+
+  }
+  .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+  }
+  
+  .logo-image {
+    height: auto;
+    width: 120px;
+  }
+  .nav-links li a {
+    text-decoration: none;
+    font-size: 18px;
+    transition: color 0.3s ease;
+    color:black;
+  }
+  
+  .nav-links li a:hover {
+    color: #DC8641;
+  }

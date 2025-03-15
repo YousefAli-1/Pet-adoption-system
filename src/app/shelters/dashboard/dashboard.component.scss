@@ -1,7 +1,9 @@
 $background-color: rgba(76, 77, 78, 0.377);
+
 :host{
-    display: block;
+    display: grid;
+    grid-template-columns: 100%;
+    row-gap: 10px;
+    padding: 5px;
     height: 100%;
-    padding: 25px 0px;
-    background-color: $background-color;
 }

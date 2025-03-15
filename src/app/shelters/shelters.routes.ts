@@ -1,6 +1,7 @@
 import { Routes } from "@angular/router";
 import { DashboardComponent } from "./dashboard/dashboard.component";
-import { SheltersComponent } from "./shelters.component";
+import { AddPostComponent } from "./add-post/add-post.component";
+import { ManagePostsComponent } from "./manage-posts/manage-posts.component";
 
 export const routes: Routes=[
     {
@@ -11,5 +12,13 @@ export const routes: Routes=[
     {
         path: 'dashboard',
         component: DashboardComponent
+    },
+    {
+        path: 'addPost',
+        component: AddPostComponent
+    },
+    {
+        path: 'managePosts',
+        component: ManagePostsComponent
     }
 ];

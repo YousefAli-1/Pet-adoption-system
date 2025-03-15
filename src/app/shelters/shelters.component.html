@@ -1,0 +1,14 @@
+<mat-drawer-container hasBackdrop="true" (backdropClick)="closeDrawer()">
+    <mat-drawer class="drawer" mode="over" position="start" [opened]="isOpened">
+      <a routerLink="/shelter/dashboard" routerLinkActive="active" mat-button>Dashboard</a>
+      <a routerLink="/shelter/addPost" routerLinkActive="active" mat-button>Add Post</a>
+      <a routerLink="/shelter/managePosts" routerLinkActive="active" mat-button>Manage Posts</a>
+      <a routerLink="/shelter/settings" routerLinkActive="active" mat-button>Settings</a>
+    </mat-drawer>
+    <mat-drawer-content>
+        <button mat-icon-button (click)="openDrawer()">
+            <span class="material-icons md-48"> list </span>
+        </button>
+        <router-outlet />
+    </mat-drawer-content>
+</mat-drawer-container>

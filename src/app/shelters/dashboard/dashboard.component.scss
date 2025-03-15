@@ -1,0 +1,9 @@
+$background-color: rgba(76, 77, 78, 0.377);
+
+:host{
+    display: grid;
+    grid-template-columns: 100%;
+    row-gap: 10px;
+    padding: 5px;
+    height: 100%;
+}

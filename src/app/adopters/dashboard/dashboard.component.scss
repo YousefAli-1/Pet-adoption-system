@@ -39,8 +39,8 @@ h1 {
         font-size: 1rem;
         border: 1px solid #ccc;
         border-radius: 5px 0 0 5px;
-        width: 50%; // Use percentage for responsive width
-        max-width: 300px; // Set a max-width for larger screens
+        width: 50%; 
+        max-width: 35vh; 
     }
     button {
         padding: 10px 20px;
@@ -53,6 +53,7 @@ h1 {
         cursor: pointer;
         &:hover {
             background-color: #fdfdfd;
+            color:#DC8641;
         }
     }
 }
@@ -83,6 +84,58 @@ h1 {
             }
             p {
                 margin-bottom: 0;
+            }
+        }
+    }
+}
+.featured-pets {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .card-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        .card {
+            background-color: #EFE8D5;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 10px;
+            flex: 1 1 calc(20% - 30px); 
+            max-height: 70vh;
+            box-sizing: border-box;
+            text-align: center;
+            img {
+                width: 100%;
+                max-height: 30%;
+                border-radius: 10px;
+                margin-bottom: 10px;
+            }
+            h3 {
+                margin-top: 0;
+            }
+            p {
+                margin-bottom: 10px;
+            }
+            button {
+                padding: 10px 20px;
+                font-size: 1rem;
+                border: none;
+                border-radius: 5px;
+                background-color: #DC8641;
+                color: white;
+                cursor: pointer;
+                margin: 5px;
+                &:hover {
+                    background-color: #fdfdfd;
+                    color: #DC8641;
+                }
             }
         }
     }

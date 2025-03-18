@@ -1,0 +1,24 @@
+:host{
+    display: grid;
+    color: #333;
+    grid-template-columns: 58vw 28vw;
+    padding: 2vw;
+}
+
+b{
+    font-size: 3em;
+    color: orange;
+}
+.info{
+    display: grid;
+    font-size: 2em;
+    max-width: 100%;
+    grid-template-columns: 50% 50%;
+}
+
+.shelterInfo{
+    grid-column-start: 1;
+    grid-column-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 4;
+}

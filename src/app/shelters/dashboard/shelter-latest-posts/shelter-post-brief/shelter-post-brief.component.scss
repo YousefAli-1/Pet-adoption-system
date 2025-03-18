@@ -1,0 +1,40 @@
+.post{
+    color: #333;
+    text-align: center;
+    display: grid;
+    grid-template-rows: 60% 40%;
+    width: 30vw;
+}
+h1,h2,h3{
+    font-weight: normal;
+}
+div{
+    display: flexbox;
+    align-items: center;
+    text-align: center;
+}
+img{
+    width:100%;
+}
+
+.status{
+    text-align: center;
+    width: 150%;
+    color: white;
+    position: relative;
+    top:4%;
+    right: -10%;
+    transform:rotate(35deg);  
+}
+.adopted{
+    background-color: #fc6300;
+}
+.waitingForAVisit{
+    background-color: #fe912a;
+}
+.returned{
+    background-color: #625f5e;
+}
+.waitingForAdoption{
+    background-color: #303030;
+}

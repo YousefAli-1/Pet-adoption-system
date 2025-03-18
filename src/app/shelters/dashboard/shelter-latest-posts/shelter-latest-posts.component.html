@@ -1,1 +1,8 @@
-<p>shelter-latest-posts works!</p>
+@for (post of latestPosts(); track $index) {
+    <app-card>
+        <app-shelter-post-brief [post]="post" />
+    </app-card>
+}
+@empty {
+    <p>You haven't posted any pets yet! :(</p>
+}

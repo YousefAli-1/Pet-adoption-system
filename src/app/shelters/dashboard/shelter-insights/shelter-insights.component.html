@@ -1,0 +1,21 @@
+<div class="info">
+    <div class="shelterInfo">
+        Welcome <br>
+        <b>{{shelter().name}}</b>
+    </div>
+    <div class="subInfo">
+        Adopted: {{shelter().statusCount.adoptedCount}}
+    </div>
+    <div class="subInfo">
+        Waiting for a visit: {{shelter().statusCount.waitingForAVisitCount}}
+    </div>
+    <div class="subInfo">
+        Waiting for adoption: {{shelter().statusCount.waitingForAdoptionCount}}
+    </div>
+    <div class="subInfo">
+        Returned: {{shelter().statusCount.returnedCount}}
+    </div>
+</div>
+<div>
+    <p-chart type="doughnut" [data]="data()" [options]="options" class="w-full md:w-[30rem]" />
+</div>

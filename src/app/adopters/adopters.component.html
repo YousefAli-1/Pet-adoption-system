@@ -1,1 +1,26 @@
-<router-outlet />
+<button class="butn m-3" (click)="toggleSidebar()">Navigation Bar</button>
+
+
+<div id="overlay" class="overlay" (click)="toggleSidebar()" *ngIf="!isCollapsed"></div>
+
+
+<div id="sidebar" class="sidebar text-white p-4" [ngClass]="{'active': !isCollapsed}">
+  <button class="btn btn-danger close-btn" (click)="toggleSidebar()">X</button>
+  <h3 class="text-center">Sidebar</h3>
+  <ul class="nav flex-column">
+    <li class="nav-item">
+      <a routerLink="/adopter/dashboard"  (click)="closeSidebar()" class="nav-link text-white" href="#">Dashboard</a>
+    </li>
+    <li class="nav-item">
+      <a routerLink="/adopter/profile"  (click)="closeSidebar()" class="nav-link text-white" href="#">Profile</a>
+    </li>
+    <li class="nav-item">
+      <a routerLink="/adopter/settings"  (click)="closeSidebar()" class="nav-link text-white" href="#">Settings</a>
+    </li>
+    <li class="nav-item">
+      <a routerLink="/adopter/pets"  (click)="closeSidebar()" class="nav-link text-white" href="#">pets</a>
+    </li>
+  </ul>
+</div>
+
+<router-outlet/>

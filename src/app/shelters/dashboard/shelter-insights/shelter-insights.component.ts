@@ -1,8 +1,8 @@
 import { isPlatformBrowser } from '@angular/common';
 import { Component, computed, inject, OnInit, PLATFORM_ID, signal, Signal } from '@angular/core';
 import { ChartModule } from 'primeng/chart';
+import { ShelterType } from '../../shelters.model';
 
-type ShelterType={name: String, statusCount: {adoptedCount: number, waitingForAVisitCount: number,returnedCount: number, waitingForAdoptionCount: number}};
 
 @Component({
   selector: 'app-shelter-insights',

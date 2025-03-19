@@ -11,9 +11,9 @@ export class ShelterPostBriefComponent {
   post=input.required<PostType>();
 
   get petImagePath(){
-    return './post-images/'+this.post().imgName;
+    return this.post().imgName;
   }
   get petImageAltText(){
-    return this.post().species+' '+this.post().category+'image';
+    return this.post().species+' '+this.post().category+'\'s image';
   }
 }

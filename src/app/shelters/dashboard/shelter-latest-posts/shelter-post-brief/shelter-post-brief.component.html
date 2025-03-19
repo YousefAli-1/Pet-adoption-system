@@ -1,0 +1,22 @@
+<div [class]="{'adopted': post().status==='Adopted', 'waitingForAVisit': post().status==='WaitingForAVisit', 'returned': post().status==='Returned', 'waitingForAdoption': post().status==='WaitingForAdoption','status':true}">
+    {{post().status}}
+</div>
+<div class="post">
+    <div>
+        <img [src]="petImagePath" [alt]="petImageAltText">
+    </div>
+    <div>
+        <h1>
+            {{post().species}}
+        </h1>
+        <h2>
+            {{post().category}}
+        </h2>
+        <h3>
+            <span class="material-icons">
+                location_on
+            </span>
+            {{post().location}}
+        </h3>
+    </div>
+</div>

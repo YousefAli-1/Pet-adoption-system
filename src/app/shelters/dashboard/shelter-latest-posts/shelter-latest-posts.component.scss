@@ -1,7 +1,7 @@
 :host{
     display: grid;
     grid-auto-flow: column;
-    grid-template-columns: 30vw;
+    grid-template-columns: repeat(10,30vw);
     column-gap: 50px;
     color: #333;
     width: 86vw;

@@ -1,1 +1,89 @@
-\
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@angular/material@15.0.0/prebuilt-themes/indigo-pink.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        
+    </style>
+</head>
+<body> 
+
+<mat-drawer-container hasBackdrop="true" (backdropClick)="closeDrawer()">
+    <mat-drawer class="drawer" mode="over" position="start" [opened]="isOpened">
+        <a routerLink="/dashboard" routerLinkActive="active" mat-button>Dashboard</a>
+        <a routerLink="/adopters" routerLinkActive="active" mat-button>Adopters</a>
+        <a routerLink="/shelters" routerLinkActive="active" mat-button>Shelters</a>
+        <a routerLink="/settings" routerLinkActive="active" mat-button>Settings</a>
+    </mat-drawer>
+    <mat-drawer-content>
+        <button mat-icon-button (click)="openDrawer()">
+            <span class="material-icons md-48"> list </span>
+        </button>
+
+        <div class="metrics-container">
+            <div class="metric-card">
+                <i class="fa-solid fa-paw metric-icon"></i>
+                <div class="metric-number">120</div>
+                <div class="metric-label">Total Adoptions</div>
+            </div>
+
+            <div class="metric-card">
+                <i class="fa-solid fa-user metric-icon"></i>
+                <div class="metric-number">45</div>
+                <div class="metric-label">New Adopters</div>
+            </div>
+
+            <div class="metric-card">
+                <i class="fa-solid fa-house metric-icon"></i>
+                <div class="metric-number">10</div>
+                <div class="metric-label">Shelters</div>
+            </div>
+        </div>
+
+        <div class="featured">
+            <h1>Dashboard</h1>
+            <div class="dashboard-card">
+                <div class="cards">
+                    <h1>Shelters</h1>
+                    <span class="material-icons">home</span>
+                    <button>Add Shelter</button>
+                    <button>Delete Shelter</button>
+                    <button>Manage Shelter</button>
+                </div>
+                <div class="cards">
+                    <h1>Adopters</h1>
+                    <span class="material-icons">person</span>
+                    <p>Total active adopters: 321</p>
+                    <button>Manage Adopters</button>
+                    <button>Adopters List</button>
+                </div>
+                <div class="cards">
+                    <h1>Pets</h1>
+                    <span class="material-icons">pets</span>
+                    <p>Total pets posted this week: 871</p>
+                    <p>Pets available for adoption: 430</p>
+                    <p>Adopted pets this week: 441</p>
+                    <button>Pets List</button>
+                    <button>Adoption Requests</button>
+                </div>
+                <div class="cards">
+                    <h1>Adoption requests</h1>
+                    <span class="material-icons">person</span>
+                    <p>Pending requests: 321</p>
+                    <button>Manage Requests</button>
+                    <button>Adoption requests List</button>
+                </div>
+            </div>
+        </div>
+    </mat-drawer-content>
+</mat-drawer-container>
+
+</body>
+</html>

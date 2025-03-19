@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-
+import { RouterModule } from '@angular/router';
 // import { BrowserModule } from '@angular/platform-browser';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // import { MatToolbarModule } from '@angular/material/toolbar';
@@ -10,7 +10,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-admin',
-  imports: [RouterOutlet, MatSidenavModule, MatButtonModule, RouterLink, RouterLinkActive],
+  imports: [RouterOutlet, MatSidenavModule, MatButtonModule, RouterModule],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.scss'
 })

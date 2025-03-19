@@ -1,14 +1,1 @@
-<mat-drawer-container hasBackdrop="true" (backdropClick)="closeDrawer()">
-  <mat-drawer class="drawer" mode="over" position="start" [opened]="isOpened">
-    <a routerLink="/admin/admin/dashboard" routerLinkActive="active" mat-button>Dashboard</a>
-    <a routerLink="/admin/admin/settings" routerLinkActive="active" mat-button>settings</a>
-    <a routerLink="/admin/admin/shelters" routerLinkActive="active" mat-button>Shelters</a>
-    <!-- <a routerLink="/shelter/settings" routerLinkActive="active" mat-button>Settings</a> -->
-  </mat-drawer>
-  <mat-drawer-content>
-      <button mat-icon-button (click)="openDrawer()">
-          <span class="material-icons md-48"> list </span>
-      </button>
-      <router-outlet />
-  </mat-drawer-content>
-</mat-drawer-container>
+<router-outlet />

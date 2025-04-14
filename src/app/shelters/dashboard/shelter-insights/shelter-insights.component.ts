@@ -14,6 +14,7 @@ export class ShelterInsightsComponent implements OnInit {
 
   shelter=signal<ShelterType>({
     name: 'Zee Animal',
+    locations: [],
     statusCount:{
       adoptedCount: 10,
       waitingForAVisitCount: 4,

@@ -6,7 +6,7 @@
       <p>Give a loving home to pets in need</p>
       <div class="cta-buttons">
         <a routerLink="/adopter/pets" class="primary-btn">Browse Pets</a>
-        <a routerLink="/about" class="secondary-btn">Learn More</a>
+        <a routerLink="/aboutus" class="secondary-btn">Learn More</a>
       </div>
     </div>
   </section>
@@ -78,7 +78,7 @@
     <p>Start your adoption journey today</p>
     <div class="cta-buttons">
       <a routerLink="/signup" class="primary-btn">Sign Up Now</a>
-      <a routerLink="/contact" class="secondary-btn">Contact Us</a>
+      <a [routerLink]="null" (click)="scrollToFooter()" class="secondary-btn">Contact Us</a>
     </div>
   </section>
 </div>

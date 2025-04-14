@@ -54,5 +54,17 @@ export class LandingPageComponent {
     }
     console.log(this.filteredPets);
   }
-
+  scrollToFooter() {
+    const footer = document.querySelector('footer');
+    const contactSection = document.querySelector('.contact');
+    if (footer) {
+      footer.scrollIntoView({ behavior: 'smooth' });
+      if (contactSection) {
+        contactSection.classList.add('highlight-glow');
+        setTimeout(() => {
+          contactSection.classList.remove('highlight-glow');
+        }, 3000);
+      }
+    }
+  }
 }

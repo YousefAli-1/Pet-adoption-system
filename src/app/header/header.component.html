@@ -6,7 +6,6 @@
     </div>
     <style>
     </style>
-
     <ul class="nav-links">
       <li><a routerLink="/" class="nav-link">
         <span class="link-text">Home</span>
@@ -16,11 +15,12 @@
         <span class="link-text">About Us</span>
         <span class="link-underline"></span>
       </a></li>
-      <li><a routerLink="/contactus" class="nav-link">
-        <span class="link-text">Contact Us</span>
+      <li><a [routerLink]="null" class="nav-link" (click)="scrollToFooter()" style="cursor: pointer;">
+        <span class="link-text" (click)="scrollToFooter()">Contact Us</span>
         <span class="link-underline"></span>
       </a></li>
     </ul>
+    @if(userType === '') {
     <ul class="auth-links">
       <li><a routerLink="/signup" class="auth-btn signup">
         <span class="btn-text">Sign Up</span>
@@ -29,4 +29,12 @@
         <span class="btn-text">Login</span>
       </a></li>
     </ul>
+    }
+    @else {
+    <ul class="auth-links">
+      <li><a [routerLink]="null" (click)="logout()" class="auth-btn login">
+        <span class="btn-text">Logout</span>
+      </a></li>
+    </ul>
+    }
   </nav>

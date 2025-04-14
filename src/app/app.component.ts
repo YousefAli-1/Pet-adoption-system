@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from "./header/header.component";
 import { FooterComponent } from "./footer/footer.component";
+import { SignupComponent } from "./signup/signup.component";
+import { LoginComponent } from "./login/login.component";
 
 
 @Component({

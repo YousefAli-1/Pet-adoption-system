@@ -4,12 +4,29 @@
         <img src="/Logo.png" alt="Pet Adoption Logo" class="logo-image" />
       </a>
     </div>
+    <style>
+    </style>
+
     <ul class="nav-links">
-      <li><a routerLink="/">Home</a></li>
-      <li><a routerLink="/shelter">Shelters</a></li>
-      <li><a routerLink="/adopter">Adopters</a></li>
-      <li><a routerLink="/admin/dashboard">Admin</a></li>
-      <li><a routerLink="/signup">Signup</a></li>
-      <li><a routerLink="/login">Login</a></li>
+      <li><a routerLink="/" class="nav-link">
+        <span class="link-text">Home</span>
+        <span class="link-underline"></span>
+      </a></li>
+      <li><a routerLink="/aboutus" class="nav-link">
+        <span class="link-text">About Us</span>
+        <span class="link-underline"></span>
+      </a></li>
+      <li><a routerLink="/contactus" class="nav-link">
+        <span class="link-text">Contact Us</span>
+        <span class="link-underline"></span>
+      </a></li>
+    </ul>
+    <ul class="auth-links">
+      <li><a routerLink="/signup" class="auth-btn signup">
+        <span class="btn-text">Sign Up</span>
+      </a></li>
+      <li><a routerLink="/login" class="auth-btn login">
+        <span class="btn-text">Login</span>
+      </a></li>
     </ul>
   </nav>

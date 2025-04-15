@@ -1,1 +1,75 @@
-<p>settings works!</p>
+<form
+  [formGroup]="editProfileFormGroup"
+  action=""
+  method="post"
+  (ngSubmit)="editProfile()"
+>
+  <h2>Settings</h2>
+  <div class="input-fields">
+    <mat-form-field>
+      <mat-label>Enter Shelter Name</mat-label>
+      <input
+        matInput
+        placeholder="Ex. Ab"
+        name="name"
+        formControlName="name"
+        (blur)="updateNameErrorMessage()"
+      />
+      @if (editProfileFormGroup.get('name')?.invalid) {
+      <mat-error>{{ errorMessages().name }}</mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Enter your current password</mat-label>
+        <input matInput [type]="hide().oldPassword  ? 'password' : 'text'"  formControlName="oldPassword" (blur)="updateOldPasswordErrorMessage()"/>
+        <button
+          mat-icon-button
+          matSuffix
+          (click)="toggleIconOldPassword($event)"
+          [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hide().oldPassword"
+        >
+          <mat-icon>{{hide().oldPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        @if (editProfileFormGroup.get('oldPassword')?.invalid) {
+            <mat-error>{{ errorMessages().oldPassword }}</mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Enter new password</mat-label>
+        <input matInput [type]="hide().newPassword  ? 'password' : 'text'" formControlName="newPassword" (blur)="updateNewPasswordErrorMessage()"/>
+        <button
+          mat-icon-button
+          matSuffix
+          (click)="toggleIconNewPassword($event)"
+          [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hide().newPassword"
+        >
+          <mat-icon>{{hide().newPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        @if (editProfileFormGroup.invalid) {
+            <mat-error>{{ errorMessages().newPassword }}</mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Confirm new password</mat-label>
+        <input matInput [type]="hide().confirmNewPassword  ? 'password' : 'text'" formControlName="confirmNewPassword" (blur)="updateConfirmNewPasswordErrorMessage()"/>
+        <button
+          mat-icon-button
+          matSuffix
+          (click)="toggleIconConfirmNewPassword($event)"
+          [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hide().confirmNewPassword"
+        >
+          <mat-icon>{{hide().confirmNewPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        @if (editProfileFormGroup.invalid) {
+            <mat-error>{{ errorMessages().confirmNewPassword }}</mat-error>
+        }
+      </mat-form-field>
+  </div>
+  <div class="buttons">
+    <button mat-stroked-button type="reset">Clear</button>
+    <button mat-flat-button type="submit">Apply Edits</button>
+  </div>
+</form>

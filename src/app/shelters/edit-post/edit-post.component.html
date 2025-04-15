@@ -14,7 +14,7 @@
         name="category"
         formControlName="category"
         (blur)="updateCategoryErrorMessage()"
-        required
+        
       />
       @if (editPostFormGroup.get('category')?.invalid) {
       <mat-error>{{ errorMessages().category }}</mat-error>
@@ -28,7 +28,7 @@
         name="species"
         formControlName="species"
         (blur)="updateSpeciesErrorMessage()"
-        required
+        
       />
       @if (editPostFormGroup.get('species')?.invalid) {
       <mat-error>{{ errorMessages().species }}</mat-error>
@@ -43,7 +43,7 @@
         name="age"
         formControlName="age"
         (blur)="updateAgeErrorMessage()"
-        required
+        
       />
       @if (editPostFormGroup.get('age')?.invalid) {
       <mat-error>{{ errorMessages().age }}</mat-error>
@@ -51,7 +51,7 @@
     </mat-form-field>
     <mat-form-field>
       <mat-label>Select Location</mat-label>
-      <mat-select [value]="shelterLocations()[0]">
+      <mat-select formControlName="location">
         @for (location of shelterLocations(); track $index) {
         <mat-option [value]="location">{{ location }}</mat-option>
         }
@@ -76,6 +76,15 @@
       <p>Image Selected</p>
       }
     </div>
+    <mat-form-field>
+      <mat-label>Select Status</mat-label>
+      <mat-select formControlName="status">
+        <mat-option value="Adopted">Adopted</mat-option>
+        <mat-option value="WaitingForAVisit">Waiting for a visit</mat-option>
+        <mat-option value="Returned">Returned</mat-option>
+        <mat-option value="WaitingForAdoption">Waiting for adoption</mat-option>
+      </mat-select>
+    </mat-form-field>
   </div>
   <div class="buttons">
     <button mat-stroked-button type="reset">Clear</button>

@@ -13,7 +13,9 @@ import { ShelterType } from '../../shelters.model';
 export class ShelterInsightsComponent implements OnInit {
 
   shelter=signal<ShelterType>({
+    ID: 0,
     name: 'Zee Animal',
+    password: '',
     locations: [],
     statusCount:{
       adoptedCount: 10,

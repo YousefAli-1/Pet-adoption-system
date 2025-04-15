@@ -31,9 +31,10 @@ export class EditPostComponent {
     species: '',
     category: '',
     age: 0,
-    status: 'Adopted',
+    status: 'WaitingForAdoption',
     location: '',
   });
+  shelterLocations = signal<String[]>(['trial', 'trial 2', 'trail 3']);
   errorMessages = signal<{
     category: String;
     species: String;
@@ -50,9 +51,9 @@ export class EditPostComponent {
       Validators.pattern('^[a-zA-Z]+$'),
     ]),
     age: new FormControl(0, [Validators.min(1), Validators.max(241)]),
-    location: new FormControl(''),
+    location: new FormControl(this.shelterLocations()[0]),
+    status: new FormControl<'Adopted'|'WaitingForAVisit'|'Returned'|'WaitingForAdoption'>('WaitingForAdoption')
   });
-  shelterLocations = signal<String[]>(['trial', 'trial 2', 'trail 3']);
 
   private activatedRoute = inject(ActivatedRoute);
   ngOnInit() {

@@ -1,0 +1,84 @@
+<form
+  [formGroup]="editPostFormGroup"
+  action=""
+  method="post"
+  (ngSubmit)="editPost()"
+>
+  <h2>Add Post</h2>
+  <div class="input-fields">
+    <mat-form-field>
+      <mat-label>Enter Animal Category</mat-label>
+      <input
+        matInput
+        placeholder="Ex. Dog"
+        name="category"
+        formControlName="category"
+        (blur)="updateCategoryErrorMessage()"
+        required
+      />
+      @if (editPostFormGroup.get('category')?.invalid) {
+      <mat-error>{{ errorMessages().category }}</mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Enter Animal Species</mat-label>
+      <input
+        matInput
+        placeholder="Ex. Golden retriever"
+        name="species"
+        formControlName="species"
+        (blur)="updateSpeciesErrorMessage()"
+        required
+      />
+      @if (editPostFormGroup.get('species')?.invalid) {
+      <mat-error>{{ errorMessages().species }}</mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Enter Animal age</mat-label>
+      <input
+        type="number"
+        matInput
+        placeholder="Ex. Dog"
+        name="age"
+        formControlName="age"
+        (blur)="updateAgeErrorMessage()"
+        required
+      />
+      @if (editPostFormGroup.get('age')?.invalid) {
+      <mat-error>{{ errorMessages().age }}</mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Select Location</mat-label>
+      <mat-select [value]="shelterLocations()[0]">
+        @for (location of shelterLocations(); track $index) {
+        <mat-option [value]="location">{{ location }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+    <div class="upload-button-field">
+      <label for="post-pic" class="upload-button">+ Upload Pet's Picture</label>
+      <input
+        type="file"
+        #fileUploadElement
+        (change)="onImagePicked(fileUploadElement)"
+        style="display: none"
+        name="post-pic"
+        id="post-pic"
+        accept="image/jpeg, image/png"
+      />
+      @if (editPostFormGroup.get('image')?.invalid) {
+      <mat-error style="display: inline"
+        >You must upload a picture of the pet</mat-error
+      >
+      } @if (editPostFormGroup.get('image')?.valid) {
+      <p>Image Selected</p>
+      }
+    </div>
+  </div>
+  <div class="buttons">
+    <button mat-stroked-button type="reset">Clear</button>
+    <button mat-flat-button type="submit">Edit Post</button>
+  </div>
+</form>

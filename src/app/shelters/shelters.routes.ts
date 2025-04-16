@@ -6,11 +6,11 @@ import { SettingsComponent } from "./settings/settings.component";
 import { EditPostComponent } from "./edit-post/edit-post.component";
 import { PostType } from "./shelters.model";
 import { inject } from "@angular/core";
+import { PostsService } from "../posts.service";
 
 type ResolveFn<T> = (  route: ActivatedRouteSnapshot,  state: RouterStateSnapshot) => MaybeAsync<T | RedirectCommand>
 const PostResolver: ResolveFn<PostType>=(route)=>{
-    console.log(route.paramMap.get('postId'));
-    return new RedirectCommand(inject(Router).parseUrl('/error404'));
+    return inject(PostsService).getPostsById(Number(route.paramMap.get('postId')) || 0) || new RedirectCommand(inject(Router).parseUrl('/error404'));
 };
 
 export const routes: Routes=[
@@ -33,7 +33,8 @@ export const routes: Routes=[
     },
     {
         path: 'editPost/:postId',
-        component: EditPostComponent
+        component: EditPostComponent,
+        resolve: {post: PostResolver}
     },
     {
         path: 'settings',

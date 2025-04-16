@@ -1,4 +1,4 @@
-import { Routes } from '@angular/router';
+import { CanActivateFn, Router, Routes } from '@angular/router';
 import {routes as shelterRoutes} from './shelters/shelters.routes';
 import {routes as adopterRoutes} from './adopters/adopters.routes';
 import {routes as adminRoutes} from './admin/admin/admin.routes';
@@ -10,14 +10,25 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';  
 import { AdminComponent } from './admin/admin/admin.component';
+import { inject } from '@angular/core';
+import { SheltersService } from './shelters/shelters.service';
 
-
+const sheltersAuthGuard: CanActivateFn = () => {
+    const sheltersService= inject(SheltersService);
+    const router = inject(Router);
+    
+    if (sheltersService.isShelterLoggedIn() ) {
+      return true;
+    }
+    return router.navigateByUrl('/unauth');
+};
 
 export const routes: Routes = [
     {
         path:'shelter',
         component: SheltersComponent,
-        children: shelterRoutes
+        children: shelterRoutes,
+        canActivateChild: [sheltersAuthGuard]
     },{
         path:'adopter',
         component: AdoptersComponent,

@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -18,6 +18,7 @@ import {
 } from '@angular/material/chips';
 import { shelterEssentialType } from '../shelters.model';
 import { SettingsCustomValidators } from './settings-custom-validators';
+import { SheltersService } from '../shelters.service';
 
 @Component({
   selector: 'app-settings',
@@ -34,13 +35,12 @@ import { SettingsCustomValidators } from './settings-custom-validators';
   styleUrl: './settings.component.scss',
 })
 export class SettingsComponent {
+  private sheltersService=inject(SheltersService);
+  shelter =computed(()=> this.sheltersService.loggedInShelter() as shelterEssentialType);
+  locations = signal<string[]>(this.shelter().locations);
+  
   readonly locationsSeparatorKeysCodes = [ENTER] as const;
-  shelter = signal<shelterEssentialType>({
-    ID: 0,
-    name: '',
-    password: '',
-    locations: [],
-  });
+
   errorMessages = signal<{
     name: String;
     locations: String;
@@ -55,7 +55,6 @@ export class SettingsComponent {
     confirmNewPassword: '',
   });
 
-  locations = signal<String[]>(this.shelter().locations);
 
   hide = signal<{
     oldPassword: boolean;
@@ -70,7 +69,7 @@ export class SettingsComponent {
   editProfileFormGroup = new FormGroup(
     {
       name: new FormControl('', [Validators.required, Validators.minLength(2)]),
-      locations: new FormControl<String[]>([], [Validators.minLength(1)]),
+      locations: new FormControl<string[]>([], [Validators.minLength(1)]),
       oldPassword: new FormControl('', [
         SettingsCustomValidators.isPasswordCorrect(),
       ]),
@@ -87,26 +86,36 @@ export class SettingsComponent {
     return this.editProfileFormGroup.get(formControlName)?.invalid || false;
   }
 
+  ngOnInit(){
+    this.editProfileFormGroup.get('name')?.setValue(this.shelter().name);
+  }
+
   private updateAllErrorMessages(){
     this.updateNameErrorMessage();
     this.updateNewPasswordErrorMessage();
     this.updateConfirmNewPasswordErrorMessage();
+    this.updateLocationErrorMessage();
   }
 
   editProfile() {
+    this.editProfileFormGroup.get('locations')?.setValue(this.locations());
+    
     this.updateAllErrorMessages();
 
-    this.editProfileFormGroup.get('locations')?.setValue(this.locations());
-    this.updateLocationErrorMessage();
 
     if (this.editProfileFormGroup.invalid) {
-      console.log(this.editProfileFormGroup);
       return false;
     }
 
-    console.log(JSON.stringify(this.editProfileFormGroup.value));
+    this.sheltersService.editProfile(this.editProfileFormGroup.value);
     this.editProfileFormGroup.reset();
     return true;
+  }
+
+  resetForm(){
+    this.editProfileFormGroup.reset();
+    this.editProfileFormGroup.get('name')?.setValue(this.shelter().name);
+    this.locations.set(this.shelter().locations);
   }
 
   toggleIconOldPassword(event: MouseEvent) {

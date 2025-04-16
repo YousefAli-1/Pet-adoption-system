@@ -1,7 +1,6 @@
 import { Component, computed, signal } from '@angular/core';
 import {PageEvent, MatPaginatorModule} from '@angular/material/paginator';
 import { PostType } from '../shelters.model';
-import { posts } from '../dashboard/shelter-latest-posts/dummy-posts';
 import { ShelterPostComponent } from "./shelter-post/shelter-post.component";
 import { CardComponent } from "../shared/card/card.component";
 
@@ -12,7 +11,7 @@ import { CardComponent } from "../shared/card/card.component";
   styleUrl: './manage-posts.component.scss'
 })
 export class ManagePostsComponent {
-  allPosts= signal<PostType[]>(posts);
+  allPosts= signal<PostType[]>([]);
 
   posts= signal<PostType[]>(this.allPosts().slice(0,9));
   pageChange(event: PageEvent){

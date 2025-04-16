@@ -27,6 +27,7 @@ import { ActivatedRoute } from '@angular/router';
 export class EditPostComponent {
   post = signal<PostType>({
     ID: 0,
+    shelterEmail: '',
     imgName: '',
     species: '',
     category: '',

@@ -48,7 +48,7 @@ export class AddPostComponent {
       return false;
     }
 
-    console.log(this.addPostFormGroup);
+    console.log(JSON.stringify(this.addPostFormGroup.value));
     this.addPostFormGroup.reset();
     return true;
   }

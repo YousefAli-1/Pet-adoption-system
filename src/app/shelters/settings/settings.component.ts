@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -13,6 +13,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
+import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import {MatChipEditedEvent, MatChipInputEvent, MatChipsModule} from '@angular/material/chips';
 import { shelterEssentialType } from '../shelters.model';
 
 interface ValidatorFn {
@@ -28,11 +30,13 @@ interface ValidatorFn {
     MatButtonModule,
     ReactiveFormsModule,
     MatIconModule,
+    MatChipsModule
   ],
   templateUrl: './settings.component.html',
   styleUrl: './settings.component.scss',
 })
-export class SettingsComponent implements OnInit {
+export class SettingsComponent {
+  readonly locationsSeparatorKeysCodes = [ENTER, COMMA] as const;
   shelter = signal<shelterEssentialType>({
     ID: 0,
     name: '',
@@ -52,6 +56,8 @@ export class SettingsComponent implements OnInit {
     newPassword: '',
     confirmNewPassword: '',
   });
+  
+  locations= signal<String[]>(this.shelter().locations);
 
   hide = signal<{
     oldPassword: boolean;
@@ -63,13 +69,13 @@ export class SettingsComponent implements OnInit {
     confirmNewPassword: true,
   });
 
-  editProfileFormGroup!: FormGroup<{
-    name: FormControl<string | null>;
-    locations: FormControl<string[] | null>;
-    oldPassword: FormControl<string | null>;
-    newPassword: FormControl<string | null>;
-    confirmNewPassword: FormControl<string | null>;
-  }>;
+  editProfileFormGroup= new FormGroup({
+    name: new FormControl('', [Validators.required, Validators.minLength(2)]),
+    locations: new FormControl<String[]>([], [Validators.minLength(1)]),
+    oldPassword: new FormControl('', [this.isPasswordCorrect()]),
+    newPassword: new FormControl(''),
+    confirmNewPassword: new FormControl(''),
+  },[this.isNewPasswordRequired(), this.isConfirmNewPasswordMatchesNewPassword()]);
 
   private isNewPasswordRequired(): ValidatorFn{
     return (formGroup: AbstractControl): ValidationErrors | null => {
@@ -114,25 +120,21 @@ export class SettingsComponent implements OnInit {
     };
   };
 
-  ngOnInit(): void {
-    this.editProfileFormGroup = new FormGroup({
-      name: new FormControl('', [Validators.required, Validators.minLength(2)]),
-      locations: new FormControl<string[]>([], [Validators.minLength(1)]),
-      oldPassword: new FormControl('', [this.isPasswordCorrect()]),
-      newPassword: new FormControl(''),
-      confirmNewPassword: new FormControl(''),
-    },[this.isNewPasswordRequired(), this.isConfirmNewPasswordMatchesNewPassword()]);
-  }
-
   editProfile() {
     this.updateNewPasswordErrorMessage();
     this.updateConfirmNewPasswordErrorMessage();
+    
+    this.editProfileFormGroup.get('locations')?.setValue(this.locations());
+    this.updateLocationErrorMessage();
+
+
     if (this.editProfileFormGroup.invalid) {
       console.log(this.editProfileFormGroup);
       return false;
     }
 
-    console.log(this.editProfileFormGroup);
+    console.log('Valid');
+    console.log(JSON.stringify(this.editProfileFormGroup.value));
     this.editProfileFormGroup.reset();
     return true;
   }
@@ -153,6 +155,32 @@ export class SettingsComponent implements OnInit {
       confirmNewPassword: !this.hide().confirmNewPassword,
     });
     event.stopPropagation();
+  }
+
+  addLocation(event: MatChipInputEvent): void {
+    const newLocation = (event.value || '').trim();
+
+    if (newLocation) {
+      this.locations.update((currentLocations)=>[...currentLocations,newLocation]);
+    }
+
+    event.chipInput!.clear();
+  }
+
+  removeLocation(location: String): void { 
+    this.locations.update((currentLocations)=>currentLocations.filter((locationValue)=>location!==locationValue));
+  }
+
+  editLocation(location: String, event: MatChipEditedEvent) {
+    const newLocation = event.value.trim();
+    
+    this.removeLocation(location);
+    
+    if (!newLocation) {
+      return;
+    }
+
+    this.locations.update((currentLocations)=>[...currentLocations,newLocation]);
   }
 
   updateNameErrorMessage() {

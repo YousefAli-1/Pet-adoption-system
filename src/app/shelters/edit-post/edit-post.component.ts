@@ -68,7 +68,7 @@ export class EditPostComponent {
       return false;
     }
 
-    console.log(this.editPostFormGroup);
+    console.log(JSON.stringify(this.editPostFormGroup.value));
     this.editPostFormGroup.reset();
     return true;
   }

@@ -68,6 +68,36 @@
         }
       </mat-form-field>
   </div>
+  <mat-form-field style="width: 100%;">
+    <mat-label>Shelter Locations</mat-label>
+    <mat-chip-grid #chipGrid aria-label="Enter fruits">
+      @for (location of locations(); track $index) {
+        <mat-chip-row
+          (removed)="removeLocation(location)"
+          [editable]="true"
+          (edited)="editLocation(location, $event)"
+          [aria-description]="'press enter to edit ' + location"
+        >
+          {{location}}
+
+          <button matChipRemove [attr.aria-label]="'remove ' + location">
+            <mat-icon>cancel</mat-icon>
+          </button>
+        </mat-chip-row>
+      }
+      <input
+        placeholder="New Location..."
+        [matChipInputFor]="chipGrid"
+        [matChipInputSeparatorKeyCodes]="locationsSeparatorKeysCodes"
+        [matChipInputAddOnBlur]="true"
+        (matChipInputTokenEnd)="addLocation($event)"
+      />
+    </mat-chip-grid>
+    @if (editProfileFormGroup.get('locations')?.invalid) {
+      <mat-error>{{ errorMessages().locations }}</mat-error>
+    }
+  </mat-form-field>
+
   <div class="buttons">
     <button mat-stroked-button type="reset">Clear</button>
     <button mat-flat-button type="submit">Apply Edits</button>

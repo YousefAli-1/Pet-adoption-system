@@ -44,15 +44,17 @@ export class EditPostComponent {
     image: new FormControl<File | null>(null, [Validators.required]),
     category: new FormControl('', [
       Validators.required,
-      Validators.pattern('^[a-zA-Z]+$'),
+      Validators.pattern('^[a-zA-Z ]+$'),
     ]),
     species: new FormControl('', [
       Validators.required,
-      Validators.pattern('^[a-zA-Z]+$'),
+      Validators.pattern('^[a-zA-Z ]+$'),
     ]),
     age: new FormControl(0, [Validators.min(1), Validators.max(241)]),
     location: new FormControl(this.shelterLocations()[0]),
-    status: new FormControl<'Adopted'|'WaitingForAVisit'|'Returned'|'WaitingForAdoption'>('WaitingForAdoption')
+    status: new FormControl<
+      'Adopted' | 'WaitingForAVisit' | 'Returned' | 'WaitingForAdoption'
+    >('WaitingForAdoption'),
   });
 
   private activatedRoute = inject(ActivatedRoute);
@@ -62,7 +64,19 @@ export class EditPostComponent {
     });
   }
 
+  hasErrors(formControlName: string): boolean {
+    return this.editPostFormGroup.get(formControlName)?.invalid || false;
+  }
+
+  private updateAllErrorMessages(){
+    this.updateCategoryErrorMessage();
+    this.updateSpeciesErrorMessage();
+    this.updateAgeErrorMessage();
+  }
+
   editPost() {
+    this.updateAllErrorMessages();
+    
     if (this.editPostFormGroup.invalid) {
       console.log(this.editPostFormGroup);
       return false;

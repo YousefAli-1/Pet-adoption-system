@@ -15,75 +15,96 @@
         formControlName="name"
         (blur)="updateNameErrorMessage()"
       />
-      @if (editProfileFormGroup.get('name')?.invalid) {
+      @if (hasErrors('name')) {
       <mat-error>{{ errorMessages().name }}</mat-error>
       }
     </mat-form-field>
     <mat-form-field>
-        <mat-label>Enter your current password</mat-label>
-        <input matInput [type]="hide().oldPassword  ? 'password' : 'text'"  formControlName="oldPassword" (blur)="updateOldPasswordErrorMessage()"/>
-        <button
-          mat-icon-button
-          matSuffix
-          (click)="toggleIconOldPassword($event)"
-          [attr.aria-label]="'Hide password'"
-          [attr.aria-pressed]="hide().oldPassword"
-        >
-          <mat-icon>{{hide().oldPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
-        </button>
-        @if (editProfileFormGroup.get('oldPassword')?.invalid) {
-            <mat-error>{{ errorMessages().oldPassword }}</mat-error>
-        }
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Enter new password</mat-label>
-        <input matInput [type]="hide().newPassword  ? 'password' : 'text'" formControlName="newPassword" (blur)="updateNewPasswordErrorMessage()"/>
-        <button
-          mat-icon-button
-          matSuffix
-          (click)="toggleIconNewPassword($event)"
-          [attr.aria-label]="'Hide password'"
-          [attr.aria-pressed]="hide().newPassword"
-        >
-          <mat-icon>{{hide().newPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
-        </button>
-        @if (editProfileFormGroup.invalid) {
-            <mat-error>{{ errorMessages().newPassword }}</mat-error>
-        }
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Confirm new password</mat-label>
-        <input matInput [type]="hide().confirmNewPassword  ? 'password' : 'text'" formControlName="confirmNewPassword" (blur)="updateConfirmNewPasswordErrorMessage()"/>
-        <button
-          mat-icon-button
-          matSuffix
-          (click)="toggleIconConfirmNewPassword($event)"
-          [attr.aria-label]="'Hide password'"
-          [attr.aria-pressed]="hide().confirmNewPassword"
-        >
-          <mat-icon>{{hide().confirmNewPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
-        </button>
-        @if (editProfileFormGroup.invalid) {
-            <mat-error>{{ errorMessages().confirmNewPassword }}</mat-error>
-        }
-      </mat-form-field>
+      <mat-label>Enter your current password</mat-label>
+      <input
+        matInput
+        [type]="hide().oldPassword ? 'password' : 'text'"
+        formControlName="oldPassword"
+        (blur)="updateOldPasswordErrorMessage()"
+      />
+      <button
+        mat-icon-button
+        matSuffix
+        (click)="toggleIconOldPassword($event)"
+        [attr.aria-label]="'Hide password'"
+        [attr.aria-pressed]="hide().oldPassword"
+      >
+        <mat-icon>{{
+          hide().oldPassword ? "visibility_off" : "visibility"
+        }}</mat-icon>
+      </button>
+      @if (hasErrors('oldPassword')) {
+      <mat-error>{{ errorMessages().oldPassword }}</mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Enter new password</mat-label>
+      <input
+        matInput
+        [type]="hide().newPassword ? 'password' : 'text'"
+        formControlName="newPassword"
+        (blur)="updateNewPasswordErrorMessage()"
+      />
+      <button
+        mat-icon-button
+        matSuffix
+        (click)="toggleIconNewPassword($event)"
+        [attr.aria-label]="'Hide password'"
+        [attr.aria-pressed]="hide().newPassword"
+      >
+        <mat-icon>{{
+          hide().newPassword ? "visibility_off" : "visibility"
+        }}</mat-icon>
+      </button>
+      @if (editProfileFormGroup.invalid) {
+      <mat-error>{{ errorMessages().newPassword }}</mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Confirm new password</mat-label>
+      <input
+        matInput
+        [type]="hide().confirmNewPassword ? 'password' : 'text'"
+        formControlName="confirmNewPassword"
+        (blur)="updateConfirmNewPasswordErrorMessage()"
+      />
+      <button
+        mat-icon-button
+        matSuffix
+        (click)="toggleIconConfirmNewPassword($event)"
+        [attr.aria-label]="'Hide password'"
+        [attr.aria-pressed]="hide().confirmNewPassword"
+      >
+        <mat-icon>{{
+          hide().confirmNewPassword ? "visibility_off" : "visibility"
+        }}</mat-icon>
+      </button>
+      @if (editProfileFormGroup.invalid) {
+      <mat-error>{{ errorMessages().confirmNewPassword }}</mat-error>
+      }
+    </mat-form-field>
   </div>
-  <mat-form-field style="width: 100%;">
+  <mat-form-field style="width: 100%">
     <mat-label>Shelter Locations</mat-label>
     <mat-chip-grid #chipGrid aria-label="Enter fruits">
       @for (location of locations(); track $index) {
-        <mat-chip-row
-          (removed)="removeLocation(location)"
-          [editable]="true"
-          (edited)="editLocation(location, $event)"
-          [aria-description]="'press enter to edit ' + location"
-        >
-          {{location}}
+      <mat-chip-row
+        (removed)="removeLocation(location)"
+        [editable]="true"
+        (edited)="editLocation(location, $event)"
+        [aria-description]="'press enter to edit ' + location"
+      >
+        {{ location }}
 
-          <button matChipRemove [attr.aria-label]="'remove ' + location">
-            <mat-icon>cancel</mat-icon>
-          </button>
-        </mat-chip-row>
+        <button matChipRemove [attr.aria-label]="'remove ' + location">
+          <mat-icon>cancel</mat-icon>
+        </button>
+      </mat-chip-row>
       }
       <input
         placeholder="New Location..."
@@ -93,13 +114,13 @@
         (matChipInputTokenEnd)="addLocation($event)"
       />
     </mat-chip-grid>
-    @if (editProfileFormGroup.get('locations')?.invalid) {
-      <mat-error>{{ errorMessages().locations }}</mat-error>
+    @if (hasErrors('locations')) {
+    <mat-error>{{ errorMessages().locations }}</mat-error>
     }
   </mat-form-field>
 
   <div class="buttons">
-    <button mat-stroked-button type="reset">Clear</button>
+    <button mat-stroked-button type="reset">Reset</button>
     <button mat-flat-button type="submit">Apply Edits</button>
   </div>
 </form>

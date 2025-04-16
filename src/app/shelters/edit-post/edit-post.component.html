@@ -14,9 +14,8 @@
         name="category"
         formControlName="category"
         (blur)="updateCategoryErrorMessage()"
-        
       />
-      @if (editPostFormGroup.get('category')?.invalid) {
+      @if (hasErrors('category')) {
       <mat-error>{{ errorMessages().category }}</mat-error>
       }
     </mat-form-field>
@@ -28,9 +27,8 @@
         name="species"
         formControlName="species"
         (blur)="updateSpeciesErrorMessage()"
-        
       />
-      @if (editPostFormGroup.get('species')?.invalid) {
+      @if (hasErrors('species')) {
       <mat-error>{{ errorMessages().species }}</mat-error>
       }
     </mat-form-field>
@@ -43,9 +41,8 @@
         name="age"
         formControlName="age"
         (blur)="updateAgeErrorMessage()"
-        
       />
-      @if (editPostFormGroup.get('age')?.invalid) {
+      @if (hasErrors('age')) {
       <mat-error>{{ errorMessages().age }}</mat-error>
       }
     </mat-form-field>
@@ -68,11 +65,11 @@
         id="post-pic"
         accept="image/jpeg, image/png"
       />
-      @if (editPostFormGroup.get('image')?.invalid) {
-      <mat-error style="display: inline"
-        >You must upload a picture of the pet</mat-error
-      >
-      } @if (editPostFormGroup.get('image')?.valid) {
+      @if (hasErrors('image')) {
+      <mat-error class="imgError">
+        You must upload a picture of the pet
+      </mat-error>
+      } @else {
       <p>Image Selected</p>
       }
     </div>
@@ -87,7 +84,7 @@
     </mat-form-field>
   </div>
   <div class="buttons">
-    <button mat-stroked-button type="reset">Clear</button>
+    <button mat-stroked-button type="reset">Reset</button>
     <button mat-flat-button type="submit">Edit Post</button>
   </div>
 </form>

@@ -23,26 +23,40 @@ import { MatSelectModule } from '@angular/material/select';
 })
 export class AddPostComponent {
   shelterLocations = signal<String[]>(['trial', 'trial 2', 'trail 3']);
+
   errorMessages = signal<{
     category: String;
     species: String;
     age: String;
   }>({ category: '', species: '', age: '' });
+
   addPostFormGroup = new FormGroup({
     image: new FormControl<File | null>(null, [Validators.required]),
     category: new FormControl('', [
       Validators.required,
-      Validators.pattern('^[a-zA-Z]+$'),
+      Validators.pattern('^[a-zA-Z ]+$'),
     ]),
     species: new FormControl('', [
       Validators.required,
-      Validators.pattern('^[a-zA-Z]+$'),
+      Validators.pattern('^[a-zA-Z ]+$'),
     ]),
     age: new FormControl(0, [Validators.min(1), Validators.max(241)]),
     location: new FormControl(this.shelterLocations()[0]),
   });
 
+  hasErrors(formControlName: string): boolean{
+    return this.addPostFormGroup.get(formControlName)?.invalid || false;
+  }
+
+  private updateAllErrorMessages(){
+    this.updateCategoryErrorMessage();
+    this.updateSpeciesErrorMessage();
+    this.updateAgeErrorMessage();
+  }
+
   addPost() {
+    this.updateAllErrorMessages();
+    
     if (this.addPostFormGroup.invalid) {
       console.log(this.addPostFormGroup);
       return false;

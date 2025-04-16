@@ -23,7 +23,7 @@ $grey-color: #333;
   & {
     display: block;
     width: 100vw;
-    height: fit-content;
+    height: 60vh;
   }
 }
 form {
@@ -44,6 +44,7 @@ h2 {
 
 p {
   display: inline;
+  padding: 5px;
   color: green;
 }
 
@@ -63,6 +64,11 @@ p {
   padding: 15px;
   border-radius: 4px;
   cursor: pointer;
+}
+
+.imgError{
+  display: inline;
+  padding: 5px;
 }
 
 .buttons {

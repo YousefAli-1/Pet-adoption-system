@@ -23,7 +23,7 @@ $grey-color: #333;
   & {
     display: block;
     width: 100vw;
-    height: fit-content;
+    height: 60vh;
   }
 }
 form {
@@ -53,7 +53,7 @@ p {
   column-gap: 5px;
   row-gap: 20px;
   grid-template-columns: 50% auto;
-  margin-bottom: 92px;
+  margin-bottom: 20px;
 }
 .upload-button {
   background: $orange-color;

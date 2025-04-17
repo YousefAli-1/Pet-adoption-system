@@ -1,14 +1,31 @@
-import { Injectable, OnDestroy, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { PostType } from './shelters/shelters.model';
 import { posts } from './dummy-posts';
+
+type addPostFormGroupType = Partial<{
+  image: string | null;
+  category: string | null;
+  species: string | null;
+  age: number | null;
+  location: string[] | null;
+}>;
+
+type editPostFormGroupType = Partial<{
+  image: string | null;
+  category: string | null;
+  species: string | null;
+  age: number | null;
+  location: string[] | null;
+  status: string | null;
+}>;
 
 @Injectable({
   providedIn: 'root',
 })
-export class PostsService implements OnInit, OnDestroy {
+export class PostsService {
   allPosts!: PostType[];
 
-  ngOnInit(): void {
+  constructor() {
     const allPostsJson = localStorage.getItem('allPosts');
 
     if (allPostsJson) {
@@ -19,11 +36,15 @@ export class PostsService implements OnInit, OnDestroy {
     this.allPosts = posts;
   }
 
-  getPostsById(postId: number){
-    return this.allPosts.find((post)=>post.ID===postId);
+  getPostsById(postId: number) {
+    return this.allPosts.find((post) => post.ID === postId);
   }
 
-  ngOnDestroy(): void {
+  addPost(newPost: addPostFormGroupType) {}
+
+  editPost(editedPostData: editPostFormGroupType) {}
+
+  updateLocalStorage(): void {
     localStorage.setItem('allPosts', JSON.stringify(this.allPosts));
   }
 }

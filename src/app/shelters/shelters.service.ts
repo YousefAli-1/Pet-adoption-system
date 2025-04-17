@@ -36,10 +36,17 @@ export class SheltersService {
 
     if (allSheltersJson) {
       this.allShelters = JSON.parse(allSheltersJson);
+
+      //For Test Purposes
+      this.login('info@happypaws.org', 'secure123');
+
       return;
     }
 
     this.allShelters = dummy_shelters;
+
+    //For Test Purposes
+    this.login('info@happypaws.org', 'secure123');
   }
 
   addShelter(newShelter: shelterEssentialType) {

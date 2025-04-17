@@ -10,6 +10,7 @@ $grey-color: #333;
   );
   & {
     display: block;
+    height: 60vh;
   }
 }
 div {
@@ -20,4 +21,11 @@ div {
   grid-template-rows: 30% 30% 30%;
   column-gap: 28px;
   row-gap: 10px;
+}
+
+p{
+  display: block;
+  position: relative;
+  width: 100vw;
+  text-align: center;
 }

@@ -13,7 +13,9 @@ import { SheltersService } from '../../shelters.service';
 })
 export class ShelterInsightsComponent implements OnInit {
 
-  shelter=computed(()=>inject(SheltersService).loggedInShelter());
+  shelterService=inject(SheltersService);
+  
+  shelter=computed(()=>this.shelterService.loggedInShelter());
 
   data: Signal<any>=signal({});
 

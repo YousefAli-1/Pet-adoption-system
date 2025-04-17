@@ -1,6 +1,6 @@
-import { Injectable, OnDestroy, OnInit, signal } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { shelterEssentialType, ShelterType } from './shelters.model';
-import { shelters as dummy_shelters} from './dummy-shelters';
+import { shelters as dummy_shelters } from './dummy-shelters';
 
 type editProfileFormGroupType = Partial<{
   name: string | null;
@@ -13,7 +13,7 @@ type editProfileFormGroupType = Partial<{
 @Injectable({
   providedIn: 'root',
 })
-export class SheltersService implements OnInit,OnDestroy{
+export class SheltersService {
   private emptyShelterObject = {
     name: '',
     email: '',
@@ -27,29 +27,40 @@ export class SheltersService implements OnInit,OnDestroy{
     },
   };
 
-  private allShelters!: ShelterType[]; 
+  private allShelters!: ShelterType[];
   private loggedInShelterSignal = signal<ShelterType>(this.emptyShelterObject);
   loggedInShelter = this.loggedInShelterSignal.asReadonly();
 
-  ngOnInit(): void {
-    const allSheltersJson=localStorage.getItem('allShelters');
+  constructor() {
+    const allSheltersJson = localStorage.getItem('allShelters');
 
-    if(allSheltersJson){
-      this.allShelters=JSON.parse(allSheltersJson);
+    if (allSheltersJson) {
+      this.allShelters = JSON.parse(allSheltersJson);
       return;
     }
 
-    this.allShelters=dummy_shelters;
+    this.allShelters = dummy_shelters;
   }
 
-  addShelter(newShelter: shelterEssentialType){
-    this.allShelters.push({...newShelter,statusCount: {adoptedCount: 0, waitingForAdoptionCount: 0, returnedCount: 0, waitingForAVisitCount:0}});
+  addShelter(newShelter: shelterEssentialType) {
+    this.allShelters.push({
+      ...newShelter,
+      statusCount: {
+        adoptedCount: 0,
+        waitingForAdoptionCount: 0,
+        returnedCount: 0,
+        waitingForAVisitCount: 0,
+      },
+    });
+    this.updateLocalStorage();
   }
 
-  login(email: string, password: string): boolean{
-    const shelter=this.allShelters.find((shelter)=>shelter.email===email && shelter.password===password);
+  login(email: string, password: string): boolean {
+    const shelter = this.allShelters.find(
+      (shelter) => shelter.email === email && shelter.password === password
+    );
 
-    if(shelter){
+    if (shelter) {
       this.loggedInShelterSignal.set(shelter);
       return true;
     }
@@ -59,26 +70,50 @@ export class SheltersService implements OnInit,OnDestroy{
 
   editProfile(editedData: editProfileFormGroupType) {
     //update name
-    this.loggedInShelterSignal.update((currentData)=>{return {...currentData, name: editedData.name || currentData.name}});
+    this.loggedInShelterSignal.update((currentData) => {
+      return { ...currentData, name: editedData.name || currentData.name };
+    });
 
     //update locations
-    this.loggedInShelterSignal.update((currentData)=>{return {...currentData, locations: editedData.locations || currentData.locations}});
+    this.loggedInShelterSignal.update((currentData) => {
+      return {
+        ...currentData,
+        locations: editedData.locations || currentData.locations,
+      };
+    });
 
     //update password
-    if(editedData.oldPassword===this.loggedInShelter().password){
-      this.loggedInShelterSignal.update((currentData)=>{return {...currentData, password: editedData.newPassword || currentData.password}});
+    if (editedData.oldPassword === this.loggedInShelter().password) {
+      this.loggedInShelterSignal.update((currentData) => {
+        return {
+          ...currentData,
+          password: editedData.newPassword || currentData.password,
+        };
+      });
     }
+
+    //update logged In Shelter in all shelters array
+    this.allShelters = this.allShelters.flatMap((shelter) => {
+      if (shelter.email !== this.loggedInShelter().email) {
+        return shelter;
+      }
+
+      return this.loggedInShelter();
+    });
+
+    //update Local Storage Data
+    this.updateLocalStorage();
   }
 
-  logout(){
+  logout() {
     this.loggedInShelterSignal.set(this.emptyShelterObject);
   }
 
-  isShelterLoggedIn(): boolean{
-    return this.loggedInShelterSignal().email!=='';
+  isShelterLoggedIn(): boolean {
+    return this.loggedInShelterSignal().email !== '';
   }
-  
-  ngOnDestroy(): void {
+
+  updateLocalStorage(): void {
     localStorage.setItem('allShelters', JSON.stringify(this.allShelters));
   }
 }

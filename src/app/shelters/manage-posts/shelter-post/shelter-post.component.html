@@ -20,7 +20,7 @@
         </h3>
     </div>
     <div class="buttons">
-        <button mat-stroked-button type="button">Delete Post</button>
+        <button mat-stroked-button type="button" (click)="deletePost()">Delete Post</button>
         <a [routerLink]="'/shelter/editPost/'+post().ID" mat-flat-button>Edit Post</a>
     </div>
 </div>

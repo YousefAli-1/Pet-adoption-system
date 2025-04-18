@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, DestroyRef, inject, signal } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -19,6 +19,8 @@ import {
 import { shelterEssentialType } from '../shelters.model';
 import { SettingsCustomValidators } from './settings-custom-validators';
 import { SheltersService } from '../shelters.service';
+import { MatDialog } from '@angular/material/dialog';
+import { DoneSuccessfullyDialogComponent } from '../shared/done-successfully-dialog/done-successfully-dialog.component';
 
 @Component({
   selector: 'app-settings',
@@ -35,10 +37,14 @@ import { SheltersService } from '../shelters.service';
   styleUrl: './settings.component.scss',
 })
 export class SettingsComponent {
-  private sheltersService=inject(SheltersService);
-  shelter =computed(()=> this.sheltersService.loggedInShelter() as shelterEssentialType);
+  private readonly dialog = inject(MatDialog);
+  private readonly destroyRef = inject(DestroyRef);
+  private sheltersService = inject(SheltersService);
+  shelter = computed(
+    () => this.sheltersService.loggedInShelter() as shelterEssentialType
+  );
   locations = signal<string[]>(this.shelter().locations);
-  
+
   readonly locationsSeparatorKeysCodes = [ENTER] as const;
 
   errorMessages = signal<{
@@ -54,7 +60,6 @@ export class SettingsComponent {
     newPassword: '',
     confirmNewPassword: '',
   });
-
 
   hide = signal<{
     oldPassword: boolean;
@@ -86,33 +91,48 @@ export class SettingsComponent {
     return this.editProfileFormGroup.get(formControlName)?.invalid || false;
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.editProfileFormGroup.get('name')?.setValue(this.shelter().name);
   }
 
-  private updateAllErrorMessages(){
+  private updateAllErrorMessages() {
     this.updateNameErrorMessage();
     this.updateNewPasswordErrorMessage();
     this.updateConfirmNewPasswordErrorMessage();
     this.updateLocationErrorMessage();
   }
 
+  private openDialog() {
+    const subscribtion = this.dialog
+      .open(DoneSuccessfullyDialogComponent, {
+        width: '250px',
+        enterAnimationDuration: '0ms',
+        exitAnimationDuration: '0ms',
+      })
+      .afterClosed()
+      .subscribe();
+
+    this.destroyRef.onDestroy(() => {
+      subscribtion.unsubscribe();
+    });
+  }
+
   editProfile() {
     this.editProfileFormGroup.get('locations')?.setValue(this.locations());
-    
-    this.updateAllErrorMessages();
 
+    this.updateAllErrorMessages();
 
     if (this.editProfileFormGroup.invalid) {
       return false;
     }
 
     this.sheltersService.editProfile(this.editProfileFormGroup.value);
+    this.openDialog();
     this.editProfileFormGroup.reset();
     return true;
   }
 
-  resetForm(){
+  resetForm() {
     this.editProfileFormGroup.reset();
     this.editProfileFormGroup.get('name')?.setValue(this.shelter().name);
     this.locations.set(this.shelter().locations);

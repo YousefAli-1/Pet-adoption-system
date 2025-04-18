@@ -36,17 +36,10 @@ export class SheltersService {
 
     if (allSheltersJson) {
       this.allShelters = JSON.parse(allSheltersJson);
-
-      //For Test Purposes
-      this.login('info@happypaws.org', 'secure123');
-
       return;
     }
 
     this.allShelters = dummy_shelters;
-
-    //For Test Purposes
-    this.login('info@happypaws.org', 'secure123');
   }
 
   addShelter(newShelter: shelterEssentialType) {
@@ -100,13 +93,22 @@ export class SheltersService {
     }
 
     //update logged In Shelter in all shelters array
-    this.allShelters = this.allShelters.flatMap((shelter) => {
-      if (shelter.email !== this.loggedInShelter().email) {
-        return shelter;
-      }
+    this.updateLoggedInShelterInShelterArray();
 
-      return this.loggedInShelter();
-    });
+    //update Local Storage Data
+    this.updateLocalStorage();
+  }
+
+  editPetsStates(newStatus: {
+    adoptedCount: number;
+    waitingForAVisitCount: number;
+    returnedCount: number;
+    waitingForAdoptionCount: number;
+  }) {
+    this.loggedInShelterSignal.update((shelter)=>{return {...shelter, statusCount: newStatus}});
+
+    
+    this.updateLoggedInShelterInShelterArray();
 
     //update Local Storage Data
     this.updateLocalStorage();
@@ -118,6 +120,16 @@ export class SheltersService {
 
   isShelterLoggedIn(): boolean {
     return this.loggedInShelterSignal().email !== '';
+  }
+
+  updateLoggedInShelterInShelterArray(): void{
+    this.allShelters = this.allShelters.flatMap((shelter) => {
+      if (shelter.email !== this.loggedInShelter().email) {
+        return shelter;
+      }
+
+      return this.loggedInShelter();
+    });
   }
 
   updateLocalStorage(): void {

@@ -1,10 +1,13 @@
+import { inject } from "@angular/core";
 import { AbstractControl, ValidationErrors } from "@angular/forms";
+import { SheltersService } from "../shelters.service";
 
 interface ValidatorFn {
     (control: AbstractControl): ValidationErrors | null;
 }
 
 export class SettingsCustomValidators {
+
     static isNewPasswordRequired(): ValidatorFn{
         return (formGroup: AbstractControl): ValidationErrors | null => {
           if (

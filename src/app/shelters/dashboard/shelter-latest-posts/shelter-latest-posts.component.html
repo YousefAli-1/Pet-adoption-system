@@ -1,4 +1,4 @@
-@for (post of latestPosts(); track $index) {
+@for (post of latestPosts().reverse(); track $index) {
     <app-card>
         <app-shelter-post-brief [post]="post" />
     </app-card>

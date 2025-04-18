@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, computed, DestroyRef, inject, signal } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -9,6 +9,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
+import { SheltersService } from '../shelters.service';
+import { PostsService } from '../../posts.service';
+import { MatDialog } from '@angular/material/dialog';
+import { DoneSuccessfullyDialogComponent } from '../shared/done-successfully-dialog/done-successfully-dialog.component';
 @Component({
   selector: 'app-add-post',
   imports: [
@@ -22,7 +26,14 @@ import { MatSelectModule } from '@angular/material/select';
   styleUrl: './add-post.component.scss',
 })
 export class AddPostComponent {
-  shelterLocations = signal<String[]>(['trial', 'trial 2', 'trail 3']);
+  private readonly dialog = inject(MatDialog);
+  private readonly destroyRef = inject(DestroyRef);
+  private sheltersService = inject(SheltersService);
+  private postsService = inject(PostsService);
+
+  shelterLocations = computed(
+    () => this.sheltersService.loggedInShelter().locations
+  );
 
   errorMessages = signal<{
     category: String;
@@ -44,25 +55,56 @@ export class AddPostComponent {
     location: new FormControl(this.shelterLocations()[0]),
   });
 
-  hasErrors(formControlName: string): boolean{
+  hasErrors(formControlName: string): boolean {
     return this.addPostFormGroup.get(formControlName)?.invalid || false;
   }
 
-  private updateAllErrorMessages(){
+  private updateAllErrorMessages() {
     this.updateCategoryErrorMessage();
     this.updateSpeciesErrorMessage();
     this.updateAgeErrorMessage();
   }
 
+  private openDialog() {
+    const subscribtion = this.dialog
+      .open(DoneSuccessfullyDialogComponent, {
+        width: '250px',
+        enterAnimationDuration: '0ms',
+        exitAnimationDuration: '0ms',
+      })
+      .afterClosed()
+      .subscribe();
+
+    this.destroyRef.onDestroy(() => {
+      subscribtion.unsubscribe();
+    });
+  }
+
   addPost() {
     this.updateAllErrorMessages();
-    
+
     if (this.addPostFormGroup.invalid) {
-      console.log(this.addPostFormGroup);
       return false;
     }
 
-    console.log(JSON.stringify(this.addPostFormGroup.value));
+    const postData = {
+      ...this.addPostFormGroup.value,
+      image: this.addPostFormGroup.value.image?.name || '',
+    };
+
+    this.postsService.addPost(
+      postData,
+      this.sheltersService.loggedInShelter().email
+    );
+
+    this.sheltersService.editPetsStates({
+      ...this.sheltersService.loggedInShelter().statusCount,
+      waitingForAdoptionCount:
+        this.sheltersService.loggedInShelter().statusCount
+          .waitingForAdoptionCount + 1,
+    });
+
+    this.openDialog();
     this.addPostFormGroup.reset();
     return true;
   }

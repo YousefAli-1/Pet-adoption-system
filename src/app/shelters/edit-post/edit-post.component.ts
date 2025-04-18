@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, DestroyRef, inject, signal } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -11,6 +11,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { PostType } from '../shelters.model';
 import { ActivatedRoute } from '@angular/router';
+import { SheltersService } from '../shelters.service';
+import { PostsService } from '../../posts.service';
+import { MatDialog } from '@angular/material/dialog';
+import { DoneSuccessfullyDialogComponent } from '../shared/done-successfully-dialog/done-successfully-dialog.component';
 
 @Component({
   selector: 'app-edit-post',
@@ -25,6 +29,11 @@ import { ActivatedRoute } from '@angular/router';
   styleUrl: './edit-post.component.scss',
 })
 export class EditPostComponent {
+  private readonly dialog = inject(MatDialog);
+  private readonly destroyRef = inject(DestroyRef);
+  private sheltersService = inject(SheltersService);
+  private postsService = inject(PostsService);
+
   post = signal<PostType>({
     ID: 0,
     shelterEmail: '',
@@ -35,7 +44,9 @@ export class EditPostComponent {
     status: 'WaitingForAdoption',
     location: '',
   });
-  shelterLocations = signal<String[]>(['trial', 'trial 2', 'trail 3']);
+  shelterLocations = computed(
+    () => this.sheltersService.loggedInShelter().locations
+  );
   errorMessages = signal<{
     category: String;
     species: String;
@@ -62,6 +73,15 @@ export class EditPostComponent {
   ngOnInit() {
     this.activatedRoute.data.subscribe(({ post }) => {
       this.post.set(post);
+
+      this.editPostFormGroup.setValue({
+        image: new File([], post.imgName),
+        category: post.category,
+        species: post.species,
+        age: post.age,
+        location: post.location,
+        status: post.status,
+      });
     });
   }
 
@@ -69,21 +89,91 @@ export class EditPostComponent {
     return this.editPostFormGroup.get(formControlName)?.invalid || false;
   }
 
-  private updateAllErrorMessages(){
+  private updateAllErrorMessages() {
     this.updateCategoryErrorMessage();
     this.updateSpeciesErrorMessage();
     this.updateAgeErrorMessage();
   }
 
+  resetForm() {
+    this.editPostFormGroup.reset();
+    this.editPostFormGroup.setValue({
+      image: new File([], this.post().imgName),
+      category: this.post().category,
+      species: this.post().species,
+      age: this.post().age,
+      location: this.post().location,
+      status: this.post().status,
+    });
+  }
+
+  private editStates() {
+    var petsStates = this.sheltersService.loggedInShelter().statusCount;
+    const oldStatus = this.post().status;
+
+    switch (oldStatus) {
+      case 'Adopted':
+        petsStates={...petsStates, adoptedCount: petsStates.adoptedCount-1}
+        break;
+      case 'WaitingForAVisit':
+        petsStates={...petsStates, waitingForAVisitCount: petsStates.waitingForAVisitCount-1}
+        break;
+      case 'Returned':
+        petsStates={...petsStates, returnedCount: petsStates.returnedCount-1}
+        break;
+      case 'WaitingForAdoption':
+        petsStates={...petsStates, waitingForAdoptionCount: petsStates.waitingForAdoptionCount-1}
+        break;
+    }
+
+    const newStatus = this.editPostFormGroup.controls.status.value;
+    switch (newStatus) {
+      case 'Adopted':
+        petsStates={...petsStates, adoptedCount: petsStates.adoptedCount+1}
+        break;
+      case 'WaitingForAVisit':
+        petsStates={...petsStates, waitingForAVisitCount: petsStates.waitingForAVisitCount+1}
+        break;
+      case 'Returned':
+        petsStates={...petsStates, returnedCount: petsStates.returnedCount+1}
+        break;
+      case 'WaitingForAdoption':
+        petsStates={...petsStates, waitingForAdoptionCount: petsStates.waitingForAdoptionCount+1}
+        break;
+    }
+
+    this.sheltersService.editPetsStates(petsStates);
+  }
+
+  private openDialog() {
+      const subscribtion = this.dialog
+        .open(DoneSuccessfullyDialogComponent, {
+          width: '250px',
+          enterAnimationDuration: '0ms',
+          exitAnimationDuration: '0ms',
+        })
+        .afterClosed()
+        .subscribe();
+  
+      this.destroyRef.onDestroy(() => {
+        subscribtion.unsubscribe();
+      });
+    }
+
   editPost() {
     this.updateAllErrorMessages();
-    
+
     if (this.editPostFormGroup.invalid) {
-      console.log(this.editPostFormGroup);
       return false;
     }
 
-    console.log(JSON.stringify(this.editPostFormGroup.value));
+    const editedPostData = {
+      ...this.editPostFormGroup.value,
+      image: this.editPostFormGroup.value.image?.name || '',
+    };
+    this.postsService.editPost(editedPostData, this.post());
+    this.editStates();
+    this.openDialog();
     this.editPostFormGroup.reset();
     return true;
   }

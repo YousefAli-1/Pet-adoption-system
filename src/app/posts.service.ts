@@ -81,6 +81,7 @@ export class PostsService {
     );
 
     this.updateLocalStorage();
+    return editedPostData;
   }
 
   private updateShelterStates(postId: number){

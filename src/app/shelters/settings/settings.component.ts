@@ -40,6 +40,7 @@ export class SettingsComponent {
   private readonly dialog = inject(MatDialog);
   private readonly destroyRef = inject(DestroyRef);
   private sheltersService = inject(SheltersService);
+  private settingsCustomValidators=inject(SettingsCustomValidators);
   shelter = computed(
     () => this.sheltersService.loggedInShelter() as shelterEssentialType
   );
@@ -76,14 +77,14 @@ export class SettingsComponent {
       name: new FormControl('', [Validators.required, Validators.minLength(2)]),
       locations: new FormControl<string[]>([], [Validators.minLength(1)]),
       oldPassword: new FormControl('', [
-        SettingsCustomValidators.isPasswordCorrect(),
+        this.settingsCustomValidators.isPasswordCorrect(),
       ]),
       newPassword: new FormControl(''),
       confirmNewPassword: new FormControl(''),
     },
     [
-      SettingsCustomValidators.isNewPasswordRequired(),
-      SettingsCustomValidators.isConfirmNewPasswordMatchesNewPassword(),
+      this.settingsCustomValidators.isNewPasswordRequired(),
+      this.settingsCustomValidators.isConfirmNewPasswordMatchesNewPassword(),
     ]
   );
 
@@ -128,7 +129,7 @@ export class SettingsComponent {
 
     this.sheltersService.editProfile(this.editProfileFormGroup.value);
     this.openDialog();
-    this.editProfileFormGroup.reset();
+    this.resetForm();
     return true;
   }
 

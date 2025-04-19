@@ -1,32 +1,40 @@
 import { Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
+import { SheltersService } from '../../shelters/shelters.service';
+import { FormsModule } from '@angular/forms';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-login',
-  imports: [RouterLink],
+  imports: [RouterLink, FormsModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router, 
+    private sheltersService: SheltersService,
+    private authService: AuthService
+  ) {}
 
   login() {
     const email = (document.getElementById('email') as HTMLInputElement).value;
     const password = (document.getElementById('password') as HTMLInputElement).value;
     const adopters = JSON.parse(localStorage.getItem('adopters') || '[]');
     const adopter = adopters.find((a: any) => a.email === email && a.password === password);
+    
     if (adopter) {
-      localStorage.setItem('userType', 'adopter');
-      this.router.navigate(['/adopter/dashboard']);
+      this.authService.login('adopter', email, password);
+      this.router.navigate(['/adopter/dashboard']); 
       return;
     }
-    const shelters = JSON.parse(localStorage.getItem('shelters') || '[]');
-    const shelter = shelters.find((s: any) => s.email === email && s.password === password);
-    if (shelter) {
-      localStorage.setItem('userType', 'shelter'); 
+    
+    if (this.sheltersService.login(email, password)) {
+      this.authService.login('shelter', email, password);
       this.router.navigate(['/shelter/dashboard']);
       return;
     }
+    
     alert('Invalid email or password');
   }
 }

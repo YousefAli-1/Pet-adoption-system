@@ -1,4 +1,4 @@
-import { CanActivateFn, Router, Routes } from '@angular/router';
+import { CanActivateFn, RedirectCommand, Router, Routes } from '@angular/router';
 import {routes as shelterRoutes} from './shelters/shelters.routes';
 import {routes as adopterRoutes} from './adopters/adopters.routes';
 import {routes as adminRoutes} from './admin/admin/admin.routes';
@@ -12,6 +12,7 @@ import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { AdminComponent } from './admin/admin/admin.component';
 import { inject } from '@angular/core';
 import { SheltersService } from './shelters/shelters.service';
+import { AboutusComponent } from './aboutus/aboutus.component';
 
 const sheltersAuthGuard: CanActivateFn = () => {
     const sheltersService= inject(SheltersService);
@@ -35,10 +36,25 @@ export const routes: Routes = [
         children: adopterRoutes
     },{
         path:'login',
-        component:LoginComponent
+        component:LoginComponent,
+        canActivate: [(route: any, state: any) => {
+            const userType = localStorage.getItem('userType') as 'adopter' | 'shelter' | '';
+            console.log(userType);
+            if (userType!== '') {
+                return new RedirectCommand(inject(Router).parseUrl("/unauth")) ;
+            }
+            return true;
+        }]
     },{
         path:'signup',
-        component:SignupComponent
+        component:SignupComponent,
+        canActivate: [(route: any, state: any) => {
+            const userType = localStorage.getItem('userType') as 'adopter' | 'shelter' | '';
+            if (userType!== '') {
+                return new RedirectCommand(inject(Router).parseUrl("/unauth")) ;
+            }
+            return true;
+        }]
     },{
         path:'',
         component:LandingPageComponent
@@ -52,6 +68,9 @@ export const routes: Routes = [
         path:'admin',
         component:AdminComponent,
         children:adminRoutes
+    },{
+        path:'aboutus',
+        component:AboutusComponent
     }
 
 ];

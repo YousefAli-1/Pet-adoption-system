@@ -171,10 +171,11 @@ export class EditPostComponent {
       ...this.editPostFormGroup.value,
       image: this.editPostFormGroup.value.image?.name || '',
     };
-    this.postsService.editPost(editedPostData, this.post());
+    const editedPostNewData=this.postsService.editPost(editedPostData, this.post());
+    this.post.set(editedPostNewData);
     this.editStates();
     this.openDialog();
-    this.editPostFormGroup.reset();
+    this.resetForm();
     return true;
   }
 

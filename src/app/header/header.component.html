@@ -11,6 +11,18 @@
         <span class="link-text">Home</span>
         <span class="link-underline"></span>
       </a></li>
+      @if(authService.userType === 'shelter') {
+      <li><a routerLink="/shelter/dashboard" class="nav-link">
+        <span class="link-text">Dashboard</span>
+        <span class="link-underline"></span>
+      </a></li>
+      }
+      @if(authService.userType === 'adopter') {
+      <li><a routerLink="/adopter/dashboard" class="nav-link">
+        <span class="link-text">Dashboard</span>
+        <span class="link-underline"></span>
+      </a></li>
+      }
       <li><a routerLink="/aboutus" class="nav-link">
         <span class="link-text">About Us</span>
         <span class="link-underline"></span>
@@ -20,7 +32,7 @@
         <span class="link-underline"></span>
       </a></li>
     </ul>
-    @if(userType === '') {
+    @if(authService.userType === '' || authService.userType === null) {
     <ul class="auth-links">
       <li><a routerLink="/signup" class="auth-btn signup">
         <span class="btn-text">Sign Up</span>

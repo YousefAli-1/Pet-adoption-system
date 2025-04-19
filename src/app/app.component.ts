@@ -1,9 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from "./header/header.component";
 import { FooterComponent } from "./footer/footer.component";
-import { SignupComponent } from "./signup/signup.component";
-import { LoginComponent } from "./login/login.component";
+import { SheltersService } from './shelters/shelters.service';
 
 
 @Component({
@@ -14,8 +13,8 @@ import { LoginComponent } from "./login/login.component";
 })
 export class AppComponent {
   title = 'Pet-adoption-system';
-  constructor() {
-    // Listen for router navigation events
+  userTypeSignal = signal<'adopter' | 'shelter' | ''>('');
+  constructor(private sheltersService: SheltersService) {
     window.addEventListener('click', (event) => {
       const target = event.target as HTMLElement;
       if (target.matches('a[routerLink]')) {
@@ -27,5 +26,15 @@ export class AppComponent {
         }
       }
     });
+  }
+  ngOnInit() {
+    const storedType = localStorage.getItem('userType');
+    this.userTypeSignal.set((storedType === 'adopter' || storedType === 'shelter') ? storedType : '');
+    
+    const email = localStorage.getItem('email');
+    const password = localStorage.getItem('password');
+    if (email && password) {
+      this.sheltersService.login(email, password);
+    }
   }
 }

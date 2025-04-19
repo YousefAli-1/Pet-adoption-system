@@ -23,7 +23,7 @@ $grey-color: #333;
   & {
     display: block;
     width: 100vw;
-    height: 60vh;
+    height: 80vh;
   }
 }
 form {
@@ -44,6 +44,7 @@ h2 {
 
 p {
   display: inline;
+  padding: 5px;
   color: green;
 }
 
@@ -53,7 +54,7 @@ p {
   column-gap: 5px;
   row-gap: 20px;
   grid-template-columns: 50% auto;
-  margin-bottom: 20px;
+  margin-bottom: 92px;
 }
 .upload-button {
   background: $orange-color;
@@ -63,6 +64,11 @@ p {
   padding: 15px;
   border-radius: 4px;
   cursor: pointer;
+}
+
+.imgError{
+  display: inline;
+  padding: 5px;
 }
 
 .buttons {

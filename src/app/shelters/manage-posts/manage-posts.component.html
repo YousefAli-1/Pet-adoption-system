@@ -1,1 +1,16 @@
-<p>manage-posts works!</p>
+<mat-paginator (page)="pageChange($event)"
+               [length]="allPosts().length"
+               [pageSize]="9"
+               [showFirstLastButtons]="true"
+               [hidePageSize]="true"
+               aria-label="Select page" />
+<div>
+    @for (post of posts(); track post.ID) {
+        <app-card>
+            <app-shelter-post [post]="post"/>
+        </app-card>
+    }
+    @empty {
+        <p>You haven't posted any pets yet! :(</p>
+    }
+</div>

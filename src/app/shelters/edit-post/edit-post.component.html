@@ -1,10 +1,10 @@
 <form
-  [formGroup]="addPostFormGroup"
+  [formGroup]="editPostFormGroup"
   action=""
   method="post"
-  (ngSubmit)="addPost()"
+  (ngSubmit)="editPost()"
 >
-  <h2>Add Post</h2>
+  <h2>Edit Post</h2>
   <div class="input-fields">
     <mat-form-field>
       <mat-label>Enter Animal Category</mat-label>
@@ -69,16 +69,22 @@
       <mat-error class="imgError">
         You must upload a picture of the pet
       </mat-error>
-      } @else () {
-      <p>
-        Image Selected
-        <span style="vertical-align: middle;" class="material-icons"> check_circle_outline </span>
-      </p>
+      } @else {
+      <p>Image Selected</p>
       }
     </div>
+    <mat-form-field>
+      <mat-label>Select Status</mat-label>
+      <mat-select formControlName="status">
+        <mat-option value="Adopted">Adopted</mat-option>
+        <mat-option value="WaitingForAVisit">Waiting for a visit</mat-option>
+        <mat-option value="Returned">Returned</mat-option>
+        <mat-option value="WaitingForAdoption">Waiting for adoption</mat-option>
+      </mat-select>
+    </mat-form-field>
   </div>
   <div class="buttons">
-    <button mat-stroked-button type="reset">Clear</button>
-    <button mat-flat-button type="submit">Add Post</button>
+    <button mat-stroked-button type="button" (click)="resetForm()">Reset</button>
+    <button mat-flat-button type="submit">Edit Post</button>
   </div>
 </form>

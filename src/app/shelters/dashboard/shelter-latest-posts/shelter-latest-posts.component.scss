@@ -1,0 +1,17 @@
+:host{
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: repeat(10,30vw);
+    column-gap: 50px;
+    color: #333;
+    width: 86vw;
+    padding: 1vw;
+    height: fit-content;
+    border-radius: 25px;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+p{
+    width: 86vw;
+    text-align: center;
+}

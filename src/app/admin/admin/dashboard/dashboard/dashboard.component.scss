@@ -1,0 +1,203 @@
+@use '@angular/material' as mat;
+
+.featured {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+
+    h1 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .dashboard-card {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+
+        .cards {
+            background-color: #EFE8D5;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 10px;
+            flex: 1 1 calc(25% - 30px);
+            max-height: 70vh;
+            box-sizing: border-box;
+            text-align: center;
+            transition: transform 0.3s ease-in-out;
+
+            &:hover {
+                transform: scale(1.05);
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            }
+
+            button {
+                padding: 10px 20px;
+                font-size: 1rem;
+                border: none;
+                border-radius: 5px;
+                background-color: #DC8641;
+                color: white;
+                cursor: pointer;
+                margin: 5px;
+                transition: background-color 0.3s ease-in-out;
+
+                &:hover {
+                    background-color: #fdfdfd;
+                    color: #DC8641;
+                    border: 1px solid #DC8641;
+                }
+            }
+        }
+    }
+}
+
+$background-color: rgba(76, 77, 78, 0.377);
+$drawer-text-color: #333;
+
+:host {
+    @include mat.icon-button-overrides((
+        icon-color: $drawer-text-color,
+    ));
+
+    @include mat.sidenav-overrides((
+        container-background-color: white,
+        content-background-color: $background-color,
+        container-width: 15%,
+    ));
+
+    @include mat.button-overrides((
+        text-container-shape: Rectangle,
+        text-label-text-color: $drawer-text-color,
+        text-label-text-size: 30px,
+        text-state-layer-color: $background-color,
+        text-ripple-color: $background-color
+    ));
+}
+
+button {
+    margin-left: 3px;
+}
+
+a {
+    width: 100%;
+}
+
+.material-icons {
+    font-size: 50px;
+}
+
+/* 📊 Key Metrics Section */
+.metrics-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.metric-card {
+    background: linear-gradient(135deg, #7B57D2, #BAA7FF);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease-in-out;
+
+    &:hover {
+        transform: scale(1.05);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    }
+}
+
+// .metric-icon {
+//     font-size: 35px;
+//     margin-bottom: 10px;
+// }
+
+// .metric-number {
+//     font-size: 28px;
+//     font-weight: bold;
+// }
+
+// .metric-label {
+//     font-size: 16px;
+//     opacity: 0.8;
+// }
+body {
+            font-family: Arial, sans-serif;
+            background: white   ;
+            margin: 0;
+            padding: 0;
+        }
+
+        .metrics-container {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin: 20px;
+        }
+
+        .metric-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 200px;
+        }
+
+        .metric-icon {
+            font-size: 30px;
+            color: #000000;
+            margin-bottom: 10px;
+        }
+
+        .metric-number {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .metric-label {
+            font-size: 14px;
+            color: gray;
+        }
+
+        .dashboard-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 90%;
+            margin: 20px auto;
+        }
+
+        .cards {
+            display: inline-block;
+            width: 30%;
+            background: #fff;
+            padding: 20px;
+            margin: 10px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .cards span {
+            font-size: 40px;
+            display: block;
+            margin-bottom: 10px;
+            color: #000000;
+        }
+
+        button {
+            margin: 5px;
+            padding: 6px 15px;
+            border: none;
+            color: rgb(0, 0, 0);
+            border-radius: 5px;
+            cursor: pointer;
+        }
+

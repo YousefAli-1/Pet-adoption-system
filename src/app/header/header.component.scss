@@ -5,12 +5,8 @@
     position: sticky;
     background-color: #FFFFFF;
     padding: 5px 100px 0px 100px;
+    color:black
 
-  }
-  .nav-links {
-    list-style: none;
-    display: flex;
-    gap: 30px;
   }
   .logo {
     display: flex;
@@ -21,13 +17,67 @@
     height: auto;
     width: 120px;
   }
-  .nav-links li a {
+  .nav-links, .auth-links {
     text-decoration: none;
-    font-size: 18px;
-    transition: color 0.3s ease;
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav-link {
+    color: linear-gradient(135deg, #ff6f61, #ff3b2f);
+    text-decoration: none;
+    color:black;
+    font-size: 1.1rem;
+    position: relative;
+    transition: color 0.3s;
+  }
+
+  .nav-link:hover {
+    color: linear-gradient(135deg, #ff6f61, #ff3b2f);
+  }
+
+  .link-underline {
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(135deg, #ff6f61, #ff3b2f);
+    transition: width 0.3s;
+  }
+
+  .nav-link:hover .link-underline {
+    width: 100%;
+  }
+
+  .auth-btn {
+    padding: 0.5rem 1.5rem;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s;
+  }
+
+  .signup {
+    background:linear-gradient(135deg, #ff6f61, #ff3b2f);
+    color: white;
+  }
+
+  .signup:hover {
+    background: linear-gradient(135deg, #ff6f61, #ff3b2f);
+    transform: translateY(-2px);
+  }
+
+  .login {
+    border: 2px solid linear-gradient(135deg, #ff6f61, #ff3b2f);
     color:black;
   }
-  
-  .nav-links li a:hover {
-    color: #DC8641;
+
+  .login:hover {
+    background: linear-gradient(135deg, #ff6f61, #ff3b2f);
+    color: white;
+    transform: translateY(-2px);
   }

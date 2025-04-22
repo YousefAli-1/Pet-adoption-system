@@ -4,11 +4,49 @@
         <img src="/Logo.png" alt="Pet Adoption Logo" class="logo-image" />
       </a>
     </div>
+    <style>
+    </style>
     <ul class="nav-links">
-      <li><a routerLink="/">Home</a></li>
-      <li><a routerLink="/shelter">Shelters</a></li>
-      <li><a routerLink="/adopter">Adopters</a></li>
-      <li><a routerLink="/signup">Signup</a></li>
-      <li><a routerLink="/login">Login</a></li>
+      <li><a routerLink="/" class="nav-link">
+        <span class="link-text">Home</span>
+        <span class="link-underline"></span>
+      </a></li>
+      @if(authService.userType === 'shelter') {
+      <li><a routerLink="/shelter/dashboard" class="nav-link">
+        <span class="link-text">Dashboard</span>
+        <span class="link-underline"></span>
+      </a></li>
+      }
+      @if(authService.userType === 'adopter') {
+      <li><a routerLink="/adopter/dashboard" class="nav-link">
+        <span class="link-text">Dashboard</span>
+        <span class="link-underline"></span>
+      </a></li>
+      }
+      <li><a routerLink="/aboutus" class="nav-link">
+        <span class="link-text">About Us</span>
+        <span class="link-underline"></span>
+      </a></li>
+      <li><a [routerLink]="null" class="nav-link" (click)="scrollToFooter()" style="cursor: pointer;">
+        <span class="link-text" (click)="scrollToFooter()">Contact Us</span>
+        <span class="link-underline"></span>
+      </a></li>
     </ul>
+    @if(authService.userType === '' || authService.userType === null) {
+    <ul class="auth-links">
+      <li><a routerLink="/signup" class="auth-btn signup">
+        <span class="btn-text">Sign Up</span>
+      </a></li>
+      <li><a routerLink="/login" class="auth-btn login">
+        <span class="btn-text">Login</span>
+      </a></li>
+    </ul>
+    }
+    @else {
+    <ul class="auth-links">
+      <li><a [routerLink]="null" (click)="logout()" class="auth-btn login">
+        <span class="btn-text">Logout</span>
+      </a></li>
+    </ul>
+    }
   </nav>

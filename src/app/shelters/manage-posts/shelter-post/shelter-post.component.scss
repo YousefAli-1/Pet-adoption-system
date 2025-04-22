@@ -1,0 +1,63 @@
+@use "@angular/material" as mat;
+$orange-color: orange;
+$grey-color: #333;
+
+.post {
+  @include mat.button-overrides(
+    (
+      filled-container-color: $orange-color,
+      filled-label-text-color: white,
+      outlined-outline-color: red,
+      outlined-label-text-color: red,
+    )
+  );
+  & {
+    color: #333;
+    text-align: center;
+    display: grid;
+    grid-template-rows: 60% 31% 9%;
+    width: 30vw;
+    height: 100%;
+  }
+}
+h1,
+h2,
+h3 {
+  font-weight: normal;
+}
+div {
+  display: flexbox;
+  align-items: center;
+  text-align: center;
+}
+img {
+  width: 100%;
+}
+.buttons {
+  display: flex;
+  padding: 5px;
+  justify-content: end;
+  gap: 3px;
+}
+
+.status {
+  text-align: center;
+  width: 150%;
+  color: white;
+  position: relative;
+  top: 4%;
+  right: -10%;
+  transform: rotate(35deg);
+}
+.adopted {
+  background-color: #fc6300;
+}
+.waitingForAVisit {
+  background-color: #fe912a;
+}
+.returned {
+  background-color: #625f5e;
+}
+.waitingForAdoption {
+  background-color: #303030;
+}

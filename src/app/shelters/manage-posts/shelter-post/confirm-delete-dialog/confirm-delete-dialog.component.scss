@@ -1,0 +1,12 @@
+@use '@angular/material' as mat;
+
+:host{
+    @include mat.dialog-overrides((
+        subhead-color: orange,
+    ));
+
+    @include mat.button-overrides((
+        text-label-text-color: orange,
+        text-state-layer-color: orange,
+    ));
+}

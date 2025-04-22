@@ -1,0 +1,36 @@
+@use '@angular/material' as mat;
+
+$background-color: rgba(76, 77, 78, 0.377);
+$drawer-text-color: #333;
+:host{
+    @include mat.icon-button-overrides((
+        icon-color: $drawer-text-color,
+    ));
+    @include mat.sidenav-overrides((
+        container-background-color: white,
+        content-background-color: $background-color,
+        container-width: 15%,
+    ));
+    @include mat.button-overrides((
+        text-container-shape: Rectangle,
+        text-label-text-color: $drawer-text-color,
+        text-label-text-size: 30px,
+        text-state-layer-color: $background-color,
+        text-ripple-color: $background-color
+    ));
+}
+
+button{
+    margin-left: 3px;
+}
+
+a{
+    width: 100%;
+}
+
+.active{
+    @include mat.button-overrides((
+        text-label-text-color: white,
+    ));
+    background-color: orange;
+}

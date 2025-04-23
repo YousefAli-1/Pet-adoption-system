@@ -25,15 +25,20 @@ export class PetsComponent  {
       if (q) {
         this.postsService.searchPosts(q);
       } else {
-        this.pets.set(this.postsService.getAllPosts());
+        this.pets.set(this.postsService.getPostsByStatus("WaitingForAdoption"));
       }
     });
+    this.start.set(0);
+    this.end.set(4);
   }
   private start=signal<number>(0);
   private end=signal<number>(1);
-  posts= computed<PostType[]>(()=>this.pets().slice(this.start(),this.end()).reverse());
-  pageChange(event: PageEvent){
-    this.start.set(Math.max(event.pageIndex*10-1,0));
-    this.end.set(this.start()+1);
+  posts = computed<PostType[]>(() =>
+    this.pets().slice(this.start(), this.end()).reverse()
+  );
+  pageChange(event: PageEvent) {
+    const startIndex = event.pageIndex * 4;
+    this.start.set(startIndex);
+    this.end.set(startIndex + 4);
   }
 }

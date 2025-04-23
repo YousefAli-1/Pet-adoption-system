@@ -1,9 +1,9 @@
-<mat-paginator (page)="pageChange($event)" [length]="pets().length" [pageSize]="1" [showFirstLastButtons]="true"
+<mat-paginator (page)="pageChange($event)" [length]="pets().length" [pageSize]="4" [showFirstLastButtons]="true"
     [hidePageSize]="true" aria-label="Select page" />
 <div>
     <div class="featured-pets">
         <div class="card-container">
-            @for (pet of pets(); track pet.ID) {
+            @for (pet of posts(); track pet.ID) {
             <div class="card">
                 <img [src]="pet.imgName" [alt]="pet.category" />
                 <p>Category: {{ pet.category }}</p>

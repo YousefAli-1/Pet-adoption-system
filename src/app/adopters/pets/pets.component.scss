@@ -1,0 +1,55 @@
+.featured-pets {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .card-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        .card {
+            background-color: #EFE8D5;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            max-width: 50vh;
+            padding: 20px;
+            margin: 10px;
+            flex: 1 1 calc(20% - 30px); 
+            max-height: 70vh;
+            box-sizing: border-box;
+            text-align: center;
+            img {
+                width: 40vh;
+                max-width: 40vh;
+                max-height: 38%;
+                min-height:38%;
+                border-radius: 1vh;
+                margin-bottom: 1vh;
+            }
+            h3 {
+                margin-top: 0;
+            }
+            p {
+                margin-bottom: 1vh;
+            }
+            button {
+                padding: 10px 20px;
+                font-size: 1rem;
+                border: none;
+                border-radius: 5px;
+                background-color: #DC8641;
+                color: white;
+                cursor: pointer;
+                margin: 5px;
+                &:hover {
+                    background-color: #fdfdfd;
+                    color: #DC8641;
+                }
+            }
+        }
+    }
+}

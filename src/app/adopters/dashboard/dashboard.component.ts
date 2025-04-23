@@ -1,7 +1,7 @@
 import { Component, effect,inject,signal,computed } from '@angular/core';
 import { PostsService } from '../../posts.service';
 import { PostType } from '../../shelters/shelters.model';
-
+import { Router } from '@angular/router'; 
 
 @Component({
   selector: 'app-dashboard',
@@ -11,8 +11,8 @@ import { PostType } from '../../shelters/shelters.model';
 })
 export class DashboardComponent {
   private postsService = inject(PostsService);
-
-  speciesCount = this.postsService.getSpeciesList();
+  private router = inject(Router);  
+  categoryCount = this.postsService.getCategoryList();
   featuredPets = signal<PostType[]>([]);
   allPosts = this.postsService.getAllPosts();
   constructor() {
@@ -21,30 +21,30 @@ export class DashboardComponent {
       this.featuredPets.set(waitingPets.slice(0, 5));
     });
   }
-  allSpeciesData = computed(() => {
-    const speciesMap = new Map<string, number>();
+  allCategoryData = computed(() => {
+    const categoryMap = new Map<string, number>();
     
     for (const post of this.allPosts) {
       if (post.status === 'WaitingForAdoption') {
-        const currentCount = speciesMap.get(post.species) || 0;
-        speciesMap.set(post.species, currentCount + 1);
+        const currentCount = categoryMap.get(post.category) || 0;
+        categoryMap.set(post.category, currentCount + 1);
       }
     }
     
-    return Array.from(speciesMap.entries())
+    return Array.from(categoryMap.entries())
       .sort((a, b) => b[1] - a[1])
-      .map(([species, count]) => ({
-        name: species,
+      .map(([category, count]) => ({
+        name: category,
         count,
-        description: this.getSpeciesDescription(species),
-        icon: this.getSpeciesIcon(species)
+        description: this.getCategoryDescription(category),
+        icon: this.getCategoryIcon(category)
       }));
   });
 
   totalAvailableAnimals = computed(() => {
-    return this.allSpeciesData().reduce((sum, species) => sum + species.count, 0);
+    return this.allCategoryData().reduce((sum, category) => sum + category.count, 0);
   });
-  getSpeciesIcon(species: string): string {
+  getCategoryIcon(category: string): string {
     const icons: { [key: string]: string } = {
       Dog: '/english-cocker_12893777.gif',
       Cat: '/cat_17092250.gif',
@@ -52,9 +52,9 @@ export class DashboardComponent {
       Rabbit: '/rabbit_12086781.gif',
       Reptile: '/andrias-davidianus_12217712.gif'
     };
-    return icons[species] || '/default-icon.gif';
+    return icons[category] || '/default-icon.gif';
   }
-  getSpeciesDescription(species: string): string {
+  getCategoryDescription(category: string): string {
     const descriptions: { [key: string]: string } = {
       Dog: "Man's best friend. Loyal and loving companions.",
       Cat: "Independent and curious. Perfect for a cozy home.",
@@ -62,6 +62,12 @@ export class DashboardComponent {
       Rabbit: "Soft and cuddly. Ideal for gentle and loving owners.",
       Reptile: "Unique and fascinating. Perfect for exotic pet enthusiasts."
     };
-    return descriptions[species] || 'Adorable and lovable pets.';
+    return descriptions[category] || 'Adorable and lovable pets.';
   }
+  searchInput = signal<string>('');
+
+search() {
+  this.postsService.searchPosts(this.searchInput());
+  this.router.navigate(['adopter/pets'], { queryParams: { q: this.searchInput() } });
+}
 }

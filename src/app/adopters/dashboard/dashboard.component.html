@@ -9,8 +9,9 @@
 </div>
 <h1>Search for your friend Now!</h1>
 <div class="search-bar">
-    <input type="text" placeholder="Search for pets..." />
-    <button>Search</button>
+    <input type="text" placeholder="Search by Category, Species or Location"  [value]="searchInput()" 
+    (input)="searchInput.set($any($event.target).value)"/>
+    <button (click)="search()">Search</button>
 </div>
 <style>
     .phot {
@@ -31,18 +32,18 @@
 <div class="pet-list">
     <h2>Available Species</h2>
     @if (totalAvailableAnimals() > 0){
-        <div class="total-count">
-           <h3>Total animals available for adoption: {{ totalAvailableAnimals() }}</h3> 
-        </div>
+    <div class="total-count">
+        <h3>Total animals available for adoption: {{ totalAvailableAnimals() }}</h3>
+    </div>
     }
     <div class="card-container">
-    
-        @for (item of allSpeciesData(); track item.name) {
+
+        @for (item of allCategoryData(); track item.name) {
         <div class="card">
             <h3>{{ item.name }}</h3>
-            <p>{{ getSpeciesDescription(item.name) }}</p>
+            <p>{{ getCategoryDescription(item.name) }}</p>
             <p class="phot">
-                <img class="icon" [src]="getSpeciesIcon(item.name)" alt="icon" />
+                <img class="icon" [src]="getCategoryIcon(item.name)" alt="icon" />
                 Available: {{ item.count }}
             </p>
         </div>
@@ -65,7 +66,8 @@
             @for (pet of featuredPets(); track $index) {
             <div class="card">
                 <img [src]="pet.imgName" [alt]="pet.category" />
-                <p>Species: {{ pet.species }}</p>
+                <p>Category: {{ pet.category }}</p>
+                <p>Species:{{pet.species}}</p>
                 <p>Age: {{ pet.age }}</p>
                 <p>location: {{ pet.location }}</p>
                 <button>Contact Shelter</button>

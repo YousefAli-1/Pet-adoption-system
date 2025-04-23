@@ -28,7 +28,7 @@ export class PostsService {
   private sheltersService = inject(SheltersService);
   private adopterService = inject(AdoptersService);
   private allPosts = signal<PostType[]>([]);
-  private filteredPostsSignal = signal<PostType[]>([]);
+  filteredPostsSignal = signal<PostType[]>([]);
   filteredPosts = this.filteredPostsSignal.asReadonly();
   constructor() {
     const allPostsJson = localStorage.getItem('allPosts');
@@ -217,13 +217,13 @@ export class PostsService {
   isPetRequested(postId: number): boolean {
     return !!this.adopterService.loggedInAdopter()?.requestedPets.includes(postId.toString());
   }
-  getSpeciesList(): string[] {
-    const speciesSet = new Set<string>();
+  getCategoryList(): string[] {
+    const categorySet = new Set<string>();
     for (const post of this.allPosts()) {
       if (post.status === 'WaitingForAdoption') {
-        speciesSet.add(post.species);
+        categorySet.add(post.category);
       }
     }
-    return Array.from(speciesSet).slice(0, 5); // Get first 5 species
+    return Array.from(categorySet).slice(0, 5); // Get first 5 species
   }
 }

@@ -1,1 +1,21 @@
-<p>pets works!</p>
+<mat-paginator (page)="pageChange($event)" [length]="pets().length" [pageSize]="1" [showFirstLastButtons]="true"
+    [hidePageSize]="true" aria-label="Select page" />
+<div>
+    <div class="featured-pets">
+        <div class="card-container">
+            @for (pet of pets(); track pet.ID) {
+            <div class="card">
+                <img [src]="pet.imgName" [alt]="pet.category" />
+                <p>Category: {{ pet.category }}</p>
+                <p>Species:{{pet.species}}</p>
+                <p>Age: {{ pet.age }}</p>
+                <p>location: {{ pet.location }}</p>
+                <button>Contact Shelter</button>
+                <button>Request Adoption</button>
+            </div>
+            }
+            @empty {
+            <p>No pets found matching your search.</p>
+            }
+        </div>
+    </div>

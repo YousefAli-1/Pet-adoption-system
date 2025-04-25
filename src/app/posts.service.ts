@@ -199,7 +199,13 @@ export class PostsService {
     if (!currentAdopter.requestedPets.includes(postIdStr)) {
       currentAdopter.requestedPets.push(postIdStr);
       this.adopterService.updateLoggedInAdopter(currentAdopter);
+      const post = this.getPostById(postId);
+      console.log(post);
+      if (post) {
+        post.status = 'WaitingForAVisit';
+      }
     }
+    this.updateLocalStorage();
   }
 
   cancelAdoptionRequest(postId: number): void {

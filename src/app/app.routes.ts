@@ -38,12 +38,12 @@ export const routes: Routes = [
         path:'login',
         component:LoginComponent,
         canActivate: [(route: any, state: any) => {
-            const userType = localStorage.getItem('userType') as 'adopter' | 'shelter' | '';
+            const userType = localStorage.getItem('userType') as 'adopter' | 'shelter' | '' | null;
             console.log(userType);
-            if (userType!== '') {
-                return new RedirectCommand(inject(Router).parseUrl("/unauth")) ;
+            if (userType== null || userType=='') {
+                return true;
             }
-            return true;
+            return new RedirectCommand(inject(Router).parseUrl("/unauth")) ;
         }]
     },{
         path:'signup',

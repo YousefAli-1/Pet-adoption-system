@@ -70,4 +70,7 @@ search() {
   this.postsService.searchPosts(this.searchInput());
   this.router.navigate(['adopter/pets'], { queryParams: { q: this.searchInput() } });
 }
+Request(petId: number) {
+  this.postsService.requestAdoption(petId);
+}
 }

@@ -71,7 +71,7 @@
                 <p>Age: {{ pet.age }}</p>
                 <p>location: {{ pet.location }}</p>
                 <button>Contact Shelter</button>
-                <button>Request Adoption</button>
+                <button (click)="Request(pet.ID)">Request Adoption</button>
             </div>
             }
             }

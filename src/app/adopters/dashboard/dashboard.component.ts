@@ -1,45 +1,51 @@
-import { Component, effect,inject,signal,computed } from '@angular/core';
+import { Component, effect, inject, signal, computed } from '@angular/core';
 import { PostsService } from '../../posts.service';
 import { PostType } from '../../shelters/shelters.model';
-import { Router } from '@angular/router'; 
+import { Router, RouterLink } from '@angular/router';
+import { AdoptersService } from '../adopters.services';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent {
   private postsService = inject(PostsService);
-  private router = inject(Router);  
+  private adoptersService = inject(AdoptersService);
+  private router = inject(Router);
   categoryCount = this.postsService.getCategoryList();
   featuredPets = signal<PostType[]>([]);
-  allPosts = this.postsService.getAllPosts();
+  allPosts = signal<PostType[]>([]);
+  userType = localStorage.getItem('userType') as 'adopter' | 'shelter' | '' | null;
+  loggedInUser = localStorage.getItem('loggedInAdopter') as string ;
   constructor() {
     effect(() => {
+      const parsedUser = JSON.parse(this.loggedInUser);
+      this.loggedInUser = parsedUser.name;
       const waitingPets = this.postsService.getPostsByStatus('WaitingForAdoption');
-      this.featuredPets.set(waitingPets.slice(0, 5));
+      this.allPosts.set(this.postsService.getAllPosts());
+      this.featuredPets.set(waitingPets.slice(-5));
     });
   }
-  allCategoryData = computed(() => {
-    const categoryMap = new Map<string, number>();
-    
-    for (const post of this.allPosts) {
-      if (post.status === 'WaitingForAdoption') {
-        const currentCount = categoryMap.get(post.category) || 0;
-        categoryMap.set(post.category, currentCount + 1);
+    allCategoryData = computed(() => {
+      const categoryMap = new Map<string, number>();
+      for (const post of this.allPosts()) {
+        if (post.status === 'WaitingForAdoption') {
+          const currentCount = categoryMap.get(post.category) || 0;
+          categoryMap.set(post.category, currentCount + 1);
+        }
       }
-    }
-    
-    return Array.from(categoryMap.entries())
-      .sort((a, b) => b[1] - a[1])
-      .map(([category, count]) => ({
-        name: category,
-        count,
-        description: this.getCategoryDescription(category),
-        icon: this.getCategoryIcon(category)
-      }));
-  });
+
+      return Array.from(categoryMap.entries())
+        .sort((a, b) => b[1] - a[1])
+        .map(([category, count]) => ({
+          name: category,
+          count,
+          description: this.getCategoryDescription(category),
+          icon: this.getCategoryIcon(category)
+        }));
+    });
 
   totalAvailableAnimals = computed(() => {
     return this.allCategoryData().reduce((sum, category) => sum + category.count, 0);
@@ -66,11 +72,21 @@ export class DashboardComponent {
   }
   searchInput = signal<string>('');
 
-search() {
-  this.postsService.searchPosts(this.searchInput());
-  this.router.navigate(['adopter/pets'], { queryParams: { q: this.searchInput() } });
-}
-Request(petId: number) {
-  this.postsService.requestAdoption(petId);
-}
+  search() {
+    const category = this.postsService.searchPosts(this.searchInput());
+    this.router.navigate(['adopter/pets'], { 
+      queryParams: { 
+        q: this.searchInput(),
+        category: category 
+      } 
+    });
+  }
+  showPopup = false;
+
+  Request(petId: number) {
+    this.postsService.requestAdoption(petId);
+    this.adoptersService.trigger('The pet is now waiting for your visit!');
+    this.featuredPets.set(this.postsService.getPostsByStatus('WaitingForAdoption').slice(0, 5));
+    this.allPosts.set(this.postsService.getPostsByStatus("WaitingForAdoption"));
+  }
 }

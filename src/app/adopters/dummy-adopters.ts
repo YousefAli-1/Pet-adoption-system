@@ -6,6 +6,7 @@ import { Adopter } from './adopters.model';
       email: 'john@email.com',
       password: 'password123',
       savedPets: [],
-      requestedPets: []
+      requestedPets: [],
+      adoptedPets: []
     }
   ];

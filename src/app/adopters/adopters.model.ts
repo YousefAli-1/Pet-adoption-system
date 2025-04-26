@@ -3,5 +3,6 @@ export type Adopter = {
   email: string;
   password: string;
   savedPets: string[]; 
-  requestedPets: string[]; 
+  requestedPets: string[];
+  adoptedPets: string[]; 
 };

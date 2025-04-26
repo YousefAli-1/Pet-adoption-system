@@ -15,6 +15,7 @@ export class AdoptersService {
         password: '',
         savedPets: [],
         requestedPets: [],
+        adoptedPets: []
       };
       
   private allAdopters: Adopter[] = [];
@@ -57,6 +58,17 @@ export class AdoptersService {
 
     this.filteredPostsSignal.set(this.allPosts);
   }
+  private _showPopup = signal(false);
+  private _message = signal('');
+
+  showPopup = () => this._showPopup();
+  message = () => this._message();
+
+  trigger(message: string) {
+    this._message.set(message);
+    this._showPopup.set(true);
+    setTimeout(() => this._showPopup.set(false), 3000); 
+  }
 
   register(name: string, email: string, password: string): boolean {
     if (this.allAdopters.some(adopter => adopter.email === email)) {
@@ -68,7 +80,8 @@ export class AdoptersService {
       email,
       password,
       savedPets: [],
-      requestedPets: []
+      requestedPets: [],
+      adoptedPets: []
     };
     
     this.allAdopters.push(newAdopter);

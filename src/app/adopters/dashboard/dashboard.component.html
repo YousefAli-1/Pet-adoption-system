@@ -2,15 +2,15 @@
     <div class="hero-banner">
         <img src="\Adopter-dash.jpg" alt="Find Your Pet" />
         <div class="hero-text">
-            <h1>Welcome John!</h1>
+            <h1>Welcome {{loggedInUser}}</h1>
             <p>Discover your new best friend today...</p>
         </div>
     </div>
 </div>
 <h1>Search for your friend Now!</h1>
 <div class="search-bar">
-    <input type="text" placeholder="Search by Category, Species or Location"  [value]="searchInput()" 
-    (input)="searchInput.set($any($event.target).value)"/>
+    <input type="text" placeholder="Search by Category, Species or Location" [value]="searchInput()"
+        (input)="searchInput.set($any($event.target).value)" />
     <button (click)="search()">Search</button>
 </div>
 <style>
@@ -57,11 +57,11 @@
     </div>
     <!-- Featured Pets -->
     <div class="featured-pets">
-        <h2>Featured Pets</h2>
+        <h2>Latest Pets for adoption </h2>
         <div class="card-container">
 
             @if (featuredPets().length === 0) {
-            <p>No featured pets available at the moment.</p>
+            <p>No pets available for adoption at the moment.</p>
             } @else {
             @for (pet of featuredPets(); track $index) {
             <div class="card">
@@ -70,11 +70,23 @@
                 <p>Species:{{pet.species}}</p>
                 <p>Age: {{ pet.age }}</p>
                 <p>location: {{ pet.location }}</p>
-                <button>Contact Shelter</button>
+                @if(userType==null || userType==""){
+                <button routerLink="/login">Login to Adopt</button>
+                } @else if(userType=="adopter"){
+                @if(pet.status=="WaitingForAdoption" ){
                 <button (click)="Request(pet.ID)">Request Adoption</button>
+                }@else if(pet.status=="Adopted"){
+                <p>Adopted</p>
+                }@else if(pet.status=="WaitingForAVisit"){
+                <p>Waiting for a visit</p>
+                <button (click)="Request(pet.ID)">Request Adoption</button>
+                }
+            }
             </div>
             }
             }
+
         </div>
+
     </div>
 </div>

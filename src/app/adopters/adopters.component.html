@@ -1,6 +1,12 @@
 <button class="butn m-3" (click)="toggleSidebar()">Navigation Bar</button>
 
-
+@if(adoptersService.showPopup()){
+  <div class="popup-overlay">
+      <div class="popup">
+          <p>{{adoptersService.message()}}</p>
+      </div>
+  </div>
+  }
 <div id="overlay" class="overlay" (click)="toggleSidebar()" *ngIf="!isCollapsed"></div>
 
 

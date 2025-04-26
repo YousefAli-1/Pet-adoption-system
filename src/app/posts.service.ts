@@ -154,20 +154,32 @@ export class PostsService {
     return this.allPosts().find(post => post.ID === id);
   }
 
-  searchPosts(searchTerm: string): void {
+  searchPosts(searchTerm: string): string {
+    this.allPosts.set(this.getAllPosts());
     if (!searchTerm) {
       this.filteredPostsSignal.set(this.allPosts());
-      return;
+      return 'All';
     }
-
+  
     const term = searchTerm.toLowerCase();
     const filtered = this.allPosts().filter(post =>
       post.species.toLowerCase().includes(term) ||
       post.category.toLowerCase().includes(term) ||
       post.location.toLowerCase().includes(term)
     );
-
+  
     this.filteredPostsSignal.set(filtered);
+    
+    if (filtered.length > 0) {
+      const firstCategory = filtered[0].category;
+      const allSameCategory = filtered.every(post => post.category === firstCategory);
+      
+      if (allSameCategory) {
+        return firstCategory; 
+      }
+    }
+    
+    return 'All'; 
   }
 
   savePet(postId: number): void {

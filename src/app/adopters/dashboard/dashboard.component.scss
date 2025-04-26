@@ -1,12 +1,14 @@
 .dashboard {
     .hero-banner {
         position: relative;
+
         img {
             width: 100%;
-            height: 90vh; 
-            object-fit: cover; 
+            height: 90vh;
+            object-fit: cover;
             display: block;
         }
+
         .hero-text {
             position: absolute;
             top: 50%;
@@ -14,10 +16,12 @@
             transform: translate(-50%, -50%);
             color: white;
             text-align: center;
+
             h1 {
                 font-size: 3rem;
                 margin: 0;
             }
+
             p {
                 font-size: 1.5rem;
             }
@@ -34,14 +38,16 @@ h1 {
     display: flex;
     justify-content: center;
     margin: 2vh 0;
+
     input {
         padding: 1vh;
         font-size: 1rem;
         border: 1px solid #ccc;
         border-radius: 5px 0 0 5px;
-        width: 50%; 
-        max-width: 35vh; 
+        width: 50%;
+        max-width: 35vh;
     }
+
     button {
         padding: 10px 20px;
         font-size: 1rem;
@@ -51,9 +57,10 @@ h1 {
         background-color: #DC8641;
         color: white;
         cursor: pointer;
+
         &:hover {
             background-color: #fdfdfd;
-            color:#DC8641;
+            color: #DC8641;
         }
     }
 }
@@ -62,68 +69,84 @@ h1 {
     background-color: #EFE8D5;
     padding: 20px;
     border-radius: 10px;
+
     h2 {
         text-align: center;
         margin-bottom: 20px;
     }
+
     .card-container {
         display: flex;
         flex-wrap: wrap;
         justify-content: space-around;
+
         .card {
             background-color: white;
             border: 1px solid #ccc;
             border-radius: 10px;
             padding: 20px;
             margin: 10px;
-            flex: 1 1 calc(33% - 40px); 
+            max-width: 86vh;
+            flex: 1 1 calc(33% - 40px);
             box-sizing: border-box;
             text-align: center;
+
             h3 {
                 margin-top: 0;
             }
+
             p {
                 margin-bottom: 0;
             }
         }
     }
 }
+
 .featured-pets {
     background-color: #ffffff;
     padding: 20px;
     border-radius: 10px;
     margin-top: 20px;
+
     h2 {
         text-align: center;
         margin-bottom: 20px;
     }
+
     .card-container {
         display: flex;
         flex-wrap: wrap;
         justify-content: space-around;
+
         .card {
             background-color: #EFE8D5;
             border: 1px solid #ccc;
             border-radius: 10px;
             padding: 20px;
             margin: 10px;
-            flex: 1 1 calc(20% - 30px); 
-            max-height: 70vh;
+            max-width: 60vh;
+            flex: 1 1 calc(20% - 30px);
+            max-height: 74vh;
             box-sizing: border-box;
             text-align: center;
+
             img {
                 width: 100%;
+                max-width: 40vh;
                 max-height: 38%;
-                min-height:38%;
+                min-height: 38%;
                 border-radius: 1vh;
                 margin-bottom: 1vh;
             }
+
             h3 {
                 margin-top: 0;
             }
+
             p {
                 margin-bottom: 1vh;
             }
+
             button {
                 padding: 10px 20px;
                 font-size: 1rem;
@@ -133,6 +156,7 @@ h1 {
                 color: white;
                 cursor: pointer;
                 margin: 5px;
+
                 &:hover {
                     background-color: #fdfdfd;
                     color: #DC8641;
@@ -141,6 +165,7 @@ h1 {
         }
     }
 }
+
 .total-count {
     padding: 10px;
     margin-bottom: 20px;

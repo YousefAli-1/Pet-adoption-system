@@ -1,5 +1,12 @@
 <mat-paginator (page)="pageChange($event)" [length]="pets().length" [pageSize]="4" [showFirstLastButtons]="true"
     [hidePageSize]="true" aria-label="Select page" />
+<div class="pet-filters">
+    <button class="filter-btn" [class.active]="selectedType === 'all'" (click)="filterPets('all')">All Pets</button>
+    <button class="filter-btn" [class.active]="selectedType === 'Dog'" (click)="filterPets('Dog')">Dog</button>
+    <button class="filter-btn" [class.active]="selectedType === 'Cat'" (click)="filterPets('Cat')">Cat</button>
+    <button class="filter-btn" [class.active]="selectedType === 'Bird'" (click)="filterPets('Bird')">Bird</button>
+    <button class="filter-btn" [class.active]="selectedType === 'others'" (click)="filterPets('others')">Others</button>
+</div>
 <div>
     <div class="featured-pets">
         <div class="card-container">
@@ -10,8 +17,39 @@
                 <p>Species:{{pet.species}}</p>
                 <p>Age: {{ pet.age }}</p>
                 <p>location: {{ pet.location }}</p>
-                <button>Contact Shelter</button>
-                <button>Request Adoption</button>
+                @if(userType==null || userType==""){
+                <button routerLink="/login">Login To Adopt</button>
+                } @else if(userType=="adopter"){
+                @if(pet.status=="WaitingForAdoption" ){
+                    <div class="flag2">
+                        <p>Be The First To Request</p>
+                    </div>
+                <button (click)="Request(pet.ID)">Request Adoption</button>
+                }@else if(pet.status=="Adopted"){
+                <div class="flag">
+                    <p>Adopted</p>
+                </div>
+                }@else if(pet.status=="WaitingForAVisit"){
+                    @if(loggedInUser.requestedPets.includes(pet.ID.toString())){
+                        <div class="flag2">
+                            <p>Waiting For your Visit</p>
+                        </div>
+                    }@else{
+                <div class="flag2">
+                    <p>Waiting For A Visit</p>
+                </div>
+                <button (click)="Request(pet.ID)">Request Adoption</button>
+            }
+                }
+                @else if(pet.status=="Returned"){
+                <div class="flag2">
+                    <p>Returned By Adopter</p>
+                </div>
+                <button (click)="Request(pet.ID)">Request Adoption</button>
+                } 
+                }
+
+
             </div>
             }
             @empty {

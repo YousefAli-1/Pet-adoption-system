@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component,inject } from '@angular/core';
 import { RouterOutlet,RouterLink } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
+import { AdoptersService } from './adopters.services';
 @Component({
   selector: 'app-adopters',
   imports: [RouterOutlet,CommonModule,RouterLink],
@@ -12,6 +13,7 @@ import { CommonModule } from '@angular/common';
 export class AdoptersComponent {
   constructor(private modalService: NgbModal) {
   }
+ adoptersService = inject(AdoptersService);
   isCollapsed = true; 
   closeSidebar() {
     this.isCollapsed = true;

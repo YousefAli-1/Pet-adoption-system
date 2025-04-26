@@ -2,7 +2,7 @@
     <div class="hero-banner">
         <img src="\Adopter-dash.jpg" alt="Find Your Pet" />
         <div class="hero-text">
-            <h1>Welcome {{loggedInUser}}</h1>
+            <h1>Welcome {{loggedInUser.name}}</h1>
             <p>Discover your new best friend today...</p>
         </div>
     </div>
@@ -74,13 +74,23 @@
                 <button routerLink="/login">Login to Adopt</button>
                 } @else if(userType=="adopter"){
                 @if(pet.status=="WaitingForAdoption" ){
-                <button (click)="Request(pet.ID)">Request Adoption</button>
-                }@else if(pet.status=="Adopted"){
-                <p>Adopted</p>
-                }@else if(pet.status=="WaitingForAVisit"){
-                <p>Waiting for a visit</p>
+                    <div class="flag2">
+                        <p>Be The First To Request</p>
+                    </div>
                 <button (click)="Request(pet.ID)">Request Adoption</button>
                 }
+                @else if(pet.status=="WaitingForAVisit"){
+                    @if(isRequested(pet.ID)){
+                        <div class="flag2">
+                            <p>Waiting For your Visit</p>
+                        </div>
+                    }@else{
+                <div class="flag2">
+                    <p>Waiting For A Visit</p>
+                </div>
+                <button (click)="Request(pet.ID)">Request Adoption</button>
+            }
+        }
             }
             </div>
             }

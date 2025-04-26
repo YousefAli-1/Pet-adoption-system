@@ -18,12 +18,13 @@ export class DashboardComponent {
   featuredPets = signal<PostType[]>([]);
   allPosts = signal<PostType[]>([]);
   userType = localStorage.getItem('userType') as 'adopter' | 'shelter' | '' | null;
-  loggedInUser = localStorage.getItem('loggedInAdopter') as string ;
+  loggedInUser = JSON.parse(localStorage.getItem('loggedInAdopter') || '{"requestedPets":[]}');
   constructor() {
     effect(() => {
-      const parsedUser = JSON.parse(this.loggedInUser);
-      this.loggedInUser = parsedUser.name;
-      const waitingPets = this.postsService.getPostsByStatus('WaitingForAdoption');
+      const waitingPets = [
+        ...this.postsService.getPostsByStatus('WaitingForAdoption'),
+        ...this.postsService.getPostsByStatus('WaitingForAVisit')
+      ]
       this.allPosts.set(this.postsService.getAllPosts());
       this.featuredPets.set(waitingPets.slice(-5));
     });
@@ -31,10 +32,11 @@ export class DashboardComponent {
     allCategoryData = computed(() => {
       const categoryMap = new Map<string, number>();
       for (const post of this.allPosts()) {
-        if (post.status === 'WaitingForAdoption') {
-          const currentCount = categoryMap.get(post.category) || 0;
-          categoryMap.set(post.category, currentCount + 1);
-        }
+      if ((post.status === 'WaitingForAdoption' || post.status === 'WaitingForAVisit' || post.status === 'Returned') 
+          && !this.isRequested(post.ID)) {
+        const currentCount = categoryMap.get(post.category) || 0;
+        categoryMap.set(post.category, currentCount + 1);
+      }
       }
 
       return Array.from(categoryMap.entries())
@@ -86,7 +88,15 @@ export class DashboardComponent {
   Request(petId: number) {
     this.postsService.requestAdoption(petId);
     this.adoptersService.trigger('The pet is now waiting for your visit!');
-    this.featuredPets.set(this.postsService.getPostsByStatus('WaitingForAdoption').slice(0, 5));
-    this.allPosts.set(this.postsService.getPostsByStatus("WaitingForAdoption"));
+    this.loggedInUser = JSON.parse(localStorage.getItem('loggedInAdopter') || '{"requestedPets":[]}');
+    const waitingPets = [
+      ...this.postsService.getPostsByStatus('WaitingForAdoption'),
+      ...this.postsService.getPostsByStatus('WaitingForAVisit')
+    ];
+    this.allPosts.set(waitingPets);
+  }
+
+  isRequested(petId: number): boolean {
+    return this.loggedInUser?.requestedPets?.includes(petId) || this.postsService.isPetRequested(petId);
   }
 }

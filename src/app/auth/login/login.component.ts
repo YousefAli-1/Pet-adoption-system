@@ -22,8 +22,6 @@ export class LoginComponent {
   login() {
     const email = (document.getElementById('email') as HTMLInputElement).value;
     const password = (document.getElementById('password') as HTMLInputElement).value;
-    const adopters = JSON.parse(localStorage.getItem('adopters') || '[]');
-    const adopter = adopters.find((a: any) => a.email === email && a.password === password);
     
     if (this.adoptersService.login(email, password)) {
       this.authService.login('adopter', email, password);

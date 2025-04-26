@@ -31,14 +31,25 @@ export class AdoptersService {
   speciesCount = this.speciesCountSignal.asReadonly();
 
   constructor() {
-    // Initialize adopters data
     const adoptersJson = localStorage.getItem('allAdopters');
-    if (adoptersJson) {
-      this.allAdopters = JSON.parse(adoptersJson);
+  if (adoptersJson) {
+    let parsed: unknown;
+    try {
+      parsed = JSON.parse(adoptersJson);
+    } catch {
+      parsed = null;
+    }
+    if (Array.isArray(parsed)) {
+      this.allAdopters = parsed as Adopter[];
     } else {
+      console.warn('Invalid allAdopters in storage—resetting to dummy.');
       this.allAdopters = dummy_adopters;
       this.updateAdoptersInLocalStorage();
     }
+  } else {
+    this.allAdopters = dummy_adopters;
+    this.updateAdoptersInLocalStorage();
+  }
     
     const loggedInAdopterJson = localStorage.getItem('loggedInAdopter');
     if (loggedInAdopterJson) {
@@ -90,6 +101,7 @@ export class AdoptersService {
   }
 
   login(email: string, password: string): boolean {
+    console.log('allAdopters:', this.allAdopters, 'isArray?', Array.isArray(this.allAdopters));
     const adopter = this.allAdopters.find(
       (adopter) => adopter.email === email && adopter.password === password
     );
@@ -111,9 +123,7 @@ export class AdoptersService {
   isLoggedIn(): boolean {
     return this.loggedInAdopterSignal().email !== '';
   }
-  getAdopterName(): string {
-    return this.loggedInAdopter()?.name || 'Guest';
-  }
+
   editProfile(editedData: Partial<{ name: string; oldPassword: string; newPassword: string; confirmNewPassword: string }>) {
     const current = this.loggedInAdopterSignal();
 

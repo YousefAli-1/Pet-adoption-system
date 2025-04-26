@@ -158,7 +158,7 @@ export class PostsService {
     this.allPosts.set(this.getAllPosts());
     if (!searchTerm) {
       this.filteredPostsSignal.set(this.allPosts());
-      return 'All';
+      return 'all';
     }
   
     const term = searchTerm.toLowerCase();
@@ -179,7 +179,7 @@ export class PostsService {
       }
     }
     
-    return 'All'; 
+    return 'all'; 
   }
 
   savePet(postId: number): void {
@@ -206,25 +206,21 @@ export class PostsService {
     if (!this.adopterService.isLoggedIn()) return;
 
     const currentAdopter = this.adopterService.loggedInAdopterSignal()!;
-    const postIdStr = postId.toString();
 
-    if (!currentAdopter.requestedPets.includes(postIdStr)) {
-      currentAdopter.requestedPets.push(postIdStr);
+    const post = this.getPostById(postId);
+    if (post && !currentAdopter.requestedPets.includes(post)) {
+      currentAdopter.requestedPets.push(post);
       this.adopterService.updateLoggedInAdopter(currentAdopter);
-      const post = this.getPostById(postId);
       console.log(post);
-      if (post) {
-        post.status = 'WaitingForAVisit';
-      }
+      post.status = 'WaitingForAVisit';
     }
     this.updateLocalStorage();
   }
 
   cancelAdoptionRequest(postId: number): void {
     if (!this.adopterService.isLoggedIn()) return;
-
     const currentAdopter = this.adopterService.loggedInAdopterSignal()!;
-    currentAdopter.requestedPets = currentAdopter.requestedPets.filter(id => id !== postId.toString());
+    currentAdopter.requestedPets = currentAdopter.requestedPets.filter(post => post.ID !== postId);
     this.adopterService.updateLoggedInAdopter(currentAdopter);
   }
 
@@ -233,7 +229,10 @@ export class PostsService {
   }
 
   isPetRequested(postId: number): boolean {
-    return !!this.adopterService.loggedInAdopter()?.requestedPets.includes(postId.toString());
+    const adopter = this.adopterService.loggedInAdopter();
+    if (!adopter) return false;
+    
+    return adopter.requestedPets.some(post => post.ID === postId);
   }
   getCategoryList(): string[] {
     const categorySet = new Set<string>();

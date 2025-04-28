@@ -4,14 +4,13 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { PostsService } from '../../posts.service';
 import { PostType } from '../../shelters/shelters.model';
 import { AdoptersService } from '../adopters.services';
-
 @Component({
-  selector: 'app-pets',
+  selector: 'app-adopter-wishlist',
   imports: [MatPaginatorModule,RouterLink],
-  templateUrl: './pets.component.html',
-  styleUrls: ['./pets.component.scss']
+  templateUrl: './adopter-wishlist.component.html',
+  styleUrl: './adopter-wishlist.component.scss'
 })
-export class PetsComponent  {
+export class AdopterWishlistComponent {
   selectedType: string = 'all';
   query = signal<string>('');
   private postsService = inject(PostsService);
@@ -21,12 +20,11 @@ export class PetsComponent  {
   userType = localStorage.getItem('userType') as 'adopter' | 'shelter' | '' | null;
   loggedInUser = JSON.parse(localStorage.getItem('loggedInAdopter') || '{"requestedPets":[]}');
   constructor() {
-    this.route.queryParams.subscribe(params => {
+      this.route.queryParams.subscribe(params => {
       if (params['category']) {
         this.selectedType = params['category'];
       }
     });
-    console.log(this.loggedInUser);
     this.route.queryParams.subscribe(params => {
       this.query.set((params['q'] || '').toLowerCase());
     });
@@ -36,7 +34,7 @@ export class PetsComponent  {
       if (q) {
         this.postsService.searchPosts(q);
       } else {
-        this.pets.set(this.postsService.getAllPosts());
+        this.getWishlistPets();
       }
     });
     this.start.set(0);
@@ -55,12 +53,15 @@ export class PetsComponent  {
   filterPets(type: string): void {
     this.selectedType = type;
     if (type === 'all') {
-      this.pets.set(this.postsService.getAllPosts());
+      this.getWishlistPets();
+    }else if (type === 'Requested') {
+    this.getRequestedPets();
     } else {
-      this.pets.set(this.postsService.getAllPosts());
-      const filtered = this.pets().filter(pets =>
-        pets.category=== type
+      this.getWishlistPets();
+      const filtered =this.pets().filter(pet =>
+        pet.category === type
       );
+      this.getWishlistPets();
       this.pets.set(filtered);
     }
   }
@@ -78,8 +79,7 @@ export class PetsComponent  {
     const currentAdopterEmail = this.loggedInUser.email;
     
     this.postsService.cancelAdoptionRequest(petId);
-    
-
+    this.pets.set(this.postsService.getAllPosts());
     const hasOtherRequests = this.postsService.isPetRequestedByOthers(petId, currentAdopterEmail);
     const pet = this.pets().find(p => p.ID === petId);
     if (pet) {
@@ -93,5 +93,15 @@ export class PetsComponent  {
   }
   getRequestCount(petId: number): number {
     return this.postsService.getRequestCount(petId);
+  }
+  getWishlistPets() {
+    const loggedInUser = this.adoptersService.getLoggedInAdopterSignal(); 
+    const SavedPets = loggedInUser.savedPets || [];
+    this.pets.set(SavedPets);
+  }
+  getRequestedPets() {
+    const loggedInUser = this.adoptersService.getLoggedInAdopterSignal(); 
+    const requestedPets = loggedInUser.requestedPets || [];
+    this.pets.set(requestedPets);
   }
 }

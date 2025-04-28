@@ -3,7 +3,7 @@ export type Adopter = {
   name: string;
   email: string;
   password: string;
-  savedPets: string[]; 
+  savedPets: PostType[]; 
   requestedPets: PostType [];
   adoptedPets: PostType []; 
 };

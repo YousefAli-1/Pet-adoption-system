@@ -54,7 +54,7 @@ h1 {
         border: 1px solid #ccc;
         border-left: none;
         border-radius: 0 5px 5px 0;
-        background: linear-gradient(135deg, #00ccb1, #07706b); 
+        background: linear-gradient(135deg, #00ccb1, #07706b);
         color: rgb(255, 255, 255);
         cursor: pointer;
 
@@ -66,7 +66,7 @@ h1 {
 }
 
 .pet-list {
-     background: linear-gradient(135deg, #EFE8D5, #fff2f2);
+    background: linear-gradient(135deg, #EFE8D5, #fff2f2);
     padding: 20px;
     border-radius: 10px;
 
@@ -127,7 +127,7 @@ h1 {
             margin: 10px;
             max-width: 60vh;
             flex: 1 1 calc(20% - 30px);
-            max-height: 74vh;
+            max-height: 76vh;
             box-sizing: border-box;
             text-align: center;
 
@@ -137,7 +137,7 @@ h1 {
                 max-height: 38%;
                 min-height: 38%;
                 border-radius: 1vh;
-                margin-bottom:5vh;
+                margin-bottom: 5vh;
             }
 
             h3 {
@@ -153,7 +153,7 @@ h1 {
                 font-size: 1rem;
                 border: none;
                 border-radius: 5px;
-                background: linear-gradient(135deg, #00ccb1, #07706b);  
+                background: linear-gradient(135deg, #00ccb1, #07706b);
                 color: white;
                 cursor: pointer;
                 margin: 5px;
@@ -172,37 +172,64 @@ h1 {
     margin-bottom: 20px;
     border-radius: 4px;
     text-align: center;
-  }
-  .flag,
-  .flag2 {
-      position: absolute;
-      top: 40%;
-      left: 50%;
-      transform: translate(-50%, 0) perspective(1000px) rotateY(-20deg);
-      width: 80%;
-      max-width: 36vh;
-      height: 6vh;
-      background-origin: padding-box;
-      border-radius: 3%;
-      box-shadow: 10px 15px 15px rgba(0, 0, 0, 0.1),
-                  -7px 10px 10px rgba(0, 0, 0, 0.2);
-      transform-style: preserve-3d;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: white;
-      font-size: 16px;
-      transition: transform 0.5s ease;
-      
-      &:hover {
-          transform: translate(-50%, 0) perspective(1000px) rotateX(5deg) rotateY(-2deg) translateZ(10px);
-      }
-  }
+}
 
-  .flag {
-      background: linear-gradient(135deg, #ff6f61, #ff3b2f);
-  }
+.flag,
+.flag2 {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, 0) perspective(1000px) rotateY(-20deg);
+    width: 80%;
+    max-width: 36vh;
+    height: 6vh;
+    background-origin: padding-box;
+    border-radius: 3%;
+    box-shadow: 10px 15px 15px rgba(0, 0, 0, 0.1),
+        -7px 10px 10px rgba(0, 0, 0, 0.2);
+    transform-style: preserve-3d;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 16px;
+    transition: transform 0.5s ease;
+    &:hover {
+        transform: translate(-50%, 0) perspective(1000px) rotateX(5deg) rotateY(-2deg) translateZ(10px);
+    }
+}
 
-  .flag2 {
-    background: linear-gradient(135deg, #00ccb1, #07706b); 
-  }
+.flag {
+    background: linear-gradient(135deg, #ff6f61, #ff3b2f);
+}
+
+.flag2 {
+    background: linear-gradient(135deg, #00ccb1, #07706b);
+}
+
+.request-badge {
+    background-color: #ff6b6b;
+    color: white;
+    max-width: 12vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-size: 0.8em;
+    margin: 0 auto;  
+    margin-top: 1.6vh;
+}
+.bookmark-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+}
+.bookmark-btn svg {
+    fill: #ccc;
+    transition: fill 0.3s;
+}
+.bookmark-btn.active svg {
+    fill: #ff4081;
+}

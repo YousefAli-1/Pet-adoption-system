@@ -7,6 +7,13 @@
       </div>
   </div>
   }
+  @if(adoptersService.showPopup2()){
+    <div class="popup-overlay">
+        <div class="popup2">
+            <p>{{adoptersService.message()}}</p>
+        </div>
+    </div>
+    }
 <div id="overlay" class="overlay" (click)="toggleSidebar()" *ngIf="!isCollapsed"></div>
 
 
@@ -25,6 +32,9 @@
     </li>
     <li class="nav-item">
       <a routerLink="/adopter/pets"  (click)="closeSidebar()" class="nav-link text-white" href="#">pets</a>
+    </li>
+    <li class="nav-item">
+      <a routerLink="/adopter/wishlist"  (click)="closeSidebar()" class="nav-link text-white" href="#">Wishlist and Requested pets</a>
     </li>
   </ul>
 </div>

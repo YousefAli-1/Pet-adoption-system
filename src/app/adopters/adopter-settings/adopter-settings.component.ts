@@ -19,12 +19,12 @@ export class AdopterSettingsComponent {
 
   saveChanges() {
     if (this.confirmPassword !== this.adopter.password) {
-      alert('Passwords do not match');
+      this.adoptersService.triggerError('Passwords do not match! Try Again');
       return;
     }
 
     // delegate everything to the service
     this.adoptersService.updateLoggedInAdopter(this.adopter);
-    alert('Settings saved successfully');
+    this.adoptersService.trigger('Account info saved successfully!');
   }
 }

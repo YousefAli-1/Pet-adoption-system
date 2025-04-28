@@ -1,5 +1,6 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { PostStatusType, PostType } from './shelters/shelters.model';
+import { Adopter } from './adopters/adopters.model';
 import { posts } from './dummy-posts';
 import { SheltersService } from './shelters/shelters.service';
 import { AdoptersService } from './adopters/adopters.services';
@@ -186,19 +187,19 @@ export class PostsService {
     if (!this.adopterService.isLoggedIn()) return;
 
     const currentAdopter = this.adopterService.getLoggedInAdopterSignal()!;
-    const postIdStr = postId.toString();
+    const post=this.getPostById(postId);
 
-    if (!currentAdopter.savedPets.includes(postIdStr)) {
-      currentAdopter.savedPets.push(postIdStr);
+    if (post &&!currentAdopter.savedPets.includes(post)) {
+      currentAdopter.savedPets.push(post);
       this.adopterService.updateLoggedInAdopter(currentAdopter);
     }
+    this.updateLocalStorage();
   }
 
   unsavePet(postId: number): void {
     if (!this.adopterService.isLoggedIn()) return;
-
     const currentAdopter = this.adopterService.loggedInAdopterSignal()!;
-    currentAdopter.savedPets = currentAdopter.savedPets.filter(id => id !== postId.toString());
+    currentAdopter.savedPets = currentAdopter.savedPets.filter(post => post.ID !== postId);
     this.adopterService.updateLoggedInAdopter(currentAdopter);
   }
 
@@ -211,7 +212,6 @@ export class PostsService {
     if (post && !currentAdopter.requestedPets.includes(post)) {
       currentAdopter.requestedPets.push(post);
       this.adopterService.updateLoggedInAdopter(currentAdopter);
-      console.log(post);
       post.status = 'WaitingForAVisit';
     }
     this.updateLocalStorage();
@@ -223,9 +223,27 @@ export class PostsService {
     currentAdopter.requestedPets = currentAdopter.requestedPets.filter(post => post.ID !== postId);
     this.adopterService.updateLoggedInAdopter(currentAdopter);
   }
-
+  isPetRequestedByOthers(petId: number, currentAdopterEmail: string): boolean {
+    const adopters = JSON.parse(localStorage.getItem('allAdopters') || '[]');
+    
+    
+    return adopters.some((adopter: Adopter) => 
+      adopter.email !== currentAdopterEmail && 
+      adopter.requestedPets.some(pet => pet.ID === petId)
+    );
+  }
+  getRequestCount(petId: number): number {
+    const adopters = JSON.parse(localStorage.getItem('allAdopters') || '[]');
+    
+    return adopters.filter((adopter:Adopter) => 
+      adopter.requestedPets.some(pet => pet.ID === petId)
+    ).length;
+  }
   isPetSaved(postId: number): boolean {
-    return !!this.adopterService.loggedInAdopter()?.savedPets.includes(postId.toString());
+    const adopter = this.adopterService.loggedInAdopter();
+    if (!adopter) return false;
+    
+    return adopter.savedPets.some(post => post.ID === postId);
   }
 
   isPetRequested(postId: number): boolean {

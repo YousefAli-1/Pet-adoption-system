@@ -8,5 +8,13 @@ import { Adopter } from './adopters.model';
       savedPets: [],
       requestedPets: [],
       adoptedPets: []
+    },
+    {
+      name: 'Jane Smith',
+      email: 'jane@email.com',
+      password: 'pass12345',
+      savedPets: [],
+      requestedPets: [],
+      adoptedPets: []
     }
   ];

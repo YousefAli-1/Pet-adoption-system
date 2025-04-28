@@ -23,7 +23,8 @@ export class DashboardComponent {
     effect(() => {
       const waitingPets = [
         ...this.postsService.getPostsByStatus('WaitingForAdoption'),
-        ...this.postsService.getPostsByStatus('WaitingForAVisit')
+        ...this.postsService.getPostsByStatus('WaitingForAVisit'),
+        ...this.postsService.getPostsByStatus('Returned')
       ]
       this.allPosts.set(this.postsService.getAllPosts());
       this.featuredPets.set(waitingPets.slice(-5));
@@ -91,12 +92,43 @@ export class DashboardComponent {
     this.loggedInUser = JSON.parse(localStorage.getItem('loggedInAdopter') || '{"requestedPets":[]}');
     const waitingPets = [
       ...this.postsService.getPostsByStatus('WaitingForAdoption'),
-      ...this.postsService.getPostsByStatus('WaitingForAVisit')
+      ...this.postsService.getPostsByStatus('WaitingForAVisit'),
+      ...this.postsService.getPostsByStatus('Returned')
     ];
     this.allPosts.set(waitingPets);
   }
+  cancelRequest(petId: number) {
+    const currentAdopterEmail = this.loggedInUser.email;
+    
+    this.postsService.cancelAdoptionRequest(petId);
+    
+    const hasOtherRequests = this.postsService.isPetRequestedByOthers(petId, currentAdopterEmail);
+    const pet = this.allPosts().find((p: PostType) => p.ID === petId);
+    if (pet) {
+      pet.status = hasOtherRequests ? 'WaitingForAVisit' : 'WaitingForAdoption';
+    }
+    
+    this.adoptersService.trigger('The pet is no longer waiting for your visit!');
+    this.loggedInUser = JSON.parse(localStorage.getItem('loggedInAdopter') || '{"requestedPets":[]}');
 
+  }
+  getRequestCount(petId: number): number {
+    return this.postsService.getRequestCount(petId);
+  }
   isRequested(petId: number): boolean {
     return this.loggedInUser?.requestedPets?.includes(petId) || this.postsService.isPetRequested(petId);
+  }
+  save(petId:number){
+    this.postsService.savePet(petId);
+    this.adoptersService.trigger('The pet is now saved! you can now see it in your wishlist');
+    this.loggedInUser = JSON.parse(localStorage.getItem('loggedInAdopter') || '{"savedPets":[]}');
+  }
+  unSave(petId:number){
+    this.postsService.unsavePet(petId);
+    this.adoptersService.triggerError('The pet is now removed from your wishlist!');
+    this.loggedInUser = JSON.parse(localStorage.getItem('loggedInAdopter') || '{"savedPets":[]}');
+  }
+  isInWishlist(petId: number): boolean {
+    return this.loggedInUser?.requestedPets?.includes(petId) || this.postsService.isPetSaved(petId);
   }
 }

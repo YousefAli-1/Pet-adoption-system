@@ -91,7 +91,23 @@ export class PetsComponent  {
 
     this.filterPets(this.selectedType);
   }
+  
   getRequestCount(petId: number): number {
     return this.postsService.getRequestCount(petId);
   }
+  save(petId:number){
+  this.postsService.savePet(petId);
+  this.adoptersService.trigger('The pet is now saved! you can now see it in your wishlist');
+  this.loggedInUser = JSON.parse(localStorage.getItem('loggedInAdopter') || '{"savedPets":[]}');
+  this.filterPets(this.selectedType);
+}
+unSave(petId:number){
+  this.postsService.unsavePet(petId);
+  this.adoptersService.triggerError('The pet is now removed from your wishlist!');
+  this.loggedInUser = JSON.parse(localStorage.getItem('loggedInAdopter') || '{"savedPets":[]}');
+  this.filterPets(this.selectedType);
+}
+isInWishlist(petId: number): boolean {
+  return this.loggedInUser?.requestedPets?.includes(petId) || this.postsService.isPetSaved(petId);
+}
 }

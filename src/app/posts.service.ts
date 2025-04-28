@@ -209,6 +209,9 @@ export class PostsService {
     const currentAdopter = this.adopterService.loggedInAdopterSignal()!;
 
     const post = this.getPostById(postId);
+    if (post && post.status === 'Returned') {
+      post.wasReturned = true; 
+    }
     if (post && !currentAdopter.requestedPets.includes(post)) {
       currentAdopter.requestedPets.push(post);
       this.adopterService.updateLoggedInAdopter(currentAdopter);

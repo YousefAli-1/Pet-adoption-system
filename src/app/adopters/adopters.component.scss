@@ -17,7 +17,7 @@
   padding: 10px 20px;
 }
 .butn:hover{
-  background-color: #DC8641;
+  background: linear-gradient(135deg, #ff6f61, #ff3b2f);
   color:white;
 }
 .sidebar.active {
@@ -33,7 +33,7 @@
   z-index: 1040; 
 }
 .nav-item:hover{
-  background-color: #DC8641;
+  background: linear-gradient(135deg, #ff6f61, #ff3b2f);
   color:white;
 }
 .nav-item{
@@ -92,4 +92,12 @@
       opacity: 0;
       transform: translateY(20px);
   }
+}
+.dropdown-menu {
+  color: black;
+}
+.dropdown-item:hover {
+  background: linear-gradient(135deg, #ff6f61, #ff3b2f);
+  color:white;
+  cursor: pointer;
 }

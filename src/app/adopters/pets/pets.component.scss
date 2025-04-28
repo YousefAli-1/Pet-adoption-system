@@ -112,8 +112,9 @@
     transform-style: preserve-3d;
     display: flex;
     justify-content: center;
+    padding: auto;
     align-items: center;
-    color: white;
+    color: rgb(255, 255, 255);
     font-size: 16px;
     transition: transform 0.5s ease;
 
@@ -141,4 +142,19 @@
     font-size: 0.8em;
     margin: 0 auto;  
     margin-top: 1.6vh;
+}
+#bookmark-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+}
+#bookmark-btn svg {
+    fill: #ccc;
+    transition: fill 0.3s;
+    transform: translateY(5px);
+}
+
+#bookmark-btn.active svg {
+    fill: #ff3b2f;
 }

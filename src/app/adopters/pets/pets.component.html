@@ -6,6 +6,7 @@
     <button class="filter-btn" [class.active]="selectedType === 'Cat'" (click)="filterPets('Cat')">Cat</button>
     <button class="filter-btn" [class.active]="selectedType === 'Bird'" (click)="filterPets('Bird')">Bird</button>
     <button class="filter-btn" [class.active]="selectedType === 'others'" (click)="filterPets('others')">Others</button>
+    <ng-content select="[custom-filters]"></ng-content>
 </div>
 <div>
     <div class="featured-pets">
@@ -22,9 +23,16 @@
                 <button routerLink="/login">Login To Adopt</button>
                 } @else if(userType=="adopter"){
                 @if(pet.status=="WaitingForAdoption" ){
-                    <div class="flag2">
-                        <p>Be The First To Request</p>
-                    </div>
+                    @if(pet.wasReturned==true){
+                        <div class="flag">
+                            <p>Returned previously</p>
+                        </div>
+                    }@else{
+                        <div class="flag2">
+                            <p>Be The First To Request</p>
+                        </div>
+                    }
+
                 <button (click)="Request(pet.ID)">Request Adoption</button>
                 }@else if(pet.status=="Adopted"){
                 <div class="flag">
@@ -33,7 +41,7 @@
                 }@else if(pet.status=="WaitingForAVisit"){
                     @if(isRequested(pet.ID)){
                         <div class="flag2">
-                            <p>Waiting For your Visit</p>
+                        <p>Waiting For your Visit</p>
                         </div>
                         <button (click)="cancelRequest(pet.ID)">Cancel Request</button>
                     }@else{
@@ -49,6 +57,19 @@
                 </div>
                 <button (click)="Request(pet.ID)">Request Adoption</button>
                 } 
+                }
+                @if(!isInWishlist(pet.ID)){
+                    <button id="bookmark-btn" [class.active]="isInWishlist(pet.ID)" (click)="save(pet.ID)">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                            <path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/>
+                        </svg>
+                    </button>
+                }@else{
+                    <button id="bookmark-btn" [class.active]="isInWishlist(pet.ID)" (click)="unSave(pet.ID)">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                            <path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/>
+                        </svg>
+                    </button>
                 }
             </div>
             }

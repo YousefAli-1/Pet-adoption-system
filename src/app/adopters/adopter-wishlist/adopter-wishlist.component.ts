@@ -10,33 +10,22 @@ import { AdoptersService } from '../adopters.services';
   templateUrl: './adopter-wishlist.component.html',
   styleUrl: './adopter-wishlist.component.scss'
 })
-export class AdopterWishlistComponent {
+export class AdopterWishlistComponent  implements OnInit {
+
+  ngOnInit(): void {
+    this.filterPets(this.selectedType);
+  }
   selectedType: string = 'all';
   query = signal<string>('');
   private postsService = inject(PostsService);
   private adoptersService=inject(AdoptersService);
   private route = inject(ActivatedRoute);
   pets = this.postsService.filteredPostsSignal;
+  filteredPets = this.postsService.filteredPostsSignal;
   userType = localStorage.getItem('userType') as 'adopter' | 'shelter' | '' | null;
   loggedInUser = JSON.parse(localStorage.getItem('loggedInAdopter') || '{"requestedPets":[]}');
   constructor() {
-      this.route.queryParams.subscribe(params => {
-      if (params['category']) {
-        this.selectedType = params['category'];
-      }
-    });
-    this.route.queryParams.subscribe(params => {
-      this.query.set((params['q'] || '').toLowerCase());
-    });
-  
-    effect(() => {
-      const q = this.query();
-      if (q) {
-        this.postsService.searchPosts(q);
-      } else {
-        this.getWishlistPets();
-      }
-    });
+   
     this.start.set(0);
     this.end.set(4);
   }
@@ -52,6 +41,7 @@ export class AdopterWishlistComponent {
   }
   filterPets(type: string): void {
     this.selectedType = type;
+    console.log(this.selectedType);
     if (type === 'all') {
       this.getWishlistPets();
     }else if (type === 'Requested') {
@@ -61,7 +51,6 @@ export class AdopterWishlistComponent {
       const filtered =this.pets().filter(pet =>
         pet.category === type
       );
-      this.getWishlistPets();
       this.pets.set(filtered);
     }
   }
@@ -69,7 +58,6 @@ export class AdopterWishlistComponent {
     this.postsService.requestAdoption(petId);
     this.adoptersService.trigger('The pet is now waiting for your visit!');
     this.loggedInUser = JSON.parse(localStorage.getItem('loggedInAdopter') || '{"requestedPets":[]}');
-    this.pets.set(this.postsService.getAllPosts());
     this.filterPets(this.selectedType);
   }
   isRequested(petId: number): boolean {
@@ -103,5 +91,20 @@ export class AdopterWishlistComponent {
     const loggedInUser = this.adoptersService.getLoggedInAdopterSignal(); 
     const requestedPets = loggedInUser.requestedPets || [];
     this.pets.set(requestedPets);
+  }
+  save(petId:number){
+    this.postsService.savePet(petId);
+    this.adoptersService.trigger('The pet is now saved! you can now see it in your wishlist');
+    this.loggedInUser = JSON.parse(localStorage.getItem('loggedInAdopter') || '{"savedPets":[]}');
+    this.filterPets(this.selectedType);
+  }
+  unSave(petId:number){
+    this.postsService.unsavePet(petId);
+    this.adoptersService.triggerError('The pet is now removed from your wishlist!');
+    this.loggedInUser = JSON.parse(localStorage.getItem('loggedInAdopter') || '{"savedPets":[]}');
+    this.filterPets(this.selectedType);
+  }
+  isInWishlist(petId: number): boolean {
+    return this.loggedInUser?.requestedPets?.includes(petId) || this.postsService.isPetSaved(petId);
   }
 }

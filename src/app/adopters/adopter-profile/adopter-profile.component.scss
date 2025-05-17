@@ -1,0 +1,85 @@
+.adopter-profile-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+
+    .profile-header {
+        background-color: #f5f5f5;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+
+        h2 {
+            margin: 0;
+            color: #333;
+            font-size: 24px;
+        }
+    }
+
+    .profile-content {
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+
+        .profile-info {
+            h3 {
+                color: #444;
+                margin-bottom: 20px;
+                padding-bottom: 10px;
+                border-bottom: 2px solid #eee;
+            }
+
+            .info-row {
+                display: flex;
+                margin-bottom: 15px;
+                padding: 8px 0;
+
+                label {
+                    width: 150px;
+                    font-weight: 600;
+                    color: #666;
+                }
+
+                span {
+                    flex: 1;
+                    color: #333;
+                }
+            }
+        }
+    }
+}
+.pet-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.pet-card {
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    padding: 1rem;
+    width: 200px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.pet-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.pet-category {
+    font-weight: bold;
+    color: #333;
+}
+
+.pet-species {
+    color: #666;
+}
+
+.pet-location {
+    color: #888;
+    font-size: 0.9rem;
+}

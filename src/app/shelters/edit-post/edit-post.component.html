@@ -1,0 +1,90 @@
+<form
+  [formGroup]="editPostFormGroup"
+  action=""
+  method="post"
+  (ngSubmit)="editPost()"
+>
+  <h2>Edit Post</h2>
+  <div class="input-fields">
+    <mat-form-field>
+      <mat-label>Enter Animal Category</mat-label>
+      <input
+        matInput
+        placeholder="Ex. Dog"
+        name="category"
+        formControlName="category"
+        (blur)="updateCategoryErrorMessage()"
+      />
+      @if (hasErrors('category')) {
+      <mat-error>{{ errorMessages().category }}</mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Enter Animal Species</mat-label>
+      <input
+        matInput
+        placeholder="Ex. Golden retriever"
+        name="species"
+        formControlName="species"
+        (blur)="updateSpeciesErrorMessage()"
+      />
+      @if (hasErrors('species')) {
+      <mat-error>{{ errorMessages().species }}</mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Enter Animal age</mat-label>
+      <input
+        type="number"
+        matInput
+        placeholder="Ex. Dog"
+        name="age"
+        formControlName="age"
+        (blur)="updateAgeErrorMessage()"
+      />
+      @if (hasErrors('age')) {
+      <mat-error>{{ errorMessages().age }}</mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Select Location</mat-label>
+      <mat-select formControlName="location">
+        @for (location of shelterLocations(); track $index) {
+        <mat-option [value]="location">{{ location }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+    <div class="upload-button-field">
+      <label for="post-pic" class="upload-button">+ Upload Pet's Picture</label>
+      <input
+        type="file"
+        #fileUploadElement
+        (change)="onImagePicked(fileUploadElement)"
+        style="display: none"
+        name="post-pic"
+        id="post-pic"
+        accept="image/jpeg, image/png"
+      />
+      @if (hasErrors('image')) {
+      <mat-error class="imgError">
+        You must upload a picture of the pet
+      </mat-error>
+      } @else {
+      <p>Image Selected</p>
+      }
+    </div>
+    <mat-form-field>
+      <mat-label>Select Status</mat-label>
+      <mat-select formControlName="status">
+        <mat-option value="Adopted">Adopted</mat-option>
+        <mat-option value="WaitingForAVisit">Waiting for a visit</mat-option>
+        <mat-option value="Returned">Returned</mat-option>
+        <mat-option value="WaitingForAdoption">Waiting for adoption</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="buttons">
+    <button mat-stroked-button type="button" (click)="resetForm()">Reset</button>
+    <button mat-flat-button type="submit">Edit Post</button>
+  </div>
+</form>

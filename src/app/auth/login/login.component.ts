@@ -1,0 +1,40 @@
+import { Component } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
+import { SheltersService } from '../../shelters/shelters.service';
+import { FormsModule } from '@angular/forms';
+import { AuthService } from '../auth.service';
+import { AdoptersService } from '../../adopters/adopters.services';
+
+@Component({
+  selector: 'app-login',
+  imports: [RouterLink, FormsModule],
+  templateUrl: './login.component.html',
+  styleUrl: './login.component.scss'
+})
+export class LoginComponent {
+  constructor(
+    private router: Router, 
+    private sheltersService: SheltersService,
+    private adoptersService: AdoptersService,
+    private authService: AuthService
+  ) {}
+
+  login() {
+    const email = (document.getElementById('email') as HTMLInputElement).value;
+    const password = (document.getElementById('password') as HTMLInputElement).value;
+    
+    if (this.adoptersService.login(email, password)) {
+      this.authService.login('adopter', email, password);
+      this.router.navigate(['/adopter/dashboard']); 
+      return;
+    }
+    
+    if (this.sheltersService.login(email, password)) {
+      this.authService.login('shelter', email, password);
+      this.router.navigate(['/shelter/dashboard']);
+      return;
+    }
+    
+    alert('Invalid email or password');
+  }
+}

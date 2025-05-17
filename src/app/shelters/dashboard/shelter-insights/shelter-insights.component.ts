@@ -2,6 +2,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { Component, computed, inject, OnInit, PLATFORM_ID, signal, Signal } from '@angular/core';
 import { ChartModule } from 'primeng/chart';
 import { ShelterType } from '../../shelters.model';
+import { SheltersService } from '../../shelters.service';
 
 
 @Component({
@@ -12,15 +13,10 @@ import { ShelterType } from '../../shelters.model';
 })
 export class ShelterInsightsComponent implements OnInit {
 
-  shelter=signal<ShelterType>({
-    name: 'Zee Animal',
-    statusCount:{
-      adoptedCount: 10,
-      waitingForAVisitCount: 4,
-      returnedCount: 1,
-      waitingForAdoptionCount: 15
-    }
-  });
+  shelterService=inject(SheltersService);
+  
+  shelter=computed(()=>this.shelterService.loggedInShelter());
+
   data: Signal<any>=signal({});
 
   options: any;

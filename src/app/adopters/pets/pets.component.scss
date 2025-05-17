@@ -1,0 +1,160 @@
+.featured-pets {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .card-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+
+        .card {
+            position: relative;
+            background-color: #EFE8D5;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 10px;
+            width: 100%;
+            max-width: 70vh;
+            flex: 1 1 calc(20% - 30px);
+            max-height: 76vh;
+            box-sizing: border-box;
+            text-align: center;
+
+            img {
+                width: 100%;
+                max-width: 40vh;
+                max-height: 38%;
+                min-height: 38%;
+                border-radius: 1vh;
+                margin-bottom: 5vh;
+            }
+
+            h3 {
+                margin-top: 0;
+            }
+
+            p {
+                margin-bottom: 1vh;
+            }
+
+            button {
+                padding: 10px 20px;
+                font-size: 1rem;
+                border: none;
+                border-radius: 5px;
+                background: linear-gradient(135deg, #1a3857, #1e5d8a);
+                color: white;
+                cursor: pointer;
+                margin: 5px;
+
+                &:hover {
+                    background: linear-gradient(135deg, #ffffff, #ffffff);
+                    color: #1a3857;
+                    transform: scale(1.2);
+                }
+            }
+        }
+    }
+}
+
+.pet-filters {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 2vh;
+    flex-wrap: wrap;
+
+    button {
+        padding: 12px 25px;
+        border: 2px solid white;
+        background: linear-gradient(135deg, #ff6f61, #ff3b2f);
+        color: white;
+        border-radius: 25px;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+
+        &:hover {
+            background: white;
+            color: #ff6f61;
+            transform: translateY(-2px);
+        }
+
+        &.active {
+            background: white;
+            color: #ff6f61;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+    }
+}
+
+.flag,
+.flag2 {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, 0) perspective(1000px) rotateY(-20deg);
+    width: 80%;
+    max-width: 36vh;
+    height: 6vh;
+    background-origin: padding-box;
+    border-radius: 3%;
+    box-shadow: 10px 15px 15px rgba(0, 0, 0, 0.1),
+        -7px 10px 10px rgba(0, 0, 0, 0.2);
+    transform-style: preserve-3d;
+    display: flex;
+    justify-content: center;
+    padding: auto;
+    align-items: center;
+    color: rgb(255, 255, 255);
+    font-size: 16px;
+    transition: transform 0.5s ease;
+
+    &:hover {
+        transform: translate(-50%, 0) perspective(1000px) rotateX(5deg) rotateY(-2deg) translateZ(10px);
+    }
+}
+
+.flag {
+    background: linear-gradient(135deg, #ff6f61, #ff3b2f);
+}
+
+.flag2 {
+    background: linear-gradient(135deg, #1a3857, #1e5d8a);
+}
+.request-badge {
+    background-color: #ff6b6b;
+    color: white;
+    max-width: 12vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-size: 0.8em;
+    margin: 0 auto;  
+    margin-top: 1.6vh;
+}
+#bookmark-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+}
+#bookmark-btn svg {
+    fill: #ccc;
+    transition: fill 0.3s;
+    transform: translateY(5px);
+}
+
+#bookmark-btn.active svg {
+    fill: #ff3b2f;
+}

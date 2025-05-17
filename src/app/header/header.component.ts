@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterLink, Router } from '@angular/router';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -8,10 +9,11 @@ import { RouterLink, Router } from '@angular/router';
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
-  userType: 'adopter' | 'shelter' | '' = '';
-  constructor(private router: Router) {
-  }
-  
+  constructor(
+    private router: Router,
+    public authService: AuthService
+  ) {}
+
   scrollToFooter() {
     const footer = document.querySelector('footer');
     const contactSection = document.querySelector('.contact');
@@ -27,12 +29,10 @@ export class HeaderComponent {
   }
 
   logout() {
-    this.userType = '';
-    localStorage.setItem('userType', '');
+    if(localStorage.getItem('userType') === 'adopter') {
+    localStorage.removeItem('loggedInAdopter');
+    }
+    this.authService.logout();
     this.router.navigate(['/']);
-  }
-  ngOnInit() {
-    this.userType = localStorage.getItem('userType') as 'adopter' | 'shelter' | '';
-    console.log(this.userType);
   }
 }

@@ -32,5 +32,7 @@ a{
     @include mat.button-overrides((
         text-label-text-color: white,
     ));
-    background-color: orange;
+    & {
+        background-color: orange;
+    }
 }

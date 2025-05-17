@@ -2,15 +2,19 @@
 
 $background-color: rgba(76, 77, 78, 0.377);
 $drawer-text-color: #333;
-:host{
+
+:host {
     @include mat.icon-button-overrides((
         icon-color: $drawer-text-color,
     ));
+
     @include mat.sidenav-overrides((
         container-background-color: white,
         content-background-color: $background-color,
         container-width: 15%,
+        
     ));
+
     @include mat.button-overrides((
         text-container-shape: Rectangle,
         text-label-text-color: $drawer-text-color,
@@ -18,7 +22,31 @@ $drawer-text-color: #333;
         text-state-layer-color: $background-color,
         text-ripple-color: $background-color
     ));
+    $background-color: white;
+    $drawer-text-color: white;
+
+:host {
+    @include mat.icon-button-overrides((
+        icon-color: $drawer-text-color,
+    ));
+
+    @include mat.sidenav-overrides((
+        container-background-color: white,
+        content-background-color: $background-color,
+        container-width: 15%,
+    ));
+
+    @include mat.button-overrides((
+        text-container-shape: Rectangle,
+        text-label-text-color: $drawer-text-color,
+        text-label-text-size: 30px,
+        text-state-layer-color: $background-color,
+        text-ripple-color: $background-color
+    ));
+    display: flex;
 }
+}
+
 
 button{
     margin-left: 3px;
@@ -34,3 +62,18 @@ a{
     ));
     background-color: orange;
 }
+.logout-button {
+    margin-top: auto; // Push to bottom if parent is flex column
+    background-color: white;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+    margin-top: 641px;
+    transition: background-color 0.3s ease;
+  
+    &:hover {
+      background-color: #b02a37;
+      color: #fff;
+    }
+  }
+  

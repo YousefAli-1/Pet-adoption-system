@@ -5,18 +5,15 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
-import { RouterModule } from '@angular/router';
-
-
 
 @Component({
-  selector: 'app-settings',
-  imports: [MatFormFieldModule, MatSlideToggleModule, FormsModule,
-     MatInputModule, MatCardModule, MatButtonModule, RouterModule],
-  templateUrl: './settings.component.html',
-  styleUrl: './settings.component.scss'
+  selector: 'app-settings-edit',
+  imports: [FormsModule, MatFormFieldModule, MatInputModule,
+     MatSlideToggleModule, MatCardModule, MatButtonModule],
+  templateUrl: './settings-edit.component.html',
+  styleUrl: './settings-edit.component.scss'
 })
-export class SettingsComponent {
+export class SettingsEditComponent {
   admin ={
     name : 'ibrhaim',
     email: 'ibrahim@example.com',
@@ -25,5 +22,8 @@ export class SettingsComponent {
 
 
   };
-  
+  saveChanges(){
+    console.log('admin settings saved: ',this.admin);
+    alert('seetings saved successfully ');
+  }
 }

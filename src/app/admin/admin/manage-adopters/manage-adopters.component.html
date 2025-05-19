@@ -1,0 +1,24 @@
+<div>
+  <h2>Manage Adopters</h2>
+
+  <div class="adopter-card" *ngFor="let adopter of adopters; let i = index">
+    <div *ngIf="!adopter.isEditing">
+      <p>{{ adopter.name }} - {{ adopter.email }}</p>
+      <button (click)="deleteAdopter(i)">Delete</button>
+      <button (click)="editAdopter(i)">Edit</button>
+    </div>
+
+    <div *ngIf="adopter.isEditing">
+      <input [(ngModel)]="adopter.name" placeholder="Name" />
+      <input [(ngModel)]="adopter.email" placeholder="Email" />
+      <button (click)="saveEditedAdopter(i)">Save</button>
+      <button (click)="cancelEdit(i)">Cancel</button>
+    </div>
+  </div>
+
+  <hr />
+
+  <button class="add-button" (click)="addAdopters({ name: 'New Adopter', email: 'new@example.com' })">
+    Add Adopter
+  </button>
+</div>

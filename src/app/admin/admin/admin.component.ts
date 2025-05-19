@@ -8,22 +8,27 @@ import { RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { inject,Injectable, signal } from '@angular/core';
-
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-admin',
-  imports: [RouterOutlet, MatSidenavModule, MatButtonModule, RouterModule],
+  imports: [RouterOutlet, MatSidenavModule, MatButtonModule, RouterModule, NgIf],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.scss'
 })
 export class AdminComponent {
-  isOpened: boolean = false;
+  // isOpened: boolean = false;
 
-  openDrawer(): void {
-    this.isOpened = true;
-  }
+  // openDrawer(): void {
+  //   this.isOpened = true;
+  // }
 
-  closeDrawer(): void {
-    this.isOpened = false;
+  // closeDrawer(): void {
+  //   this.isOpened = false;
+  // }
+  isCollapsed = false;
+  
+  toggleSidebar() {
+    this.isCollapsed = !this.isCollapsed;
   }
 }

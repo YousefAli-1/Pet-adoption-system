@@ -134,5 +134,6 @@ export class SheltersService {
 
   updateLocalStorage(): void {
     localStorage.setItem('allShelters', JSON.stringify(this.allShelters));
+    console.log(this.allShelters);
   }
 }

@@ -5,6 +5,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import { inject,Injectable, signal } from '@angular/core';
+import { Admin } from '../../../admin.models';
+import { AdminSettingsUpdate } from '../../../adminSettings.update';
 
 @Component({
   selector: 'app-settings-edit',
@@ -14,16 +17,18 @@ import { MatButtonModule } from '@angular/material/button';
   styleUrl: './settings-edit.component.scss'
 })
 export class SettingsEditComponent {
-  admin ={
-    name : 'ibrhaim',
-    email: 'ibrahim@example.com',
-    password: '',
-    notificationsEnabled: true
-
-
-  };
-  saveChanges(){
-    console.log('admin settings saved: ',this.admin);
-    alert('seetings saved successfully ');
-  }
+  private adminService = inject(AdminSettingsUpdate);
+    admin: Admin = this.adminService.getLoggedInAdminSignal();
+    showPassword = false; 
+    showConfirmPassword = false;
+    confirmPassword = this.admin.password;
+  
+    saveChanges() {
+      if (this.confirmPassword !== this.admin.password) {
+        this.adminService.triggerError('Passwords do not match! Try Again');
+        return;
+      }
+      this.adminService.updateLoggedInAdmin(this.admin);
+      this.adminService.trigger('Account info saved successfully!');
+}
 }

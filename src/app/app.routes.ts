@@ -35,10 +35,14 @@ export const routes: Routes = [
         component: AdoptersComponent,
         children: adopterRoutes
     },{
+        path:'admin',
+        component: AdminComponent,
+        children:adminRoutes
+    },{
         path:'login',
         component:LoginComponent,
         canActivate: [(route: any, state: any) => {
-            const userType = localStorage.getItem('userType') as 'adopter' | 'shelter' | '' | null;
+            const userType = localStorage.getItem('userType') as 'adopter' | 'shelter' | 'admin' | '' | null;
             console.log(userType);
             if (userType== null || userType=='') {
                 return true;
@@ -49,7 +53,7 @@ export const routes: Routes = [
         path:'signup',
         component:SignupComponent,
         canActivate: [(route: any, state: any) => {
-            const userType = localStorage.getItem('userType') as 'adopter' | 'shelter' | '';
+            const userType = localStorage.getItem('userType') as 'adopter' | 'shelter' | 'admin' | '';
             if (userType!== '') {
                 return new RedirectCommand(inject(Router).parseUrl("/unauth")) ;
             }

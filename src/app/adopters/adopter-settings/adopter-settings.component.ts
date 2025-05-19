@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { Adopter } from '../adopters.model';
 import { AdoptersService } from '../adopters.services';
 
+
 @Component({
   selector: 'app-adopter-settings',
   imports: [FormsModule],

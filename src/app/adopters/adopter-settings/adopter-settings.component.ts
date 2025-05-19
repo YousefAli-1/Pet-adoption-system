@@ -12,8 +12,8 @@ import { AdoptersService } from '../adopters.services';
 export class AdopterSettingsComponent {
   private adoptersService = inject(AdoptersService);
 
-  adopter: Adopter = this.adoptersService.getLoggedInAdopterSignal();
-  showPassword = false;
+    adopter: Adopter = this.adoptersService.getLoggedInAdopterSignal();
+  showPassword = false; 
   showConfirmPassword = false;
   confirmPassword = this.adopter.password;
 

@@ -29,6 +29,9 @@ export class HeaderComponent {
   }
 
   logout() {
+    if(localStorage.getItem('userType') === 'adopter') {
+    localStorage.removeItem('loggedInAdopter');
+    }
     this.authService.logout();
     this.router.navigate(['/']);
   }

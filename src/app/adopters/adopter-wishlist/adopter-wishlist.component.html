@@ -6,7 +6,7 @@
     <button class="filter-btn" [class.active]="selectedType === 'Cat'" (click)="filterPets('Cat')">Cat</button>
     <button class="filter-btn" [class.active]="selectedType === 'Bird'" (click)="filterPets('Bird')">Bird</button>
     <button class="filter-btn" [class.active]="selectedType === 'others'" (click)="filterPets('others')">Others</button>
-    <ng-content select="[custom-filters]"></ng-content>
+    <button class="filter-btn" [class.active]="selectedType === 'Requested'" (click)="filterPets('Requested')">Requested</button>
 </div>
 <div>
     <div class="featured-pets">
@@ -27,12 +27,11 @@
                         <div class="flag">
                             <p>Returned previously</p>
                         </div>
-                    }@else{
+                        }@else{
                         <div class="flag2">
                             <p>Be The First To Request</p>
                         </div>
-                    }
-
+                        }
                 <button (click)="Request(pet.ID)">Request Adoption</button>
                 }@else if(pet.status=="Adopted"){
                 <div class="flag">
@@ -41,7 +40,7 @@
                 }@else if(pet.status=="WaitingForAVisit"){
                     @if(isRequested(pet.ID)){
                         <div class="flag2">
-                        <p>Waiting For your Visit</p>
+                            <p>Waiting For your Visit</p>
                         </div>
                         <button (click)="cancelRequest(pet.ID)">Cancel Request</button>
                     }@else{
@@ -52,7 +51,7 @@
             }
                 }
                 @else if(pet.status=="Returned"){
-                <div class="flag2">
+                <div class="flag">
                     <p>Returned By Adopter</p>
                 </div>
                 <button (click)="Request(pet.ID)">Request Adoption</button>

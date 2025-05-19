@@ -3,6 +3,7 @@ import { Router, RouterLink } from '@angular/router';
 import { SheltersService } from '../../shelters/shelters.service';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../auth.service';
+import { AdoptersService } from '../../adopters/adopters.services';
 
 @Component({
   selector: 'app-login',
@@ -14,16 +15,15 @@ export class LoginComponent {
   constructor(
     private router: Router, 
     private sheltersService: SheltersService,
+    private adoptersService: AdoptersService,
     private authService: AuthService
   ) {}
 
   login() {
     const email = (document.getElementById('email') as HTMLInputElement).value;
     const password = (document.getElementById('password') as HTMLInputElement).value;
-    const adopters = JSON.parse(localStorage.getItem('adopters') || '[]');
-    const adopter = adopters.find((a: any) => a.email === email && a.password === password);
     
-    if (adopter) {
+    if (this.adoptersService.login(email, password)) {
       this.authService.login('adopter', email, password);
       this.router.navigate(['/adopter/dashboard']); 
       return;

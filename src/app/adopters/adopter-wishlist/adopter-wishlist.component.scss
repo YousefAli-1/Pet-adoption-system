@@ -54,10 +54,9 @@ h1 {
         border: 1px solid #ccc;
         border-left: none;
         border-radius: 0 5px 5px 0;
-        background: linear-gradient(135deg, #1a3857, #1e5d8a);
+        background: linear-gradient(135deg, #00ccb1, #07706b);
         color: rgb(255, 255, 255);
         cursor: pointer;
-
 
         &:hover {
             background-color: #fdfdfd;
@@ -128,7 +127,7 @@ h1 {
             margin: 10px;
             max-width: 60vh;
             flex: 1 1 calc(20% - 30px);
-            max-height: 86vh;
+            max-height: 76vh;
             box-sizing: border-box;
             text-align: center;
 
@@ -207,7 +206,36 @@ h1 {
 .flag2 {
     background: linear-gradient(135deg, #1a3857, #1e5d8a);
 }
+.pet-filters {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 2vh;
+    flex-wrap: wrap;
 
+    button {
+        padding: 12px 25px;
+        border: 2px solid white;
+        background: linear-gradient(135deg, #ff6f61, #ff3b2f);
+        color: white;
+        border-radius: 25px;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+
+        &:hover {
+            background: white;
+            color: #ff6f61;
+            transform: translateY(-2px);
+        }
+
+        &.active {
+            background: white;
+            color: #ff6f61;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+    }
+}
 .request-badge {
     background-color: #ff6b6b;
     color: white;
@@ -230,6 +258,7 @@ h1 {
 #bookmark-btn svg {
     fill: #ccc;
     transition: fill 0.3s;
+    transform: translateY(5px);
 }
 
 #bookmark-btn.active svg {

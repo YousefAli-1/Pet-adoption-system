@@ -1,7 +1,8 @@
 import { Routes } from "@angular/router";
 import { DashboardComponent } from "./dashboard/dashboard/dashboard.component";
-import { SettingsComponent } from "./settings/settings/settings.component";
+import { AdminSettingsComponent } from "./settings/settings/settings.component";
 import { SheltersComponent } from "../../shelters/shelters.component";
+import { SettingsEditComponent } from "./settings/settings/settings-edit/settings-edit.component";
 
 
 export const routes : Routes = [
@@ -16,11 +17,15 @@ export const routes : Routes = [
 },
 {
     path:'settings',
-    component:SettingsComponent
+    component:AdminSettingsComponent
 },
 {
     path:'shelters',
     component:SheltersComponent
+},
+{
+    path:'settings/settings-edit',
+    component:SettingsEditComponent
 }
 
 ];

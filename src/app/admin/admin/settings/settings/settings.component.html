@@ -1,1 +1,20 @@
-<p>settings works!</p>
+<div class="settings-container">
+  <h2>Admin Settings </h2>
+
+  <mat-card>
+    <mat-card-title>Profile Information</mat-card-title>
+    <mat-card-content>
+      <p><strong>Name:</strong> {{ admin.name }}</p>
+      <p><strong>Email:</strong> {{ admin.email }}</p>
+      <p><strong>Password:</strong> ••••••••••</p>
+
+   
+    </mat-card-content>
+
+    <mat-card-actions>
+      <button mat-raised-button color="primary" [routerLink]="['/admin/settings/settings-edit']">
+        Edit Settings
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

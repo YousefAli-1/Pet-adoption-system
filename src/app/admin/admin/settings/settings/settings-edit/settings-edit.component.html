@@ -1,0 +1,27 @@
+
+
+<div class="settings-container">
+    <h2>Admin Settings</h2>
+  
+    <mat-card>
+      <mat-card-title>Profile Information</mat-card-title>
+      <mat-card-content>
+       <p><strong>Email:</strong> {{ admin.email }}</p>
+  
+        <mat-form-field appearance="outline">
+          <mat-label>Name:</mat-label>
+          <input matInput [(ngModel)]="admin.name" placeholder="Enter your Name">
+        </mat-form-field>
+  
+        <mat-form-field appearance="outline">
+          <mat-label>Password</mat-label>
+          <input matInput [(ngModel)]="admin.password" placeholder="Enter new password" type="password">
+        </mat-form-field>
+      </mat-card-content>
+  
+      <mat-card-actions>
+        <button mat-raised-button color="primary" (click)="saveChanges()">Save Changes</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+  

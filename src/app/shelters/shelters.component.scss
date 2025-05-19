@@ -9,7 +9,7 @@ $drawer-text-color: #333;
     @include mat.sidenav-overrides((
         container-background-color: white,
         content-background-color: $background-color,
-        container-width: 15%,
+        container-width: 23%,
     ));
     @include mat.button-overrides((
         text-container-shape: Rectangle,
@@ -32,5 +32,7 @@ a{
     @include mat.button-overrides((
         text-label-text-color: white,
     ));
-    background-color: orange;
+    & {
+        background-color: orange;
+    }
 }

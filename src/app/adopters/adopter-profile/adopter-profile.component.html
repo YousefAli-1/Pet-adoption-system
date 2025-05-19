@@ -1,0 +1,55 @@
+<div class="adopter-profile-container">
+    <div class="profile-header">
+        <h2>Adopter Profile</h2>
+    </div>
+
+    <div class="profile-content">
+        <div class="profile-info">
+            <h3>Personal Information</h3>
+            <div class="info-row">
+                <label>Name:</label>
+                <span>{{adopter?.name}}</span>
+            </div>
+            <div class="info-row">
+                <label>Email:</label>
+                <span>{{adopter?.email}}</span>
+            </div>
+            <div class="info-row">
+                <label>Requested Pets:</label>
+                <div class="pet-cards">
+                    @for (pets of requestedPets(); track $index) {
+                    <div class="pet-card">
+                        <div class="pet-info">
+                            <span class="pet-category">{{pets.category}}</span>
+                            <span class="pet-species">{{pets.species}}</span>
+                            <span class="pet-location">{{pets.location}}</span>
+                        </div>
+                    </div>
+                    } @empty { <div class="pet-card">
+                        <div class="pet-info">
+                            <span class="pet-category">No Requested Pets Yet!</span>
+                        </div>
+                    </div>
+                    }
+                </div>
+            </div>
+            <div class="info-row">
+                <label>Adopted Pets:</label>
+                <div class="pet-cards">
+                    @for (pets of adoptedPets(); track $index) {
+                    <div class="pet-card">
+                        <div class="pet-info">
+                            <span class="pet-category">{{pets.category}}</span>
+                            <span class="pet-species">{{pets.species}}</span>
+                            <span class="pet-location">{{pets.location}}</span>
+                        </div>
+                    </div>
+                    }
+                    @empty { <div class="pet-card">
+                        <div class="pet-info">
+                            <span class="pet-category">No adopted Pets Yet!</span>
+                        </div>
+                    </div>
+                    }
+                </div>
+            </div>

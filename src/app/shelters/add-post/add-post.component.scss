@@ -1,0 +1,77 @@
+@use "@angular/material" as mat;
+
+$orange-color: orange;
+$grey-color: #333;
+
+:host {
+  @include mat.form-field-overrides(
+    (
+      filled-caret-color: $orange-color,
+      filled-focus-label-text-color: $orange-color,
+      filled-input-text-color: $grey-color,
+      filled-focus-active-indicator-color: $orange-color,
+    )
+  );
+  @include mat.button-overrides(
+    (
+      filled-container-color: $orange-color,
+      filled-label-text-color: white,
+      outlined-outline-color: $orange-color,
+      outlined-label-text-color: $orange-color,
+    )
+  );
+  & {
+    display: block;
+    width: 100vw;
+    height: 60vh;
+  }
+}
+form {
+  display: block;
+  background-color: white;
+  margin: 10px 5vw;
+  width: 90vw;
+  height: fit-content;
+  padding: 7px;
+  border-radius: 10px;
+}
+
+h2 {
+  display: block;
+  text-align: center;
+  color: $grey-color;
+}
+
+p {
+  display: inline;
+  padding: 5px;
+  color: green;
+}
+
+.input-fields {
+  display: grid;
+  height: fit-content;
+  column-gap: 5px;
+  row-gap: 20px;
+  grid-template-columns: 50% auto;
+  margin-bottom: 92px;
+}
+.upload-button {
+  background: $orange-color;
+  color: white;
+  line-height: 1.2;
+  width: 30%;
+  padding: 15px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.imgError{
+  display: inline;
+  padding: 5px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: end;
+}

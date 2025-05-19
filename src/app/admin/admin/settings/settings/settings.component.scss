@@ -1,0 +1,24 @@
+.settings-container {
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+
+  mat-card {
+    padding: 20px;
+  }
+
+  mat-card-content p {
+    font-size: 16px;
+    margin: 10px 0;
+  }
+
+  mat-slide-toggle {
+    margin-top: 20px;
+    display: block;
+  }
+
+  mat-card-actions {
+    text-align: right;
+    margin-top: 20px;
+  }
+}

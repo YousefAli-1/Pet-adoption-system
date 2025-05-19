@@ -1,1 +1,70 @@
-<router-outlet />
+<body>
+  <button class="butn m-3" (click)="toggleSidebar()">Navigation Bar</button>
+
+  <!-- Popups -->
+  <div *ngIf="adoptersService.showPopup()">
+    <div class="popup-overlay">
+      <div class="popup">
+        <p>{{adoptersService.message()}}</p>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="adoptersService.showPopup2()">
+    <div class="popup-overlay">
+      <div class="popup2">
+        <p>{{adoptersService.message()}}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sidebar -->
+  <div id="sidebar" class="sidebar text-white p-4" [ngClass]="{'active': !isCollapsed}">
+    <button class="btn btn-danger close-btn" (click)="toggleSidebar()">X</button>
+    <h3 class="text-center">Sidebar</h3>
+    <ul class="nav flex-column">
+      <li class="nav-item">
+        <a routerLink="/adopter/dashboard" (click)="closeSidebar()" class="nav-link text-white">Dashboard</a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="/adopter/profile" (click)="closeSidebar()" class="nav-link text-white">Profile</a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="/adopter/settings" (click)="closeSidebar()" class="nav-link text-white">Settings</a>
+      </li>
+
+      <li class="nav-item">
+        <div class="dropdown">
+          <a class="nav-link dropdown-toggle text-white" href="#" id="petsDropdown" role="button"
+            (click)="toggleDropdown($event)">
+            Pets
+          </a>
+          </div>
+      </li>
+      <ul class="dropdown-menu show position-static mt-2" [ngClass]="{'d-none': !isDropdownOpen}"
+        aria-labelledby="petsDropdown">
+        <li><a class="dropdown-item" [class.active]="selectedType === 'all'"
+            (click)="filterPets('all'); closeSidebar()">All Pets</a></li>
+        <li><a class="dropdown-item" [class.active]="selectedType === 'Dog'"
+            (click)="filterPets('Dog'); closeSidebar()">Dog</a></li>
+        <li><a class="dropdown-item" [class.active]="selectedType === 'Cat'"
+            (click)="filterPets('Cat'); closeSidebar()">Cat</a></li>
+        <li><a class="dropdown-item" [class.active]="selectedType === 'Bird'"
+            (click)="filterPets('Bird'); closeSidebar()">Bird</a></li>
+        <li><a class="dropdown-item" [class.active]="selectedType === 'others'"
+            (click)="filterPets('others'); closeSidebar()">Others</a></li>
+      </ul>
+
+
+  <!-- Separated Wishlist & Requested -->
+  <li class="nav-item">
+    <a routerLink="/adopter/wishlist" (click)="closeSidebar()" class="nav-link text-white">Wishlist & Requested</a>
+  </li>
+  </ul>
+
+  </div>
+
+  <router-outlet></router-outlet>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>

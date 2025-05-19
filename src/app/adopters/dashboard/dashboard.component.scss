@@ -1,12 +1,14 @@
 .dashboard {
     .hero-banner {
         position: relative;
+
         img {
             width: 100%;
-            height: 90vh; 
-            object-fit: cover; 
+            height: 90vh;
+            object-fit: cover;
             display: block;
         }
+
         .hero-text {
             position: absolute;
             top: 50%;
@@ -14,10 +16,12 @@
             transform: translate(-50%, -50%);
             color: white;
             text-align: center;
+
             h1 {
                 font-size: 3rem;
                 margin: 0;
             }
+
             p {
                 font-size: 1.5rem;
             }
@@ -27,116 +31,207 @@
 
 h1 {
     text-align: center;
-    margin: 20px 0;
+    margin: 3vh 0;
 }
 
 .search-bar {
     display: flex;
     justify-content: center;
-    margin: 20px 0;
+    margin: 2vh 0;
+
     input {
-        padding: 10px;
+        padding: 1vh;
         font-size: 1rem;
         border: 1px solid #ccc;
         border-radius: 5px 0 0 5px;
-        width: 50%; 
-        max-width: 35vh; 
+        width: 50%;
+        max-width: 35vh;
     }
+
     button {
         padding: 10px 20px;
         font-size: 1rem;
         border: 1px solid #ccc;
         border-left: none;
         border-radius: 0 5px 5px 0;
-        background-color: #DC8641;
-        color: white;
+        background: linear-gradient(135deg, #1a3857, #1e5d8a);
+        color: rgb(255, 255, 255);
         cursor: pointer;
+
+
         &:hover {
             background-color: #fdfdfd;
-            color:#DC8641;
+            color: #ffffff;
         }
     }
 }
 
 .pet-list {
-    background-color: #EFE8D5;
+    background: linear-gradient(135deg, #EFE8D5, #fff2f2);
     padding: 20px;
     border-radius: 10px;
+
     h2 {
         text-align: center;
         margin-bottom: 20px;
     }
+
     .card-container {
         display: flex;
         flex-wrap: wrap;
         justify-content: space-around;
+
         .card {
             background-color: white;
             border: 1px solid #ccc;
             border-radius: 10px;
             padding: 20px;
             margin: 10px;
-            flex: 1 1 calc(33% - 40px); // Use percentage for responsive width
+            max-width: 86vh;
+            flex: 1 1 calc(33% - 40px);
             box-sizing: border-box;
             text-align: center;
+
             h3 {
                 margin-top: 0;
             }
+
             p {
                 margin-bottom: 0;
             }
         }
     }
 }
+
 .featured-pets {
     background-color: #ffffff;
     padding: 20px;
     border-radius: 10px;
     margin-top: 20px;
+
     h2 {
         text-align: center;
         margin-bottom: 20px;
     }
+
     .card-container {
         display: flex;
         flex-wrap: wrap;
         justify-content: space-around;
+
         .card {
+            position: relative;
             background-color: #EFE8D5;
             border: 1px solid #ccc;
             border-radius: 10px;
             padding: 20px;
             margin: 10px;
-            flex: 1 1 calc(20% - 30px); 
-            max-height: 70vh;
+            max-width: 60vh;
+            flex: 1 1 calc(20% - 30px);
+            max-height: 86vh;
             box-sizing: border-box;
             text-align: center;
+
             img {
                 width: 100%;
-                max-height: 30%;
-                border-radius: 10px;
-                margin-bottom: 10px;
+                max-width: 40vh;
+                max-height: 38%;
+                min-height: 38%;
+                border-radius: 1vh;
+                margin-bottom: 5vh;
             }
+
             h3 {
                 margin-top: 0;
             }
+
             p {
-                margin-bottom: 10px;
+                margin-bottom: 1vh;
             }
+
             button {
                 padding: 10px 20px;
                 font-size: 1rem;
                 border: none;
                 border-radius: 5px;
-                background-color: #DC8641;
+                background: linear-gradient(135deg, #1a3857, #1e5d8a);
                 color: white;
                 cursor: pointer;
                 margin: 5px;
+
                 &:hover {
                     background-color: #fdfdfd;
-                    color: #DC8641;
+                    color: #fdfdfd;
                 }
             }
         }
     }
+}
+
+.total-count {
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.flag,
+.flag2 {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, 0) perspective(1000px) rotateY(-20deg);
+    width: 80%;
+    max-width: 36vh;
+    height: 6vh;
+    background-origin: padding-box;
+    border-radius: 3%;
+    box-shadow: 10px 15px 15px rgba(0, 0, 0, 0.1),
+        -7px 10px 10px rgba(0, 0, 0, 0.2);
+    transform-style: preserve-3d;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 16px;
+    transition: transform 0.5s ease;
+    &:hover {
+        transform: translate(-50%, 0) perspective(1000px) rotateX(5deg) rotateY(-2deg) translateZ(10px);
+    }
+}
+
+.flag {
+    background: linear-gradient(135deg, #ff6f61, #ff3b2f);
+}
+
+.flag2 {
+    background: linear-gradient(135deg, #1a3857, #1e5d8a);
+}
+
+.request-badge {
+    background-color: #ff6b6b;
+    color: white;
+    max-width: 12vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-size: 0.8em;
+    margin: 0 auto;  
+    margin-top: 1.6vh;
+}
+#bookmark-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+}
+#bookmark-btn svg {
+    fill: #ccc;
+    transition: fill 0.3s;
+}
+
+#bookmark-btn.active svg {
+    fill: #ff3b2f;
 }

@@ -49,7 +49,7 @@ export const routes: Routes = [
         path:'admin',
         component: AdminComponent,
         children:adminRoutes,
-        canActivateChild: [AdminAuth]
+         canActivateChild: [AdminAuth]
     },{
         path:'login',
         component:LoginComponent,
@@ -80,11 +80,7 @@ export const routes: Routes = [
     },{
         path:'unauth',
         component:UnauthorizedComponent
-    },{
-        path:'admin',
-        component:AdminComponent,
-        children:adminRoutes
-    },{
+     },{
         path:'aboutus',
         component:AboutusComponent
     }

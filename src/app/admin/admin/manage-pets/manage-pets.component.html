@@ -3,7 +3,8 @@
 
   <div class="adopter-card" *ngFor="let post of posts; let i = index">
     <div *ngIf="!post.isEditing">
-      <p>{{ post.category }} - {{ post.shelterEmail }}</p>
+      <p>{{ post.category }} - {{post.species}} - {{post.age}} - {{post.status}} - {{ post.shelterEmail }} </p>
+      <p>- {{post.location}}</p>
       <button class="delete" (click)="deletePosts(i)">Delete</button>
       <!-- <button (click)="editShlters(i)">Edit</button> -->
     </div>

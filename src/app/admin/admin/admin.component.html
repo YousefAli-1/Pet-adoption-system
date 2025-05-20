@@ -1,15 +1,44 @@
-<mat-drawer-container hasBackdrop="true" (backdropClick)="closeDrawer()">
-    <mat-drawer class="drawer" mode="over" position="start" [opened]="isOpened">
-        <a routerLink="/admin/dashboard" routerLinkActive="active" mat-button>Dashboard</a>
-        <a routerLink="/adopters" routerLinkActive="active" mat-button>Adopters</a>
-        <a routerLink="/shelter/dashboard" routerLinkActive="active" mat-button>Shelters</a>
-        <a routerLink="/admin/settings" routerLinkActive="active" mat-button>Settings</a>
-        <a routerLink="/" routerLinkActive="active" mat-button class="logout-button">Log out</a>
-    </mat-drawer>
-    <mat-drawer-content>
-        <button mat-icon-button (click)="openDrawer()">
-            <span class="material-icons md-48"> list </span>
-        </button>
-        <router-outlet />
-    </mat-drawer-content>
-</mat-drawer-container>
+<head>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<router-outlet />
+<nav class="sidebar" [class.collapsed]="isCollapsed">
+  <button class="toggle-btn" (click)="toggleSidebar()">
+    <span class="material-icons">
+      {{ isCollapsed ? 'menu' : 'close' }}
+    </span>
+  </button>
+
+  <ul>
+    <li>
+      <a routerLink="/admin/dashboard" routerLinkActive="active">
+        <span class="material-icons">dashboard</span>
+        <span *ngIf="!isCollapsed">Dashboard</span>
+      </a>
+    </li>
+    <li>
+      <a routerLink="/admin/adopters" routerLinkActive="active">
+        <span class="material-icons">group</span>
+        <span *ngIf="!isCollapsed">Adopters</span>
+      </a>
+    </li>
+    <li>
+      <a routerLink="/admin/shelters" routerLinkActive="active">
+        <span class="material-icons">home</span>
+        <span *ngIf="!isCollapsed">Shelters</span>
+      </a>
+    </li>
+    <li>
+      <a routerLink="/admin/pets" routerLinkActive="active">
+        <span class="material-icons">pets</span>
+        <span *ngIf="!isCollapsed">Pets</span>
+      </a>
+    </li>
+    <li>
+      <a routerLink="/admin/settings" routerLinkActive="active">
+        <span class="material-icons">settings</span>
+        <span *ngIf="!isCollapsed">Settings</span>
+      </a>
+    </li>
+  </ul>
+</nav>

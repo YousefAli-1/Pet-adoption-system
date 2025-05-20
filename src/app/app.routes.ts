@@ -13,13 +13,24 @@ import { AdminComponent } from './admin/admin/admin.component';
 import { inject } from '@angular/core';
 import { SheltersService } from './shelters/shelters.service';
 import { AboutusComponent } from './aboutus/aboutus.component';
+import { AdminSettingsUpdate } from './admin/admin/adminSettings.update';
 import { AdoptersService } from './adopters/adopters.services';
+
 
 const sheltersAuthGuard: CanActivateFn = () => {
     const sheltersService= inject(SheltersService);
     const router = inject(Router);
     
     if (sheltersService.isShelterLoggedIn() ) {
+      return true;
+    }
+    return router.navigateByUrl('/unauth');
+};
+const AdminAuth: CanActivateFn = () => {
+    const adminService= inject(AdminSettingsUpdate);
+    const router = inject(Router);
+    
+    if (adminService.isLoggedIn() ) {
       return true;
     }
     return router.navigateByUrl('/unauth');
@@ -46,10 +57,15 @@ export const routes: Routes = [
         children: adopterRoutes,
         canActivateChild: [adoptersAuthGuard]
     },{
+        path:'admin',
+        component: AdminComponent,
+        children:adminRoutes,
+         canActivateChild: [AdminAuth]
+    },{
         path:'login',
         component:LoginComponent,
         canActivate: [(route: any, state: any) => {
-            const userType = localStorage.getItem('userType') as 'adopter' | 'shelter' | '' | null;
+            const userType = localStorage.getItem('userType') as 'adopter' | 'shelter' | 'admin' | '' | null;
             console.log(userType);
             if (userType== null || userType=='') {
                 return true;
@@ -60,7 +76,7 @@ export const routes: Routes = [
         path:'signup',
         component:SignupComponent,
         canActivate: [(route: any, state: any) => {
-            const userType = localStorage.getItem('userType') as 'adopter' | 'shelter' | '';
+            const userType = localStorage.getItem('userType') as 'adopter' | 'shelter' | 'admin' | '';
             if (userType!== '') {
                 return new RedirectCommand(inject(Router).parseUrl("/unauth")) ;
             }
@@ -75,11 +91,7 @@ export const routes: Routes = [
     },{
         path:'unauth',
         component:UnauthorizedComponent
-    },{
-        path:'admin',
-        component:AdminComponent,
-        children:adminRoutes
-    },{
+     },{
         path:'aboutus',
         component:AboutusComponent
     }

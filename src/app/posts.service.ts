@@ -161,7 +161,9 @@ export class PostsService {
       this.filteredPostsSignal.set(this.allPosts());
       return 'all';
     }
-  
+    if (searchTerm.trim().toLowerCase() === 'newly born') {
+      this.filteredPostsSignal.set(this.allPosts().filter(post => post.age < 5));
+    }
     const term = searchTerm.toLowerCase();
     const filtered = this.allPosts().filter(post =>
       post.species.toLowerCase().includes(term) ||

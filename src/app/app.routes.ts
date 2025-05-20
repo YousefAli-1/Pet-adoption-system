@@ -13,12 +13,22 @@ import { AdminComponent } from './admin/admin/admin.component';
 import { inject } from '@angular/core';
 import { SheltersService } from './shelters/shelters.service';
 import { AboutusComponent } from './aboutus/aboutus.component';
+import { AdoptersService } from './adopters/adopters.services';
 
 const sheltersAuthGuard: CanActivateFn = () => {
     const sheltersService= inject(SheltersService);
     const router = inject(Router);
     
     if (sheltersService.isShelterLoggedIn() ) {
+      return true;
+    }
+    return router.navigateByUrl('/unauth');
+};
+const adoptersAuthGuard: CanActivateFn = () => {
+    const adopterService= inject(AdoptersService);
+    const router = inject(Router);
+    
+    if (adopterService.isLoggedIn() ) {
       return true;
     }
     return router.navigateByUrl('/unauth');
@@ -33,7 +43,8 @@ export const routes: Routes = [
     },{
         path:'adopter',
         component: AdoptersComponent,
-        children: adopterRoutes
+        children: adopterRoutes,
+        canActivateChild: [adoptersAuthGuard]
     },{
         path:'login',
         component:LoginComponent,

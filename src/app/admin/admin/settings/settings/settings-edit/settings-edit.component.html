@@ -1,3 +1,19 @@
+  <div *ngIf="adminService.showPopup()">
+    <div class="popup-overlay">
+      <div class="Succsess-Popup">
+        <p>{{adminService.message()}}</p>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="adminService.showPopup2()">
+    <div class="popup-overlay">
+      <div class="failure-popup">
+        <p>{{adminService.message()}}</p>
+      </div>
+    </div>
+  </div>
+
 <div class="settings-container">
     <h2>Account Settings</h2>
     <form class="settings-form">
@@ -27,3 +43,4 @@
         <button type="submit" class="btn btn-primary" (click)="saveChanges()">Save Changes</button>
     </form>
 </div>
+

@@ -47,7 +47,7 @@ export class AdopterWishlistComponent  implements OnInit {
     }else if (type === 'Requested') {
     this.getRequestedPets();
     }else if(type=="Newly Born"){
-      this.pets.set(this.postsService.getAllPosts());
+       this.getWishlistPets();
       const filtered = this.pets().filter(pets =>
         pets.age<5
       );

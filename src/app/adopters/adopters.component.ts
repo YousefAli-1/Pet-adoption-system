@@ -62,7 +62,7 @@ this.closeDropdown();
       this.route.navigate(['adopter/pets'], { 
         queryParams: { 
           q: '',
-          category: null 
+          category: input 
         } 
       });
       return;
@@ -70,7 +70,7 @@ this.closeDropdown();
     this.route.navigate(['adopter/pets'], { 
       queryParams: { 
         q: input,
-        category: category 
+        category: category, 
       } 
     });
     

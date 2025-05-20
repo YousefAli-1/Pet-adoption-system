@@ -1,5 +1,9 @@
 <body>
-  <button class="butn m-3" (click)="toggleSidebar()">Navigation Bar</button>
+  <button class="butn m-3" (click)="toggleSidebar()">
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+  </button>
 
   <!-- Popups -->
   <div *ngIf="adoptersService.showPopup()">
@@ -39,7 +43,7 @@
             (click)="toggleDropdown($event)">
             Pets
           </a>
-          </div>
+        </div>
       </li>
       <ul class="dropdown-menu show position-static mt-2" [ngClass]="{'d-none': !isDropdownOpen}"
         aria-labelledby="petsDropdown">
@@ -53,14 +57,16 @@
             (click)="filterPets('Bird'); closeSidebar()">Bird</a></li>
         <li><a class="dropdown-item" [class.active]="selectedType === 'others'"
             (click)="filterPets('others'); closeSidebar()">Others</a></li>
+        <li><a class="dropdown-item" [class.active]="selectedType === 'Newly Born'"
+            (click)="filterPets('Newly Born'); closeSidebar()">Newly Born</a></li>
       </ul>
 
 
-  <!-- Separated Wishlist & Requested -->
-  <li class="nav-item">
-    <a routerLink="/adopter/wishlist" (click)="closeSidebar()" class="nav-link text-white">Wishlist & Requested</a>
-  </li>
-  </ul>
+      <!-- Separated Wishlist & Requested -->
+      <li class="nav-item">
+        <a routerLink="/adopter/wishlist" (click)="closeSidebar()" class="nav-link text-white">Wishlist & Requested</a>
+      </li>
+    </ul>
 
   </div>
 

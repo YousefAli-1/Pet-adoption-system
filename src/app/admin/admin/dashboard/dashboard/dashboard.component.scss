@@ -1,9 +1,13 @@
 @use '@angular/material' as mat;
 
+// .outer-conatiner{
+//     display: block;
+//     margin-left: 6%;
+// }
 .dashboard{
     margin-left: auto;
     .dashStart{
-        position: relative;
+        // position: relative;
         
         img {
             width: 100%;
@@ -97,6 +101,7 @@ body {
     padding: 20px;
     border-radius: 10px;
     margin-top: 20px;
+    margin-left: 4%;
 
     img{
         width: 100%;

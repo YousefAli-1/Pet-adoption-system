@@ -13,6 +13,7 @@ import { AdminComponent } from './admin/admin/admin.component';
 import { inject } from '@angular/core';
 import { SheltersService } from './shelters/shelters.service';
 import { AboutusComponent } from './aboutus/aboutus.component';
+import { AdminSettingsUpdate } from './admin/admin/adminSettings.update';
 
 const sheltersAuthGuard: CanActivateFn = () => {
     const sheltersService= inject(SheltersService);
@@ -23,6 +24,16 @@ const sheltersAuthGuard: CanActivateFn = () => {
     }
     return router.navigateByUrl('/unauth');
 };
+const AdminAuth: CanActivateFn = () => {
+    const adminService= inject(AdminSettingsUpdate);
+    const router = inject(Router);
+    
+    if (adminService.isLoggedIn() ) {
+      return true;
+    }
+    return router.navigateByUrl('/unauth');
+};
+
 
 export const routes: Routes = [
     {
@@ -37,7 +48,8 @@ export const routes: Routes = [
     },{
         path:'admin',
         component: AdminComponent,
-        children:adminRoutes
+        children:adminRoutes,
+        canActivateChild: [AdminAuth]
     },{
         path:'login',
         component:LoginComponent,

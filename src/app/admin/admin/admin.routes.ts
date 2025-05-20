@@ -4,6 +4,7 @@ import { AdminSettingsComponent } from "./settings/settings/settings.component";
 import { SettingsEditComponent } from "./settings/settings/settings-edit/settings-edit.component";
 import { ManageAdoptersComponent } from "./manage-adopters/manage-adopters.component";
 import { ManageSheltersComponent } from "./manage-shelters/manage-shelters.component";
+import { ManagePetsComponent } from "./manage-pets/manage-pets.component";
 
 export const routes : Routes = [
 {
@@ -22,6 +23,9 @@ export const routes : Routes = [
 },{
     path:'adopters',
     component:ManageAdoptersComponent
+},{
+    path:'pets',
+    component:ManagePetsComponent
 },{
     path:'settings/settings-edit',
     component:SettingsEditComponent

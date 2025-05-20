@@ -1,24 +1,24 @@
 <div>
-  <h2>Manage Adopters</h2>
+  <h2>Manage Shelters</h2>
 
   <div class="adopter-card" *ngFor="let shelter of shelter; let i = index">
     <div *ngIf="!shelter.isEditing">
       <p>{{ shelter.name }} - {{ shelter.email }}</p>
-      <button (click)="deleteShelters(i)">Delete</button>
-      <button (click)="editShlters(i)">Edit</button>
+      <button class="delete" (click)="deleteShelters(i)">Delete</button>
+      <!-- <button (click)="editShlters(i)">Edit</button> -->
     </div>
 
     <div *ngIf="shelter.isEditing">
       <input [(ngModel)]="shelter.name" placeholder="Name" />
       <input [(ngModel)]="shelter.email" placeholder="Email" />
-      <button (click)="saveEditedShelters(i)">Save</button>
-      <button (click)="cancelEdit(i)">Cancel</button>
+      <!-- <button (click)="saveEditedShelters(i)">Save</button>
+      <button (click)="cancelEdit(i)">Cancel</button> -->
     </div>
   </div>
 
   <hr />
 
-  <button class="add-button" (click)="addShelters({ name: 'New Shelter', email: 'new@example.com' })">
+  <!-- <button class="add-button" (click)="addShelters({ name: 'New Shelter', email: 'new@example.com' })">
     Add Shelter
-  </button>
+  </button> -->
 </div>

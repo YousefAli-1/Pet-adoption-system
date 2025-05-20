@@ -1,0 +1,17 @@
+<div>
+  <h2>Manage Pets</h2>
+
+  <div class="adopter-card" *ngFor="let post of posts; let i = index">
+    <div *ngIf="!post.isEditing">
+      <p>{{ post.category }} - {{ post.shelterEmail }}</p>
+      <button class="delete" (click)="deletePosts(i)">Delete</button>
+      <!-- <button (click)="editShlters(i)">Edit</button> -->
+    </div>
+
+    <div *ngIf="post.isEditing">
+      <input [(ngModel)]="post.category" placeholder="category" />
+      <input [(ngModel)]="post.email" placeholder="Email" />
+    </div>
+  </div>
+  <hr />
+</div>

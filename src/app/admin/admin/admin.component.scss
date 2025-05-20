@@ -1,102 +1,26 @@
-// @use '@angular/material' as mat;
-
-// $background-color: rgba(76, 77, 78, 0.377);
-// $drawer-text-color: #333;
-
-// :host {
-//     @include mat.icon-button-overrides((
-//         icon-color: $drawer-text-color,
-//     ));
-
-//     @include mat.sidenav-overrides((
-//         container-background-color: white,
-//         content-background-color: $background-color,
-//         container-width: 15%,
-        
-//     ));
-
-//     @include mat.button-overrides((
-//         text-container-shape: Rectangle,
-//         text-label-text-color: $drawer-text-color,
-//         text-label-text-size: 30px,
-//         text-state-layer-color: $background-color,
-//         text-ripple-color: $background-color
-//     ));
-//     $background-color: white;
-//     $drawer-text-color: white;
-
-// :host {
-//     @include mat.icon-button-overrides((
-//         icon-color: $drawer-text-color,
-//     ));
-
-//     @include mat.sidenav-overrides((
-//         container-background-color: white,
-//         content-background-color: $background-color,
-//         container-width: 15%,
-//     ));
-
-//     @include mat.button-overrides((
-//         text-container-shape: Rectangle,
-//         text-label-text-color: $drawer-text-color,
-//         text-label-text-size: 30px,
-//         text-state-layer-color: $background-color,
-//         text-ripple-color: $background-color
-//     ));
-//     display: flex;
-// }
-// }
-
-
-// button{
-//     margin-left: 3px;
-// }
-
-// a{
-//     width: 100%;
-// }
-
-// .active{
-//     @include mat.button-overrides((
-//         text-label-text-color: white,
-//     ));
-//     background-color: orange;
-// }
-// .logout-button {
-//     margin-top: auto; 
-//     background-color: white;
-//     color: white;
-//     font-weight: bold;
-//     border-radius: 5px;
-//     margin-top: 620px;  
-//     transition: background-color 0.3s ease;
-  
-//     &:hover {
-//       background-color: #b02a37;
-//       color: #fff;
-//     }
-//   }
 .sidebar {
   width: 220px;
   height: 100vh;
-  background-color: #2c3e50;
+  background-color: #333;
   padding-top: 20px;
   position: fixed;
   top: 0;
   left: 0;
   transition: width 0.3s ease;
+  overflow: hidden;
 
   &.collapsed {
     width: 70px;
 
     ul li a {
-      text-align: center;
-      font-size: 0;
-      padding: 12px 0;
+      justify-content: center;
 
-      &::before {
-        content: attr(data-icon);
-        font-size: 18px;
+      .material-icons {
+        margin-right: 0;
+      }
+
+      span:not(.material-icons) {
+        display: none;
       }
     }
   }
@@ -105,10 +29,14 @@
     background: none;
     border: none;
     color: white;
-    font-size: 20px;
+    font-size: 24px;
     margin-left: 10px;
     margin-bottom: 20px;
     cursor: pointer;
+
+    .material-icons {
+      font-size: 28px;
+    }
   }
 
   ul {
@@ -119,16 +47,22 @@
       margin: 10px 0;
 
       a {
-        display: block;
+        display: flex;
+        align-items: center;
         color: white;
         text-decoration: none;
         padding: 12px 20px;
         font-size: 16px;
         transition: background 0.3s ease;
 
+        .material-icons {
+          margin-right: 10px;
+          font-size: 20px;
+        }
+
         &:hover,
         &.active {
-          background-color: #34495e;
+          background-color: #333;
           border-left: 4px solid #ff3b2f;
         }
       }

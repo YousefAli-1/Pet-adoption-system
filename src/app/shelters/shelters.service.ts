@@ -36,10 +36,12 @@ export class SheltersService {
 
     if (allSheltersJson) {
       this.allShelters = JSON.parse(allSheltersJson);
+      console.log('allShelters ',this.allShelters);
       return;
     }
 
     this.allShelters = dummy_shelters;
+    console.log('allShelters ',this.allShelters);
   }
 
   addShelter(newShelter: shelterEssentialType) {

@@ -60,6 +60,8 @@ import { Admin } from './admin.models';
     triggerError(message: string) {
       this._message.set(message);
       this._showPopup2.set(true);
+      console.log("err --->", this.message())
+      console.log("err --->", this.showPopup2())
       setTimeout(() => this._showPopup2.set(false), 1000); 
     }
     trigger(message: string) {

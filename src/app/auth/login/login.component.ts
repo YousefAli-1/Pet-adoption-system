@@ -5,6 +5,7 @@ import { SheltersService } from '../../shelters/shelters.service';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { AdoptersService } from '../../adopters/adopters.services';
+import { AdminSettingsUpdate } from '../../admin/admin/adminSettings.update';
 @Component({
   selector: 'app-login',
   imports: [RouterLink, FormsModule,CommonModule],
@@ -16,6 +17,7 @@ export class LoginComponent {
     private router: Router, 
     private sheltersService: SheltersService,
     public adoptersService: AdoptersService,
+    public adminService :AdminSettingsUpdate,
     private authService: AuthService
   ) {}
 
@@ -28,7 +30,11 @@ export class LoginComponent {
       this.router.navigate(['/adopter/dashboard']); 
       return;
     }
-    
+    if (this.adminService.login(email, password)) {
+      this.authService.login('admin', email, password);
+      this.router.navigate(['/admin/dashboard']); 
+      return;
+    }
     if (this.sheltersService.login(email, password)) {
       this.authService.login('shelter', email, password);
       this.router.navigate(['/shelter/dashboard']);

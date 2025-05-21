@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-export type UserType = 'adopter' | 'shelter' | '';
+export type UserType = 'adopter' | 'shelter' | 'admin' | '';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +10,7 @@ export class AuthService {
 
   constructor() {
     const storedType = localStorage.getItem('userType');
-    this._userType = (storedType === 'adopter' || storedType === 'shelter') ? storedType : '';
+    this._userType = (storedType === 'adopter' || storedType === 'shelter' || storedType == 'admin') ? storedType : '';
   }
 
   get userType(): UserType {

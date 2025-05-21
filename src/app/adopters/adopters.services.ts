@@ -164,7 +164,7 @@ export class AdoptersService {
     return this.loggedInAdopterSignal();
   }
 
-  private updateAdoptersInLocalStorage(): void {
+   updateAdoptersInLocalStorage(): void {
     localStorage.setItem('allAdopters', JSON.stringify(this.allAdopters));
   }
 

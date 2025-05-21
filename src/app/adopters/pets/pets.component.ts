@@ -56,6 +56,12 @@ export class PetsComponent  {
     this.selectedType = type;
     if (type === 'all') {
       this.pets.set(this.postsService.getAllPosts());
+    }else if(type=="Newly Born"){
+      this.pets.set(this.postsService.getAllPosts());
+      const filtered = this.pets().filter(pets =>
+        pets.age<5
+      );
+      this.pets.set(filtered);
     } else {
       this.pets.set(this.postsService.getAllPosts());
       const filtered = this.pets().filter(pets =>

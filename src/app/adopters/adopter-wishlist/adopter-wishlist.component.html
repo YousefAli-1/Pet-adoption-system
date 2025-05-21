@@ -7,6 +7,7 @@
     <button class="filter-btn" [class.active]="selectedType === 'Bird'" (click)="filterPets('Bird')">Bird</button>
     <button class="filter-btn" [class.active]="selectedType === 'others'" (click)="filterPets('others')">Others</button>
     <button class="filter-btn" [class.active]="selectedType === 'Requested'" (click)="filterPets('Requested')">Requested</button>
+    <button class="filter-btn" [class.active]="selectedType === 'Newly Born'" (click)="filterPets('Newly Born')">Newly Born</button>
 </div>
 <div>
     <div class="featured-pets">
@@ -17,7 +18,7 @@
                 <p class="request-badge">{{getRequestCount(pet.ID)}} requests</p> 
                 <p>Category: {{ pet.category }}</p>
                 <p>Species:{{pet.species}}</p>
-                <p>Age: {{ pet.age }}</p>
+                <p>Age: {{ pet.age }} months</p>
                 <p>location: {{ pet.location }}</p>
                 @if(userType==null || userType==""){
                 <button routerLink="/login">Login To Adopt</button>

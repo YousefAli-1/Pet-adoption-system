@@ -1,79 +1,71 @@
-@use '@angular/material' as mat;
+.sidebar {
+  width: 220px;
+  height: 100vh;
+  background-color: #333;
+  padding-top: 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  transition: width 0.3s ease;
+  overflow: hidden;
 
-$background-color: rgba(76, 77, 78, 0.377);
-$drawer-text-color: #333;
+  &.collapsed {
+    width: 70px;
 
-:host {
-    @include mat.icon-button-overrides((
-        icon-color: $drawer-text-color,
-    ));
+    ul li a {
+      justify-content: center;
 
-    @include mat.sidenav-overrides((
-        container-background-color: white,
-        content-background-color: $background-color,
-        container-width: 15%,
-        
-    ));
+      .material-icons {
+        margin-right: 0;
+      }
 
-    @include mat.button-overrides((
-        text-container-shape: Rectangle,
-        text-label-text-color: $drawer-text-color,
-        text-label-text-size: 30px,
-        text-state-layer-color: $background-color,
-        text-ripple-color: $background-color
-    ));
-    $background-color: white;
-    $drawer-text-color: white;
-
-:host {
-    @include mat.icon-button-overrides((
-        icon-color: $drawer-text-color,
-    ));
-
-    @include mat.sidenav-overrides((
-        container-background-color: white,
-        content-background-color: $background-color,
-        container-width: 15%,
-    ));
-
-    @include mat.button-overrides((
-        text-container-shape: Rectangle,
-        text-label-text-color: $drawer-text-color,
-        text-label-text-size: 30px,
-        text-state-layer-color: $background-color,
-        text-ripple-color: $background-color
-    ));
-    display: flex;
-}
-}
-
-
-button{
-    margin-left: 3px;
-}
-
-a{
-    width: 100%;
-}
-
-.active{
-    @include mat.button-overrides((
-        text-label-text-color: white,
-    ));
-    background-color: orange;
-}
-.logout-button {
-    margin-top: auto; // Push to bottom if parent is flex column
-    background-color: white;
-    color: white;
-    font-weight: bold;
-    border-radius: 5px;
-    margin-top: 641px;
-    transition: background-color 0.3s ease;
-  
-    &:hover {
-      background-color: #b02a37;
-      color: #fff;
+      span:not(.material-icons) {
+        display: none;
+      }
     }
   }
-  
+
+  .toggle-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    margin-left: 10px;
+    margin-bottom: 20px;
+    cursor: pointer;
+
+    .material-icons {
+      font-size: 28px;
+    }
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+
+    li {
+      margin: 10px 0;
+
+      a {
+        display: flex;
+        align-items: center;
+        color: white;
+        text-decoration: none;
+        padding: 12px 20px;
+        font-size: 16px;
+        transition: background 0.3s ease;
+
+        .material-icons {
+          margin-right: 10px;
+          font-size: 20px;
+        }
+
+        &:hover,
+        &.active {
+          background-color: #333;
+          border-left: 4px solid #ff3b2f;
+        }
+      }
+    }
+  }
+}

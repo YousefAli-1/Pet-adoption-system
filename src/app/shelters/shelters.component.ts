@@ -1,6 +1,7 @@
 //Angular
 import { Component } from '@angular/core';
-import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 //Angular Materials
 import { MatButtonModule } from '@angular/material/button';
@@ -8,18 +9,16 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-shelters',
-  imports: [RouterOutlet, MatSidenavModule, MatButtonModule, RouterLink, RouterLinkActive],
+  imports: [RouterOutlet, MatSidenavModule,CommonModule, MatButtonModule, RouterLink, RouterLinkActive],
   templateUrl: './shelters.component.html',
   styleUrl: './shelters.component.scss',
 })
 export class SheltersComponent {
-  isOpened: boolean = false;
-
-  openDrawer(): void {
-    this.isOpened = true;
+  isCollapsed = true; 
+  closeSidebar() {
+    this.isCollapsed = true;
   }
-
-  closeDrawer(): void {
-    this.isOpened = false;
+  toggleSidebar() {
+    this.isCollapsed = !this.isCollapsed;
   }
 }

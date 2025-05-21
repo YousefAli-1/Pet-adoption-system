@@ -1,11 +1,11 @@
 import { Component,inject } from '@angular/core';
-import { RouterOutlet,RouterLink,Router } from '@angular/router';
+import { RouterOutlet,RouterLink,Router,RouterLinkActive } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
 import { AdoptersService } from './adopters.services';
 @Component({
   selector: 'app-adopters',
-  imports: [RouterOutlet,CommonModule,RouterLink],
+  imports: [RouterOutlet,CommonModule,RouterLink,RouterLinkActive],
   templateUrl: './adopters.component.html',
   styleUrl: './adopters.component.scss'
 })
@@ -26,15 +26,6 @@ export class AdoptersComponent {
 
   public open(modal: any): void {
     this.modalService.open(modal);
-  }
-  isOpened: boolean = false;
-
-  openDrawer(): void {
-    this.isOpened = true;
-  }
-
-  closeDrawer(): void {
-    this.isOpened = false;
   }
   isDropdownOpen = false; 
 
@@ -62,7 +53,7 @@ this.closeDropdown();
       this.route.navigate(['adopter/pets'], { 
         queryParams: { 
           q: '',
-          category: null 
+          category: input 
         } 
       });
       return;
@@ -70,7 +61,7 @@ this.closeDropdown();
     this.route.navigate(['adopter/pets'], { 
       queryParams: { 
         q: input,
-        category: category 
+        category: category, 
       } 
     });
     

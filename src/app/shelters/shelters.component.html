@@ -1,14 +1,34 @@
-<mat-drawer-container hasBackdrop="true" (backdropClick)="closeDrawer()">
-    <mat-drawer class="drawer" mode="over" position="start" [opened]="isOpened">
-      <a routerLink="/shelter/dashboard" routerLinkActive="active" mat-button>Dashboard</a>
-      <a routerLink="/shelter/addPost" routerLinkActive="active" mat-button>Add Post</a>
-      <a routerLink="/shelter/managePosts" routerLinkActive="active" mat-button>Manage Posts</a>
-      <a routerLink="/shelter/settings" routerLinkActive="active" mat-button>Settings</a>
-    </mat-drawer>
-    <mat-drawer-content>
-        <button mat-icon-button (click)="openDrawer()">
-            <span class="material-icons md-48"> list </span>
-        </button>
-        <router-outlet />
-    </mat-drawer-content>
-</mat-drawer-container>
+<router-outlet/>
+<nav class="sidebar" [class.collapsed]="isCollapsed">
+    <button class="toggle-btn" (click)="toggleSidebar()">
+        <span class="material-icons">
+            {{ isCollapsed ? 'menu' : 'close' }}
+        </span>
+    </button>
+    <ul>
+        <li>
+            <a routerLink="/shelter/dashboard" routerLinkActive="active" (click)="closeSidebar()">
+                <span class="material-icons">dashboard</span>
+                <span *ngIf="!isCollapsed">Dashboard</span>
+            </a>
+        </li>
+        <li>
+            <a routerLink="/shelter/addPost" routerLinkActive="active" (click)="closeSidebar()">
+                <span class="material-icons">add_circle</span>
+                <span *ngIf="!isCollapsed">Add Post</span>
+            </a>
+        </li>
+        <li>
+            <a routerLink="/shelter/managePosts" routerLinkActive="active" (click)="closeSidebar()">
+                <span class="material-icons">pets</span>
+                <span *ngIf="!isCollapsed">Manage Posts</span>
+            </a>
+        </li>
+        <li>
+            <a routerLink="/shelter/settings" routerLinkActive="active" (click)="closeSidebar()">
+                <span class="material-icons">settings</span>
+                <span *ngIf="!isCollapsed">Settings</span>
+            </a>
+        </li>
+    </ul>
+    </nav>

@@ -19,3 +19,18 @@
     <div class="circle circle-3"></div>
   </div>
 </div>
+ <div *ngIf="adoptersService.showPopup()">
+    <div class="popup-overlay">
+      <div class="popup">
+        <p>{{adoptersService.message()}}</p>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="adoptersService.showPopup2()">
+    <div class="popup-overlay">
+      <div class="popup2">
+        <p>{{adoptersService.message()}}</p>
+      </div>
+    </div>
+  </div>

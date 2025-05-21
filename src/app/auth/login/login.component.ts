@@ -1,13 +1,13 @@
-import { Component } from '@angular/core';
+import { Component} from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { SheltersService } from '../../shelters/shelters.service';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { AdoptersService } from '../../adopters/adopters.services';
-
 @Component({
   selector: 'app-login',
-  imports: [RouterLink, FormsModule],
+  imports: [RouterLink, FormsModule,CommonModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
@@ -15,7 +15,7 @@ export class LoginComponent {
   constructor(
     private router: Router, 
     private sheltersService: SheltersService,
-    private adoptersService: AdoptersService,
+    public adoptersService: AdoptersService,
     private authService: AuthService
   ) {}
 
@@ -34,7 +34,6 @@ export class LoginComponent {
       this.router.navigate(['/shelter/dashboard']);
       return;
     }
-    
-    alert('Invalid email or password');
+    this.adoptersService.triggerError('Invalid email or password')
   }
 }

@@ -1,26 +1,75 @@
-.settings-container {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
+      /* Add your global styles here */
+    //   @import '@fortawesome/fontawesome-free/css/all.min.css';
+      @import "bootstrap/dist/css/bootstrap.min.css";
+  .settings-container {
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background-color: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   
-    mat-form-field {
-      display: block;
-      width: 100%;
-      margin-bottom: 15px;
-    }
+      h2 {
+          color: #333;
+          margin-bottom: 1.5rem;
+          text-align: center;
+      }
   
-    mat-card {
-      padding: 20px;
-    }
+      .settings-form {
   
-    mat-slide-toggle {
-      margin-top: 20px;
-      display: block;
-    }
+          .form-group {
+              margin-bottom: 1.5rem;
   
-    mat-card-actions {
-      margin-top: 20px;
-      text-align: right;
-    }
+              label {
+                  display: block;
+                  margin-bottom: 0.5rem;
+                  color: #555;
+                  font-weight: 500;
+              }
+  
+              .form-control {
+                  width: 100%;
+                  padding: 0.75rem;
+                  border: 1px solid #ddd;
+                  border-radius: 4px;
+                  font-size: 1rem;
+  
+                  &:focus {
+                      outline: none;
+                      border-color: #007bff;
+                      box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+                  }
+  
+  
+                  .password-input-container {
+                      position: relative;
+                  }
+  
+                  .password-input-container i {
+                      position: absolute;
+                      right: 10px;
+                      top: 50%;
+                      transform: translateY(-50%);
+                      cursor: pointer;
+                  }
+              }
+          }
+  
+          .btn-primary {
+              width: 100%;
+              padding: 0.75rem;
+              background: linear-gradient(135deg, #ff6f61, #ff3b2f);
+              border: none;
+              border-radius: 4px;
+              color: white;
+              font-size: 1rem;
+              cursor: pointer;
+              transition: background-color 0.2s;
+  
+              &:hover {
+                  transform: scale(1.09);
+                  background: linear-gradient(135deg, #e03525, #ff3b2f);
+              }
+          }
+      }
   }
-  

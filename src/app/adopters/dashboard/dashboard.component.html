@@ -70,7 +70,7 @@
                 <p class="request-badge">{{getRequestCount(pet.ID)}} requests</p>
                 <p>Category: {{ pet.category }}</p>
                 <p>Species:{{pet.species}}</p>
-                <p>Age: {{ pet.age }}</p>
+                <p>Age: {{ pet.age }} months</p>
                 <p>location: {{ pet.location }}</p>
                 @if(userType==null || userType==""){
                 <button routerLink="/login">Login to Adopt</button>

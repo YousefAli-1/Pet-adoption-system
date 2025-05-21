@@ -15,6 +15,7 @@ import { SheltersService } from './shelters/shelters.service';
 import { AboutusComponent } from './aboutus/aboutus.component';
 import { AdminSettingsUpdate } from './admin/admin/adminSettings.update';
 import { AdoptersService } from './adopters/adopters.services';
+import { PetsComponent } from './adopters/pets/pets.component';
 
 
 const sheltersAuthGuard: CanActivateFn = () => {
@@ -85,6 +86,10 @@ export const routes: Routes = [
     },{
         path:'',
         component:LandingPageComponent
+    },
+    {
+        path:'pets',
+        component:PetsComponent
     },{
         path:'404',
         component:NotFoundComponent

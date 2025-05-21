@@ -94,7 +94,7 @@
         <span class="material-icons">pets</span>
       </a>
       }@else{
-      <a routerLink="/adopter/pets" class="nav-link dropdown-toggle" (click)="toggleDropdown($event)" routerLinkActive="active">  
+      <a [routerLink]="null" class="nav-link dropdown-toggle" (click)="toggleDropdown($event)" routerLinkActive="active">  
         <span class="material-icons">pets</span>
         <span *ngIf="!isCollapsed">Pets</span>
       </a>

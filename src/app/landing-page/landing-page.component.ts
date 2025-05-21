@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { PostsService } from '../posts.service';
+import { PostType } from '../shelters/shelters.model';
 
 @Component({
   selector: 'app-landing-page',
@@ -9,51 +11,33 @@ import { RouterLink } from '@angular/router';
 })
 export class LandingPageComponent {
   selectedType: string = 'all';
-  filteredPets: any[] = [];
+  filteredPets: PostType[] = [];
 
   constructor() {
-    this.filteredPets = this.pets;
+    this.filteredPets = this.pets();
   }
-  pets: any[] = [
-    {
-      name: 'Max',
-      type: 'dogs',
-      breed: 'Golden Retriever',
-      age: 2,
-      imageUrl: 'Golden Retriever Puppy.jpeg'
-    },
-    {
-      name: 'Luna',
-      type: 'cats', 
-      breed: 'Persian',
-      age: 1,
-      imageUrl: 'egyptian mau.PNG'
-    },
-    {
-      name: 'Charlie',
-      type: 'birds',
-      breed: 'Parakeet',
-      age: 3,
-      imageUrl: 'Bird.jpg'
-    },
-    {
-      name: 'Oreo',
-      type: 'others',
-      breed: 'Rabbit',
-      age: 1,
-      imageUrl: 'Rabbit.jpg'
-    }
-  ];
+  
+  private postsService = inject(PostsService);
+  allPosts = this.postsService.getAllPosts();
+  pets = signal(this.getRandomPets(5));
+
+  private getRandomPets(count: number) {
+    const allPosts = this.postsService.getAllPosts();
+    const shuffled = [...allPosts].sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, count);
+  }
 
   filterPets(type: string): void {
     this.selectedType = type;
     if (type === 'all') {
-      this.filteredPets = this.pets;
+      this.filteredPets = this.pets();
     } else {
-      this.filteredPets = this.pets.filter(pet => pet.type === type);
+      this.filteredPets = this.pets().filter(pet => 
+        pet.category === type
+      );
     }
-    console.log(this.filteredPets);
   }
+
   scrollToFooter() {
     const footer = document.querySelector('footer');
     const contactSection = document.querySelector('.contact');

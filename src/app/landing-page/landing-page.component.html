@@ -16,18 +16,18 @@
     <h2 class="section-title">Check Out Our Featured Pets</h2>
     <div class="pet-filters">
       <button class="filter-btn" [class.active]="selectedType === 'all'" (click)="filterPets('all')">All Pets</button>
-      <button class="filter-btn" [class.active]="selectedType === 'dogs'" (click)="filterPets('dogs')">Dogs</button>
-      <button class="filter-btn" [class.active]="selectedType === 'cats'" (click)="filterPets('cats')">Cats</button>
-      <button class="filter-btn" [class.active]="selectedType === 'birds'" (click)="filterPets('birds')">Birds</button>
-      <button class="filter-btn" [class.active]="selectedType === 'others'" (click)="filterPets('others')">Others</button>
+      <button class="filter-btn" [class.active]="selectedType === 'Dog'" (click)="filterPets('Dog')">Dogs</button>
+      <button class="filter-btn" [class.active]="selectedType === 'Cat'" (click)="filterPets('Cat')">Cats</button>
+      <button class="filter-btn" [class.active]="selectedType === 'Bird'" (click)="filterPets('Bird')">Birds</button>
+      <button class="filter-btn" [class.active]="selectedType === 'Other'" (click)="filterPets('Other')">Others</button>
     </div>
     <div class="pet-grid" [@fadeAnimation]="selectedType">
-      @for (pet of filteredPets; track pet.name) {
+      @for (pet of filteredPets; track pet.ID) {
         <div class="pet-card">
-          <img [src]="pet.imageUrl" [alt]="pet.name" class="pet-image">
+          <img [src]="pet.imgName" [alt]="pet.species" class="pet-image">
           <div class="pet-info">
-            <h3 class="pet-name">{{pet.name}}</h3>
-            <p class="pet-details">{{pet.breed}} • {{pet.age}} years old</p>
+            <h3 class="pet-name">{{pet.species}}</h3>
+            <p class="pet-details">{{pet.category}} • {{pet.age}} years old</p>
           </div>
         </div>
       }

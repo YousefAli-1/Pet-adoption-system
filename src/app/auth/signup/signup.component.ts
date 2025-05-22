@@ -5,7 +5,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatIconModule } from '@angular/material/icon';
 import { SheltersService } from '../../shelters/shelters.service';
 import { CommonModule } from '@angular/common';
-
+import { AdoptersService } from '../../adopters/adopters.services';
 @Component({
   selector: 'app-signup',
   standalone: true,
@@ -30,7 +30,8 @@ export class SignupComponent {
 
   constructor(
     private router: Router,
-    private sheltersService: SheltersService
+    private sheltersService: SheltersService,
+    private adoptersService: AdoptersService
   ) {}
 
   toggleUserType(type: 'adopter' | 'shelter') {
@@ -88,10 +89,6 @@ export class SignupComponent {
       this.passwordError = 'Password must be at least 8 characters';
       return false;
     }
-    if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(this.password)) {
-      this.passwordError = 'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character';
-      return false;
-    }
     this.passwordError = '';
     return true;
   }
@@ -103,9 +100,7 @@ export class SignupComponent {
 
     if (isNameValid && isEmailValid && isPasswordValid) {
       if (this.userType === 'adopter') {
-        const adopters = JSON.parse(localStorage.getItem('adopters') || '[]');
-        adopters.push({ name: this.name, email: this.email, password: this.password });
-        localStorage.setItem('adopters', JSON.stringify(adopters));
+        this.adoptersService.register(this.name, this.email, this.password);
         this.router.navigate(['/login']);
       } else {
         this.sheltersService.addShelter({ name: this.name, email: this.email, password: this.password, locations: [] });

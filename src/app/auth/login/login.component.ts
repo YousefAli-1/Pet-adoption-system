@@ -57,10 +57,6 @@ export class LoginComponent {
       this.passwordError = 'Password must be at least 8 characters';
       return false;
     }
-    if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(this.password)) {
-      this.passwordError = 'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character';
-      return false;
-    }
     this.passwordError = '';
     return true;
   }

@@ -4,13 +4,16 @@
       <p class="subtitle">Create an account to adopt your furry friend today!</p>
       <form (ngSubmit)="signup()">
         <div class="form-group">
-          <input type="text" id="name" name="name"  placeholder="Full Name" required />
+          <input type="text" [(ngModel)]="name" name="name" placeholder="Full Name" required (input)="onNameChange()" />
+          <div class="error-message" *ngIf="nameError">{{ nameError }}</div>
         </div>
         <div class="form-group">
-          <input type="email" id="email" name="email"  placeholder="Email" required />
+          <input type="email" [(ngModel)]="email" name="email" placeholder="Email" required (input)="onEmailChange()" />
+          <div class="error-message" *ngIf="emailError">{{ emailError }}</div>
         </div>
         <div class="form-group">
-          <input type="password" id="password" name="password"  placeholder="Password" required />
+          <input type="password" [(ngModel)]="password" name="password" placeholder="Password" required (input)="onPasswordChange()" />
+          <div class="error-message" *ngIf="passwordError">{{ passwordError }}</div>
         </div>
         <div class="form-group toggle-container">
           <mat-button-toggle-group [(ngModel)]="userType" name="userType" aria-label="User Type">

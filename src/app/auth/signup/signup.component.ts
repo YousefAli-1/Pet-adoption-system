@@ -4,15 +4,29 @@ import { FormsModule } from '@angular/forms';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatIconModule } from '@angular/material/icon';
 import { SheltersService } from '../../shelters/shelters.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-signup',
-  imports: [RouterLink, FormsModule, MatButtonToggleModule, MatIconModule],
+  standalone: true,
+  imports: [
+    CommonModule,
+    RouterLink,
+    FormsModule,
+    MatButtonToggleModule,
+    MatIconModule
+  ],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.scss'
 })
 export class SignupComponent {
   userType: 'adopter' | 'shelter' = 'adopter';
+  name: string = '';
+  email: string = '';
+  password: string = '';
+  nameError: string = '';
+  emailError: string = '';
+  passwordError: string = '';
 
   constructor(
     private router: Router,
@@ -23,20 +37,80 @@ export class SignupComponent {
     this.userType = type;
   }
 
-  signup() {
-    const name = (document.getElementById('name') as HTMLInputElement).value;
-    const email = (document.getElementById('email') as HTMLInputElement).value;
-    const password = (document.getElementById('password') as HTMLInputElement).value;
-    console.log(name, email, password);
+  onNameChange() {
+    this.validateName();
+  }
 
-    if (this.userType === 'adopter') {
-      const adopters = JSON.parse(localStorage.getItem('adopters') || '[]');
-      adopters.push({ name, email, password });
-      localStorage.setItem('adopters', JSON.stringify(adopters));
-      this.router.navigate(['/login']);
-    } else {
-      this.sheltersService.addShelter({ name, email, password, locations: [] });
-      this.router.navigate(['/login']);
+  onEmailChange() {
+    this.validateEmail();
+  }
+
+  onPasswordChange() {
+    this.validatePassword();
+  }
+
+  validateName(): boolean {
+    if (!this.name) {
+      this.nameError = 'Name is required';
+      return false;
+    }
+    if (this.name.length < 2) {
+      this.nameError = 'Name must be at least 2 characters';
+      return false;
+    }
+    if (!/^[a-zA-Z\s]*$/.test(this.name)) {
+      this.nameError = 'Name can only contain letters and spaces';
+      return false;
+    }
+    this.nameError = '';
+    return true;
+  }
+
+  validateEmail(): boolean {
+    if (!this.email) {
+      this.emailError = 'Email is required';
+      return false;
+    }
+    if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(this.email)) {
+      this.emailError = 'Please enter a valid email address';
+      return false;
+    }
+    this.emailError = '';
+    return true;
+  }
+
+  validatePassword(): boolean {
+    if (!this.password) {
+      this.passwordError = 'Password is required';
+      return false;
+    }
+    if (this.password.length < 8) {
+      this.passwordError = 'Password must be at least 8 characters';
+      return false;
+    }
+    if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(this.password)) {
+      this.passwordError = 'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character';
+      return false;
+    }
+    this.passwordError = '';
+    return true;
+  }
+
+  signup() {
+    const isNameValid = this.validateName();
+    const isEmailValid = this.validateEmail();
+    const isPasswordValid = this.validatePassword();
+
+    if (isNameValid && isEmailValid && isPasswordValid) {
+      if (this.userType === 'adopter') {
+        const adopters = JSON.parse(localStorage.getItem('adopters') || '[]');
+        adopters.push({ name: this.name, email: this.email, password: this.password });
+        localStorage.setItem('adopters', JSON.stringify(adopters));
+        this.router.navigate(['/login']);
+      } else {
+        this.sheltersService.addShelter({ name: this.name, email: this.email, password: this.password, locations: [] });
+        this.router.navigate(['/login']);
+      }
     }
   }
 }

@@ -10,7 +10,7 @@
 <h1>Search for your friend Now!</h1>
 <div class="search-bar">
     <input type="text" placeholder="Search by Category, Species or Location" [(ngModel)]="searchInput"
-        title="Only letters are allowed" />
+        title="Only letters are allowed" (input)="searchInput.set($any($event.target).value)" (keyup.enter)="search()"/>
         <button (click)="search()">Search</button>
         @if (searchError) {
         <div class="error-message">{{ searchError }}</div>

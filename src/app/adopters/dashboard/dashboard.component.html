@@ -9,9 +9,12 @@
 </div>
 <h1>Search for your friend Now!</h1>
 <div class="search-bar">
-    <input type="text" placeholder="Search by Category, Species or Location" [value]="searchInput()"
-        (input)="searchInput.set($any($event.target).value)" />
-    <button (click)="search()">Search</button>
+    <input type="text" placeholder="Search by Category, Species or Location" [(ngModel)]="searchInput"
+        title="Only letters are allowed" />
+        <button (click)="search()">Search</button>
+        @if (searchError) {
+        <div class="error-message">{{ searchError }}</div>
+        }
 </div>
 <style>
     .phot {

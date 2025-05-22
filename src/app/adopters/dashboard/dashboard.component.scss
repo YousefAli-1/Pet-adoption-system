@@ -235,3 +235,18 @@ h1 {
 #bookmark-btn.active svg {
     fill: #ff3b2f;
 }
+.search-bar {
+  position: relative;
+  
+.error-message {
+    color: #dc3545;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    display: flex;
+    flex-direction: column;
+    font-weight: 500;
+    position: absolute;
+    top: 100%;
+    left: 39%;
+}
+}

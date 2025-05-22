@@ -3,10 +3,12 @@ import { PostsService } from '../../posts.service';
 import { PostType } from '../../shelters/shelters.model';
 import { Router, RouterLink } from '@angular/router';
 import { AdoptersService } from '../adopters.services';
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [RouterLink],
+  imports: [RouterLink,FormsModule],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
@@ -74,15 +76,20 @@ export class DashboardComponent {
     return descriptions[category] || 'Adorable and lovable pets.';
   }
   searchInput = signal<string>('');
-
+  searchError='';
   search() {
     const category = this.postsService.searchPosts(this.searchInput());
+        if (!/^[a-zA-Z\s]*$/.test(this.searchInput())) {
+      this.searchError = 'Search Input can only contain letters and spaces';
+    }else{
+    this.searchError = '';
     this.router.navigate(['adopter/pets'], { 
       queryParams: { 
         q: this.searchInput(),
         category: category 
       } 
     });
+  }
   }
   showPopup = false;
 
